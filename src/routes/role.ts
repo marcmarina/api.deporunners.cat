@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
-import { getAllRoles, createRole } from '../services/role';
+import { getAllRoles } from '../services/role';
+import * as RoleController from '../controllers/role';
 import Role from '../models/Role';
 
 const router = Router();
@@ -10,10 +11,6 @@ router.get('', async (req, res) => {
   res.status(200).json(roles);
 });
 
-router.post('', async (req, res) => {
-  const { name } = req.body;
-  const result = await createRole(new Role({ name }));
-  res.status(201).json(result);
-});
+router.post('', RoleController.create);
 
 export default router;

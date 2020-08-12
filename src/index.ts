@@ -23,6 +23,15 @@ app.get('/', (req, res, next) => {
 app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);
 
+app.use((error, req, res, next) => {
+  const status = error.status || 500;
+  const result = {
+    status: status,
+    errors: error.errors,
+  };
+  res.status(status).json(result);
+});
+
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,

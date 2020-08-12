@@ -4,6 +4,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import AuthRoutes from './routes/auth';
+
 dotenv.config();
 
 const app = express();
@@ -17,14 +19,14 @@ app.get('/', (req, res, next) => {
   res.status(200).json(response);
 });
 
-// mongoose
-//   .connect(getMongoDBUri(), {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(result => {
-//     app.listen(getPort() || 8080);
-//   })
-//   .catch(err => console.log(err));
+app.use('/auth', AuthRoutes);
 
-app.listen(process.env.PORT || 8080);
+mongoose
+  .connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(result => {
+    app.listen(process.env.PORT || 8080);
+  })
+  .catch(err => console.log(err));

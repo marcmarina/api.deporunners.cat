@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
-import AuthRoutes from './routes/auth';
+import UserRoutes from './routes/user';
+import RoleRoutes from './routes/role';
 
 dotenv.config();
 
@@ -19,7 +20,8 @@ app.get('/', (req, res, next) => {
   res.status(200).json(response);
 });
 
-app.use('/auth', AuthRoutes);
+app.use('/user', UserRoutes);
+app.use('/role', RoleRoutes);
 
 mongoose
   .connect(process.env.MONGODB_URI, {

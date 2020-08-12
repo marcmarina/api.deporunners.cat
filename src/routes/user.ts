@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import * as AuthController from '../controllers/auth';
+import * as UserController from '../controllers/user';
 
 const router = Router();
 
@@ -14,7 +14,7 @@ router.post(
       .withMessage('Please provide a valid email.'),
     check('password').trim().notEmpty().withMessage('The password is required'),
   ],
-  AuthController.login
+  UserController.login
 );
 
 export default router;

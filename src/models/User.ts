@@ -1,12 +1,12 @@
 import { Schema, Document, model } from 'mongoose';
 
 export interface IUser extends Document {
-  name: String;
-  email: String;
-  password: String;
+  name: string;
+  email: string;
+  password: string;
   role: Schema.Types.ObjectId;
-  refreshToken?: String;
-  passwordResetToken?: String;
+  refreshToken?: string;
+  passwordResetToken?: string;
 }
 
 const userSchema = new Schema({

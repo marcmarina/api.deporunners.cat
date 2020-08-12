@@ -2,8 +2,7 @@ import Role, { IRole } from '../models/Role';
 
 export const getAllRoles = async (): Promise<IRole[]> => {
   try {
-    const roles = await Role.find();
-    return roles;
+    return await Role.find();
   } catch (ex) {
     console.log('Get Roles', ex);
   }
@@ -11,8 +10,7 @@ export const getAllRoles = async (): Promise<IRole[]> => {
 
 export const createRole = async (role: IRole): Promise<IRole> => {
   try {
-    const result = await role.save();
-    return result;
+    return await role.save();
   } catch (ex) {
     console.log(ex);
   }

@@ -2,6 +2,7 @@ import { validationResult } from 'express-validator';
 import { Request, Response, NextFunction } from 'express';
 import User from '../models/User';
 import { createUser, loginWithEmail } from '../services/user';
+import Role from '../models/Role';
 
 export const login = async (req, res, next) => {
   try {
@@ -27,6 +28,13 @@ export const create = async (req, res, next) => {
       throw error;
     }
     const { name, email, password, role } = req.body;
+    const foundRole = await Role.findById(role);
+    if (!foundRole) {
+      throw {
+        status: 400,
+        errors: [{ param: role, msg: 'The provided role is not valid.' }],
+      };
+    }
     const user = new User({ name, email, password, role });
     const result = await createUser(user);
     res.status(201).json(result);

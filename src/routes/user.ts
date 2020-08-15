@@ -17,6 +17,16 @@ router.post(
   UserController.login
 );
 
-router.post('', UserController.create);
+router.post(
+  '',
+  [
+    check('email')
+      .trim()
+      .isEmail()
+      .withMessage('Please provide a valid email.'),
+    check('password').trim().notEmpty().withMessage('The password is required'),
+  ],
+  UserController.create
+);
 
 export default router;

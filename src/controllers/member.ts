@@ -2,6 +2,7 @@ import { validationResult } from 'express-validator';
 import Member from '../models/Member';
 import Town from '../models/Town';
 import TShirtSize from '../models/TShirtSize';
+import { createMember, getAllMembers } from '../services/member';
 
 export const create = async (req, res, next) => {
   try {
@@ -24,8 +25,27 @@ export const create = async (req, res, next) => {
         status: 400,
         msg: 'Town Invalid',
       };
+
+    const member = new Member({
+      firstName,
+      lastName,
+      email,
+      address,
+      dni,
+      tshirtSize,
+    });
+
+    const result = await createMember(member);
+    res.status(200).json(result);
   } catch (ex) {
-    console.log(ex);
+    next(ex);
+  }
+};
+
+export const index = async (req, res, next) => {
+  try {
+    res.status(200).json(await getAllMembers());
+  } catch (ex) {
     next(ex);
   }
 };

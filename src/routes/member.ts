@@ -19,4 +19,6 @@ router.post(
   MemberController.create
 );
 
+router.get('', MemberController.index);
+
 export default router;

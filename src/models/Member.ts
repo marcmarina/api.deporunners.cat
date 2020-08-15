@@ -2,22 +2,22 @@ import { Schema, Document, model } from 'mongoose';
 
 export interface IMember extends Document {
   numMember: number;
-  firstName: String;
-  lastName: String;
-  email: String;
-  password: String;
-  dni: String;
-  iban?: String;
-  telephone?: String;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  dni: string;
+  iban?: string;
+  telephone?: string;
   tshirtSize: Schema.Types.ObjectId;
   address: IAddress;
-  refreshToken?: String;
-  passwordResetToken?: String;
+  refreshToken?: string;
+  passwordResetToken?: string;
 }
 
 export interface IAddress {
-  streetAddress: String;
-  postcode: number;
+  streetAddress: string;
+  postCode: string;
   town: Schema.Types.ObjectId;
 }
 
@@ -37,6 +37,7 @@ const memberSchema = new Schema({
   email: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -58,7 +59,7 @@ const memberSchema = new Schema({
       required: true,
     },
     postCode: {
-      type: Number,
+      type: String,
       required: true,
     },
     town: {

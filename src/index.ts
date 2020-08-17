@@ -38,6 +38,7 @@ mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useCreateIndex: true,
   })
   .then(result => {
     app.listen(process.env.PORT || 8080);

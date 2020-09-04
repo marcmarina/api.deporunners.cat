@@ -21,4 +21,6 @@ router.post(
 
 router.get('', MemberController.index);
 
+router.get('/:id', MemberController.find);
+
 export default router;

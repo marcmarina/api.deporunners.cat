@@ -23,3 +23,12 @@ export const getAllMembers = async () => {
     throw ex;
   }
 };
+
+export const findMemberById = async (id: string) => {
+  try {
+    const member = await Member.findById(id);
+    return member;
+  } catch (ex) {
+    throw ex;
+  }
+};

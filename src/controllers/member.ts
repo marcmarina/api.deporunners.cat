@@ -2,7 +2,11 @@ import { validationResult } from 'express-validator';
 import Member from '../models/Member';
 import Town from '../models/Town';
 import TShirtSize from '../models/TShirtSize';
-import { createMember, getAllMembers } from '../services/member';
+import {
+  createMember,
+  getAllMembers,
+  findMemberById,
+} from '../services/member';
 
 export const create = async (req, res, next) => {
   try {
@@ -45,6 +49,15 @@ export const create = async (req, res, next) => {
 export const index = async (req, res, next) => {
   try {
     res.status(200).json(await getAllMembers());
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const find = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    res.status(200).json(await findMemberById(id));
   } catch (ex) {
     next(ex);
   }

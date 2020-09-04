@@ -8,7 +8,7 @@ export interface IMember extends Document {
   password: string;
   dni: string;
   iban?: string;
-  telephone?: string;
+  telephone: string;
   tshirtSize: Schema.Types.ObjectId;
   address: IAddress;
   refreshToken?: string;
@@ -48,7 +48,10 @@ const memberSchema = new Schema({
     required: true,
   },
   iban: String,
-  telephone: String,
+  telephone: {
+    type: String,
+    required: true,
+  },
   tshirtSize: {
     type: Schema.Types.ObjectId,
     ref: 'TShirtSize',

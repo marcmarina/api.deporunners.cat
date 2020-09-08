@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import faker from 'faker';
+import bcrypt from 'bcrypt';
 
 import Member from './src/models/Member';
 import User from './src/models/User';
@@ -88,7 +89,7 @@ const memberTemplate = {
 
 const userTemplate = {
   name: 'John Doe',
-  password: '123456',
+  password: bcrypt.hashSync('123456', 12),
 };
 
 const memberCount = parseInt(process.env.SEED_MEMBER_COUNT);

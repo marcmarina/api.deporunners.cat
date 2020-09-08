@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import faker from 'faker';
 
 import Member from './src/models/Member';
 import User from './src/models/User';
@@ -94,11 +95,13 @@ async function seed() {
     let { _id: townId } = await Town.findOne();
     let member = new Member({
       ...memberTemplate,
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
       address: {
         ...memberTemplate.address,
         town: townId,
       },
-      email: `john${i > 0 ? i + 1 : ''}@doe.com`,
+      email: faker.internet.email(),
       numMember: i + 1,
     });
     members.push(member);

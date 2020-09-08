@@ -12,6 +12,9 @@ dotenv.config();
 
 const towns = [
   {
+    name: 'Barcelona',
+  },
+  {
     name: 'Sant Pere de Ribes',
   },
   {
@@ -25,6 +28,24 @@ const towns = [
   },
   {
     name: 'Cunit',
+  },
+  {
+    name: 'Calafell',
+  },
+  {
+    name: 'Canyelles',
+  },
+  {
+    name: 'Igualada',
+  },
+  {
+    name: "L'Arboç",
+  },
+  {
+    name: "Sant Sadurní d'Anoia",
+  },
+  {
+    name: 'Vilafranca del Penedès',
   },
 ];
 

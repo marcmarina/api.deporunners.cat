@@ -32,3 +32,11 @@ export const findMemberById = async (id: string) => {
     throw ex;
   }
 };
+
+export const deleteById = async (id: string) => {
+  try {
+    return await Member.findByIdAndDelete(id);
+  } catch (ex) {
+    throw ex;
+  }
+};

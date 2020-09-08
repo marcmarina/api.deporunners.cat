@@ -122,7 +122,7 @@ async function seed() {
         ...memberTemplate.address,
         town: townId,
       },
-      email: faker.internet.email(),
+      email: faker.internet.email().toLowerCase(),
       numMember: i + 1,
     });
     members.push(member);

@@ -125,6 +125,7 @@ async function seed() {
       },
       email: faker.internet.email().toLowerCase(),
       numMember: i + 1,
+      iban: faker.finance.iban(),
     });
     members.push(member);
   }

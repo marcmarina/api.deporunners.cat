@@ -78,7 +78,7 @@ const roles = [{ name: 'Admin' }];
 const memberTemplate = {
   firstName: 'John',
   lastName: 'Doe',
-  password: '123456',
+  password: bcrypt.hashSync('123456', 12),
   dni: '12345678A',
   telephone: '654654654',
   address: {

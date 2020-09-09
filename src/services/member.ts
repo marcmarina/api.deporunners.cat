@@ -40,3 +40,11 @@ export const deleteById = async (id: string) => {
     throw ex;
   }
 };
+
+export const update = async (member: IMember) => {
+  try {
+    return await Member.updateOne({ _id: member._id }, member);
+  } catch (ex) {
+    throw ex;
+  }
+};

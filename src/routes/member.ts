@@ -25,4 +25,6 @@ router.get('/:id', MemberController.find);
 
 router.delete('/:id', MemberController.destroy);
 
+router.put('', MemberController.put);
+
 export default router;

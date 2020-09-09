@@ -7,6 +7,7 @@ import {
   getAllMembers,
   findMemberById,
   deleteById,
+  update,
 } from '../services/member';
 
 export const create = async (req, res, next) => {
@@ -68,6 +69,15 @@ export const destroy = async (req, res, next) => {
   try {
     const { id } = req.params;
     res.status(200).json(await deleteById(id));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const put = async (req, res, next) => {
+  try {
+    const member = req.body;
+    res.status(200).json(await update(member));
   } catch (ex) {
     next(ex);
   }

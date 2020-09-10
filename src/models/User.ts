@@ -30,4 +30,11 @@ const userSchema = new Schema({
   passwordResetToken: String,
 });
 
+const populateRole = function (this: IUser, next: any) {
+  this.populate('role');
+  next();
+};
+
+userSchema.pre('find', populateRole).pre('findOne', populateRole);
+
 export default model<IUser>('User', userSchema);

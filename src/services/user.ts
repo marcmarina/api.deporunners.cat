@@ -38,8 +38,7 @@ export const loginWithEmail = async (
     }
     const token = jwt.sign(
       {
-        email: user.email,
-        name: user.name,
+        ...user.toObject(),
       },
       process.env.APP_SECRET_KEY
     );

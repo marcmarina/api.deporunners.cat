@@ -74,4 +74,11 @@ const memberSchema = new Schema({
   passwordResetToken: String,
 });
 
+const populateTown = function (this: IMember, next: any) {
+  this.populate('address.town');
+  next();
+};
+
+memberSchema.pre('find', populateTown).pre('findOne', populateTown);
+
 export default model<IMember>('Member', memberSchema);

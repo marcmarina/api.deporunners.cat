@@ -26,7 +26,7 @@ export const getAllMembers = async () => {
 
 export const findMemberById = async (id: string) => {
   try {
-    const member = await Member.findById(id).populate('address.town');
+    const member = await Member.findOne({ _id: id });
     return member;
   } catch (ex) {
     throw ex;

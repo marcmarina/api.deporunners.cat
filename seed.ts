@@ -71,6 +71,10 @@ const tShirtSizes = [
     name: 'XL',
     orderNum: 5,
   },
+  {
+    name: 'XXL',
+    orderNum: 6,
+  },
 ];
 
 const roles = [{ name: 'Admin' }];

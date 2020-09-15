@@ -96,8 +96,8 @@ const userTemplate = {
   password: bcrypt.hashSync('123456', 12),
 };
 
-const memberCount = parseInt(process.env.SEED_MEMBER_COUNT);
-const userCount = parseInt(process.env.SEED_USER_COUNT);
+const memberCount = parseInt(process.env.SEED_MEMBER_COUNT) || 150;
+const userCount = parseInt(process.env.SEED_USER_COUNT) || 2;
 
 async function seed() {
   await mongoose.connect(process.env.MONGODB_URI, {

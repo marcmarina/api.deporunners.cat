@@ -6,6 +6,12 @@ import * as MemberController from '../controllers/member';
 const router = Router();
 
 router.post(
+  '/login',
+  [check('username').isString().trim(), check('password').isString().trim()],
+  MemberController.login
+);
+
+router.post(
   '',
   [
     check('firstName').isString().isLength({ min: 2 }),

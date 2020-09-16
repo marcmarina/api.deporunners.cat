@@ -1,4 +1,6 @@
 import bcrypt from 'bcrypt';
+import { json } from 'body-parser';
+import jwt from 'jsonwebtoken';
 
 import Member, { IMember } from '../models/Member';
 
@@ -44,6 +46,57 @@ export const deleteById = async (id: string) => {
 export const update = async (member: IMember) => {
   try {
     return await Member.updateOne({ _id: member._id }, member);
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const loginCredentials = async (
+  username: string,
+  password: string
+): Promise<string> => {
+  try {
+    let member: IMember;
+
+    let re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (re.test(username)) {
+      member = await Member.findOne({ email: username });
+      if (!member) {
+        const error = {
+          status: 400,
+          message: 'These credentials are invalid.',
+        };
+        throw error;
+      }
+    } else {
+      member = await Member.findOne({ dni: username });
+      if (!member) {
+        const error = {
+          status: 400,
+          message: 'These credentials are invalid.',
+        };
+        throw error;
+      }
+    }
+
+    const validPassword = await bcrypt.compare(password, member.password);
+
+    if (!validPassword) {
+      const error = {
+        status: 400,
+        message: 'These credentials are invalid.',
+      };
+      throw error;
+    }
+
+    const token = jwt.sign(
+      {
+        ...member.toObject(),
+      },
+      process.env.APP_SECRET_KEY
+    );
+
+    return token;
   } catch (ex) {
     throw ex;
   }

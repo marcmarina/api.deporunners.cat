@@ -31,7 +31,7 @@ app.use((error, req, res, next) => {
   const status = error.status || 500;
   const result = {
     status: status,
-    errors: error.errors,
+    errors: error.errors || [{ msg: error.message }],
   };
   res.status(status).json(result);
 });

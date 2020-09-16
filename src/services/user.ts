@@ -16,7 +16,7 @@ export const createUser = async (user: IUser): Promise<IUser> => {
 export const loginWithEmail = async (
   email: string,
   password: string
-): Promise<String> => {
+): Promise<string> => {
   try {
     const user = await User.findOne({ email });
 

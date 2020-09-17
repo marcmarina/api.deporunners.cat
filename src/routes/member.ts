@@ -1,35 +1,21 @@
 import { Router } from 'express';
-import { check } from 'express-validator';
 
 import * as MemberController from '../controllers/member';
+import { memberCreate, memberLogin } from '../validators/EndpointValidators';
 
 const router = Router();
 
-router.post(
-  '/login',
-  [check('username').isString().trim(), check('password').isString().trim()],
-  MemberController.login
-);
+router.post('/login', memberLogin, MemberController.login);
 
-router.post(
-  '',
-  [
-    check('firstName').isString().isLength({ min: 2 }),
-    check('lastName').isString().isLength({ min: 2 }),
-    check('email').trim().isEmail(),
-    check('dni').isString(),
-    check('address.streetAddress').isString(),
-    check('address.postCode'),
-    check('address.town').isString(),
-  ],
-  MemberController.create
-);
+router.post('', memberCreate, MemberController.create);
 
 router.get('', MemberController.index);
 
 router.get('/:id', MemberController.find);
 
 router.delete('/:id', MemberController.destroy);
+
+router.patch('/changePassword/:id', MemberController.changePassword);
 
 router.put('', MemberController.put);
 

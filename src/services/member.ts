@@ -101,3 +101,30 @@ export const loginCredentials = async (
     throw ex;
   }
 };
+
+export const updatePassword = async (
+  id: string,
+  oldPassword: string,
+  newPassword: string
+) => {
+  try {
+    const member = await Member.findById(id);
+    if (!member)
+      throw {
+        status: 400,
+        message: 'The member id is not valid',
+      };
+
+    const validPassword = await bcrypt.compare(oldPassword, member.password);
+    if (!validPassword)
+      throw {
+        status: 400,
+        message: 'The old password is not valid',
+      };
+
+    member.password = await bcrypt.hash(newPassword, 12);
+    return await member.save();
+  } catch (ex) {
+    throw ex;
+  }
+};

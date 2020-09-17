@@ -1,3 +1,4 @@
+import { Request } from 'express';
 import { validationResult } from 'express-validator';
 import Member from '../models/Member';
 import Town from '../models/Town';
@@ -9,29 +10,14 @@ import {
   deleteById,
   update,
   loginCredentials,
+  updatePassword,
 } from '../services/member';
+import checkForErrors from '../utils/ErrorThrowing';
 
 export const create = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    if (errors.array().length > 0) {
-      const error = { status: 400, errors: errors };
-      throw error;
-    }
+    checkForErrors(req);
     const { firstName, lastName, email, dni, address, tshirtSize } = req.body;
-    const matchingT = await TShirtSize.findById(tshirtSize);
-    if (!matchingT)
-      throw {
-        status: 400,
-        msg: 'TShirt Size Invalid',
-      };
-
-    const matchingTown = await Town.findById(address.town);
-    if (!matchingTown)
-      throw {
-        status: 400,
-        msg: 'Town Invalid',
-      };
 
     const member = new Member({
       firstName,
@@ -86,14 +72,22 @@ export const put = async (req, res, next) => {
 
 export const login = async (req, res, next) => {
   try {
-    const errors = validationResult(req);
-    if (errors.array().length > 0) {
-      const error = { status: 400, errors: errors };
-      throw error;
-    }
-
+    checkForErrors(req);
     const { username, password } = req.body;
     res.status(200).json(await loginCredentials(username, password));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const changePassword = async (req: Request, res, next) => {
+  try {
+    checkForErrors(req);
+
+    const { oldPassword, newPassword } = req.body;
+    const { id } = req.params;
+
+    res.status(200).json(await updatePassword(id, oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }

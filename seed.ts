@@ -118,18 +118,18 @@ async function seed() {
 
   const members = [];
   for (let i = 0; i < memberCount; i++) {
-    let { _id: townId } = await Town.findOne();
-    let member = new Member({
+    const member = new Member({
       ...memberTemplate,
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       address: {
         ...memberTemplate.address,
-        town: townId,
+        town: (await Town.findOne())._id,
       },
       email: faker.internet.email().toLowerCase(),
       numMember: i + 1,
       iban: faker.finance.iban(),
+      tshirtSize: (await TShirtSize.findOne())._id,
     });
     members.push(member);
   }

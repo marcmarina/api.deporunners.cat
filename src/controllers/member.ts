@@ -17,18 +17,7 @@ import checkForErrors from '../utils/ErrorThrowing';
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    const { firstName, lastName, email, dni, address, tshirtSize } = req.body;
-
-    const member = new Member({
-      firstName,
-      lastName,
-      email,
-      address,
-      dni,
-      tshirtSize,
-    });
-
-    const result = await createMember(member);
+    const result = await createMember({ ...req.body });
     res.status(200).json(result);
   } catch (ex) {
     next(ex);

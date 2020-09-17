@@ -11,7 +11,9 @@ export const createMember = async (member: IMember): Promise<IMember> => {
 
     const highestMemberNum = await Member.findOne({}).sort('-numMember');
     member.numMember = highestMemberNum ? highestMemberNum.numMember + 1 : 1;
-    return await member.save();
+
+    const newMember = new Member({ ...member });
+    return await newMember.save();
   } catch (ex) {
     throw ex;
   }

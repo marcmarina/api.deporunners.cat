@@ -8,6 +8,7 @@ import UserRoutes from './routes/user';
 import RoleRoutes from './routes/role';
 import MemberRoutes from './routes/member';
 import TownRoutes from './routes/town';
+import TShirtSizeRoutes from './routes/tshirtSize';
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);
 app.use('/member', MemberRoutes);
 app.use('/town', TownRoutes);
+app.use('/tshirtsize', TShirtSizeRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.status || 500;

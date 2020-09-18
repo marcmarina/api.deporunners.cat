@@ -74,11 +74,12 @@ const memberSchema = new Schema({
   passwordResetToken: String,
 });
 
-const populateTown = function (this: IMember, next: any) {
+const populateData = function (this: IMember, next: any) {
   this.populate('address.town');
+  this.populate('tshirtSize');
   next();
 };
 
-memberSchema.pre('find', populateTown).pre('findOne', populateTown);
+memberSchema.pre('find', populateData).pre('findOne', populateData);
 
 export default model<IMember>('Member', memberSchema);

@@ -5,6 +5,8 @@ import * as UserController from '../controllers/user';
 
 const router = Router();
 
+router.get('', UserController.index);
+
 router.post(
   '/login',
   [
@@ -16,6 +18,8 @@ router.post(
   ],
   UserController.login
 );
+
+router.patch('/changePassword/:id', UserController.changePassword);
 
 router.post(
   '',

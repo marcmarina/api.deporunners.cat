@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { json } from 'body-parser';
 import jwt from 'jsonwebtoken';
 
 import Member, { IMember } from '../models/Member';

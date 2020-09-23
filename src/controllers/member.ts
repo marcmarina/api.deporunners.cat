@@ -1,8 +1,4 @@
 import { Request } from 'express';
-import { validationResult } from 'express-validator';
-import Member from '../models/Member';
-import Town from '../models/Town';
-import TShirtSize from '../models/TShirtSize';
 import {
   createMember,
   getAllMembers,

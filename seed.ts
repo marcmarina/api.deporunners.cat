@@ -125,6 +125,8 @@ async function seed() {
       address: {
         ...memberTemplate.address,
         town: (await Town.findOne())._id,
+        streetAddress: faker.address.streetAddress(),
+        postCode: faker.address.zipCode(),
       },
       email: faker.internet.email().toLowerCase(),
       numMember: i + 1,

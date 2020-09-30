@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 import { check } from 'express-validator';
 import { validTown, validTShirtSize } from './DatabaseValidators';
 
@@ -24,4 +26,16 @@ export const fullMember = [
 export const memberLogin = [
   check('username').isString().trim(),
   check('password').isString().trim(),
+];
+
+export const fullEvent = [
+  check('name')
+    .isLength({ min: 4 })
+    .withMessage('The name has to be at least 4 characters long')
+    .trim(),
+  check('dateTime').custom(value => {
+    if (dayjs(value).isValid()) return true;
+    return false;
+  }),
+  check('coordinates').isString().isLatLong(),
 ];

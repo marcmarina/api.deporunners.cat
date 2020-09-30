@@ -8,6 +8,7 @@ import User from './src/models/User';
 import Role from './src/models/Role';
 import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
+import Event from './src/models/Event';
 
 dotenv.config();
 
@@ -111,6 +112,7 @@ async function seed() {
   await Role.deleteMany({});
   await Town.deleteMany({});
   await TShirtSize.deleteMany({});
+  await Event.deleteMany({});
 
   await Town.insertMany(towns);
   await TShirtSize.insertMany(tShirtSizes);
@@ -152,8 +154,6 @@ async function seed() {
   await User.insertMany(users);
 
   mongoose.disconnect();
-
-  console.info('Done!');
 }
 
 seed();

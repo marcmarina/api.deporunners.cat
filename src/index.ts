@@ -19,6 +19,26 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  try {
+    const apiToken = req.get('api-token');
+    if (!apiToken) {
+      throw {
+        status: 401,
+        message: 'No API Token provided',
+      };
+    } else if (apiToken !== process.env.API_TOKEN) {
+      throw {
+        status: 401,
+        message: 'API Token is not valid',
+      };
+    }
+    next();
+  } catch (ex) {
+    next(ex);
+  }
+});
+
 app.get('/', (req, res, next) => {
   const response = require('../package.json');
   delete response['repository'];

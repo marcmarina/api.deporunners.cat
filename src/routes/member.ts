@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
 import * as MemberController from '../controllers/member';
+import auth from '../middleware/auth';
 import { fullMember, memberLogin } from '../validators/EndpointValidators';
 
 const router = Router();

@@ -8,16 +8,16 @@ const router = Router();
 
 router.post('/login', memberLogin, MemberController.login);
 
-router.post('', fullMember, MemberController.create);
+router.post('', auth, fullMember, MemberController.create);
 
 router.get('', MemberController.index);
 
 router.get('/:id', MemberController.find);
 
-router.delete('/:id', MemberController.destroy);
+router.delete('/:id', auth, MemberController.destroy);
 
-router.patch('/changePassword/:id', MemberController.changePassword);
+router.patch('/changePassword/:id', auth, MemberController.changePassword);
 
-router.put('', fullMember, MemberController.put);
+router.put('', auth, fullMember, MemberController.put);
 
 export default router;

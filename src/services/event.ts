@@ -16,3 +16,11 @@ export const createEvent = async (event: IEvent) => {
     throw ex;
   }
 };
+
+export const updateEvent = async (event: IEvent) => {
+  try {
+    return await Event.updateOne({ _id: event._id }, event);
+  } catch (ex) {
+    throw ex;
+  }
+};

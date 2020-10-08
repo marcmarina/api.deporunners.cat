@@ -45,6 +45,7 @@ export const attendEvent = async (
     if (attending) {
       if (!event.members.includes(userId)) event.members.push(userId);
     } else {
+      console.log('AAAAA');
       const index = event.members.indexOf(userId);
       if (index > -1) {
         event.members.splice(index, 1);

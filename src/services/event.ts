@@ -10,6 +10,16 @@ export const getAllEvents = async () => {
   }
 };
 
+export const getPagedEvents = async (page: number, perPage: number) => {
+  try {
+    return await Event.find()
+      .skip((page - 1) * perPage)
+      .limit(perPage);
+  } catch (ex) {
+    throw ex;
+  }
+};
+
 export const getById = async (id: Schema.Types.ObjectId) => {
   try {
     return await Event.findById(id);
@@ -45,7 +55,6 @@ export const attendEvent = async (
     if (attending) {
       if (!event.members.includes(userId)) event.members.push(userId);
     } else {
-      console.log('AAAAA');
       const index = event.members.indexOf(userId);
       if (index > -1) {
         event.members.splice(index, 1);

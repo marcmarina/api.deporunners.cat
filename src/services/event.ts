@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import Event, { IEvent } from '../models/Event';
 
 export const getAllEvents = async () => {
@@ -20,6 +22,27 @@ export const createEvent = async (event: IEvent) => {
 export const updateEvent = async (event: IEvent) => {
   try {
     return await Event.updateOne({ _id: event._id }, event);
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const attendEvent = async (
+  eventId: string,
+  userId: mongoose.Schema.Types.ObjectId,
+  attending: boolean
+) => {
+  try {
+    const event = await Event.findById(eventId);
+    if (attending) {
+      if (!event.members.includes(userId)) event.members.push(userId);
+    } else {
+      const index = event.members.indexOf(userId);
+      if (index > -1) {
+        event.members.splice(index, 1);
+      }
+    }
+    return await event.save();
   } catch (ex) {
     throw ex;
   }

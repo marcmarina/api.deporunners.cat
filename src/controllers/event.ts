@@ -1,5 +1,11 @@
 import dayjs from 'dayjs';
-import { createEvent, getAllEvents, updateEvent } from '../services/event';
+import { Request } from 'express';
+import {
+  createEvent,
+  getAllEvents,
+  updateEvent,
+  attendEvent,
+} from '../services/event';
 import checkForErrors from '../utils/ErrorThrowing';
 
 export const index = async (req, res, next) => {
@@ -23,6 +29,17 @@ export const update = async (req, res, next) => {
   try {
     checkForErrors(req);
     res.status(201).json(await updateEvent({ ...req.body }));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const attend = async (req, res, next) => {
+  try {
+    const userId = req.userId;
+    const eventId = req.params.id;
+    const attending = req.query.attending;
+    res.status(201).json(await attendEvent(eventId, userId, attending));
   } catch (ex) {
     next(ex);
   }

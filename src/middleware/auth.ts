@@ -19,7 +19,7 @@ export default (req, res, next) => {
       const error = new Error('Not authenticated.');
       throw error;
     }
-    req.userId = decodedToken.userId;
+    req.userId = decodedToken._id;
     next();
   } catch (ex) {
     next(ex);

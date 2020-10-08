@@ -12,4 +12,6 @@ router.post('', auth, fullEvent, EventController.create);
 
 router.put('', auth, fullEvent, EventController.update);
 
+router.patch('/:id/attend', auth, EventController.attend);
+
 export default router;

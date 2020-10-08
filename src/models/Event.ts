@@ -6,7 +6,7 @@ export interface IEvent extends Document {
   description: string;
   dateTime: Date;
   coordinates: string;
-  members: Schema.Types.ObjectId | IMember[];
+  members: Schema.Types.ObjectId[];
 }
 
 const eventSchema = new Schema(

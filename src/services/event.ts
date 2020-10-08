@@ -1,10 +1,18 @@
-import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
 import Event, { IEvent } from '../models/Event';
 
 export const getAllEvents = async () => {
   try {
     return await Event.find();
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const getById = async (id: Schema.Types.ObjectId) => {
+  try {
+    return await Event.findById(id);
   } catch (ex) {
     throw ex;
   }
@@ -29,7 +37,7 @@ export const updateEvent = async (event: IEvent) => {
 
 export const attendEvent = async (
   eventId: string,
-  userId: mongoose.Schema.Types.ObjectId,
+  userId: Schema.Types.ObjectId,
   attending: boolean
 ) => {
   try {

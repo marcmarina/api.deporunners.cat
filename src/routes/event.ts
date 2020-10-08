@@ -8,6 +8,8 @@ const router = Router();
 
 router.get('', EventController.index);
 
+router.get('/:id', EventController.show);
+
 router.post('', auth, fullEvent, EventController.create);
 
 router.put('', auth, fullEvent, EventController.update);

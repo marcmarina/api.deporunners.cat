@@ -1,16 +1,23 @@
-import dayjs from 'dayjs';
-import { Request } from 'express';
 import {
   createEvent,
   getAllEvents,
   updateEvent,
   attendEvent,
+  getById,
 } from '../services/event';
 import checkForErrors from '../utils/ErrorThrowing';
 
 export const index = async (req, res, next) => {
   try {
     res.status(200).json(await getAllEvents());
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const show = async (req, res, next) => {
+  try {
+    res.status(200).json(await getById(req.params.id));
   } catch (ex) {
     next(ex);
   }

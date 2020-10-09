@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import faker from 'faker';
 import bcrypt from 'bcrypt';
+import dayjs from 'dayjs';
 
 import Member from './src/models/Member';
 import User from './src/models/User';
@@ -9,6 +10,8 @@ import Role from './src/models/Role';
 import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
 import Event from './src/models/Event';
+
+import randomInt from './src/utils/RandomInt';
 
 dotenv.config();
 
@@ -99,6 +102,7 @@ const userTemplate = {
 
 const memberCount = parseInt(process.env.SEED_MEMBER_COUNT) || 150;
 const userCount = parseInt(process.env.SEED_USER_COUNT) || 2;
+const eventCount = parseInt(process.env.SEED_EVENT_COUNT) || 20;
 
 async function seed() {
   await mongoose.connect(process.env.MONGODB_URI, {
@@ -150,8 +154,23 @@ async function seed() {
     });
     users.push(user);
   }
-
   await User.insertMany(users);
+
+  const events = [];
+  for (let i = 0; i < eventCount; i++) {
+    events.push(
+      new Event({
+        name: `Event ${i + 1}`,
+        description: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam semper facilisis maximus. Nulla augue massa, sollicitudin consectetur libero ut, egestas rhoncus orci. Nulla vitae ex tempor, accumsan nibh a, egestas elit. Curabitur at consequat lectus, ut venenatis urna. Proin quis turpis tellus. Phasellus ornare et erat a euismod. Aliquam id orci placerat, lobortis elit a, scelerisque erat. Etiam consequat feugiat dui a fringilla.`,
+        coordinates: `${faker.address.latitude()}, ${faker.address.longitude()}`,
+        dateTime: dayjs()
+          .add(randomInt(1, 10), 'day')
+          .add(randomInt(1, 12), 'hour'),
+        members: [],
+      })
+    );
+  }
+  await Event.insertMany(events);
 
   mongoose.disconnect();
 }

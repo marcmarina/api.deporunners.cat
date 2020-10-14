@@ -137,7 +137,6 @@ async function seed() {
       email: faker.internet.email().toLowerCase(),
       numMember: i + 1,
       iban: faker.finance.iban(),
-      tshirtSize: (await TShirtSize.findOne())._id,
     });
     members.push(member);
   }

@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 
 import { check } from 'express-validator';
-import { validTown, validTShirtSize } from './DatabaseValidators';
+import { existingMemberEmail, validTown } from './DatabaseValidators';
 
 export const fullMember = [
   check('firstName')
@@ -13,9 +13,8 @@ export const fullMember = [
     .withMessage('The lastName has to be at least 2 characters long')
     .trim(),
   check('email').trim().isEmail(),
+  existingMemberEmail('email'),
   check('dni').isString(),
-  check('tshirtSize').notEmpty().withMessage('Required'),
-  validTShirtSize('tshirtSize'),
   check('address').notEmpty(),
   check('address.streetAddress').isString(),
   check('address.postCode').isString(),

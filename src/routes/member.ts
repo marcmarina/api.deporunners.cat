@@ -10,7 +10,9 @@ router.post('/login', memberLogin, MemberController.login);
 
 router.get('/signup/secret', MemberController.signupSecret);
 
-router.post('', auth, fullMember, MemberController.create);
+router.post('/signup/:id/email', MemberController.signupEmail);
+
+router.post('', fullMember, MemberController.create);
 
 router.get('', MemberController.index);
 

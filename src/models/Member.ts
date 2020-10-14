@@ -9,7 +9,6 @@ export interface IMember extends Document {
   dni: string;
   iban?: string;
   telephone: string;
-  tshirtSize: Schema.Types.ObjectId;
   address: IAddress;
   refreshToken?: string;
   passwordResetToken?: string;
@@ -52,10 +51,6 @@ const memberSchema = new Schema({
     type: String,
     required: true,
   },
-  tshirtSize: {
-    type: Schema.Types.ObjectId,
-    ref: 'TShirtSize',
-  },
   address: {
     streetAddress: {
       type: String,
@@ -76,7 +71,6 @@ const memberSchema = new Schema({
 
 const populateData = function (this: IMember, next: any) {
   this.populate('address.town');
-  this.populate('tshirtSize');
   next();
 };
 

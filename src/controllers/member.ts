@@ -8,9 +8,9 @@ import {
   update,
   loginCredentials,
   updatePassword,
+  sendSignupEmail,
 } from '../services/member';
 import checkForErrors from '../utils/ErrorThrowing';
-import mailService, { getTemplate } from '../mail/mailService';
 
 export const create = async (req, res, next) => {
   try {
@@ -18,18 +18,16 @@ export const create = async (req, res, next) => {
 
     const result = await createMember({ ...req.body });
 
-    mailService.sendMail({
-      to: 'marc.marina.miravitlles@gmail.com',
-      from: 'marc.marina.miravitlles@gmail.com',
-      subject: 'Benvingut/da a Deporunners!',
-      html: await getTemplate('member/newMember.pug', {
-        member: {
-          dni: result.dni,
-        },
-      }),
-    });
-
     res.status(201).json(result);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const signupEmail = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    res.status(200).json(await sendSignupEmail(id));
   } catch (ex) {
     next(ex);
   }

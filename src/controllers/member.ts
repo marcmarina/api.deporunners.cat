@@ -9,11 +9,25 @@ import {
   updatePassword,
 } from '../services/member';
 import checkForErrors from '../utils/ErrorThrowing';
+import mailService, { getTemplate } from '../mail/mailService';
 
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
+
     const result = await createMember({ ...req.body });
+
+    mailService.sendMail({
+      to: 'marc.marina.miravitlles@gmail.com',
+      from: 'marc.marina.miravitlles@gmail.com',
+      subject: 'Benvingut/da a Deporunners!',
+      html: await getTemplate('member/newMember.pug', {
+        member: {
+          dni: result.dni,
+        },
+      }),
+    });
+
     res.status(201).json(result);
   } catch (ex) {
     next(ex);

@@ -1,4 +1,5 @@
-import { Request } from 'express';
+import Stripe from 'stripe';
+
 import {
   createMember,
   getAllMembers,
@@ -80,7 +81,7 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const changePassword = async (req: Request, res, next) => {
+export const changePassword = async (req, res, next) => {
   try {
     checkForErrors(req);
 
@@ -88,6 +89,27 @@ export const changePassword = async (req: Request, res, next) => {
     const { id } = req.params;
 
     res.status(200).json(await updatePassword(id, oldPassword, newPassword));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const signupSecret = async (req, res, next) => {
+  try {
+    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: '2020-08-27',
+    });
+
+    const intent = await stripe.paymentIntents.create({
+      amount: 4000,
+      currency: 'eur',
+      description: 'Pagament quota Deporunners',
+      metadata: {
+        integration_check: 'accept_a_payment',
+      },
+    });
+
+    res.status(200).json({ clientSecret: intent.client_secret });
   } catch (ex) {
     next(ex);
   }

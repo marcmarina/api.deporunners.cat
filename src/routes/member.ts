@@ -8,6 +8,8 @@ const router = Router();
 
 router.post('/login', memberLogin, MemberController.login);
 
+router.get('/signup/secret', MemberController.signupSecret);
+
 router.post('', auth, fullMember, MemberController.create);
 
 router.get('', MemberController.index);

@@ -3,8 +3,6 @@ import jwt from 'jsonwebtoken';
 
 import User, { IUser } from '../models/User';
 
-import mailService from '../mail/mailService';
-
 export const getAllUsers = async (): Promise<IUser[]> => {
   return await User.find();
 };
@@ -13,16 +11,6 @@ export const createUser = async (user: IUser): Promise<IUser> => {
   try {
     const hashedPassword = await bcrypt.hash(user.password, 12);
     user.password = hashedPassword;
-
-    mailService.sendMail({
-      to: user.email,
-      from: 'marc.marina.miravitlles@gmail.com',
-      subject: 'Successful sign up!',
-      html: `
-        <h1>Congratulations!</h1>
-        <h4>${user.name}</h4>
-      `,
-    });
 
     return await user.save();
   } catch (ex) {

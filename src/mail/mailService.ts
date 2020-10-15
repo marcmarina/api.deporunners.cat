@@ -23,9 +23,7 @@ export const getTemplate = async (path: string, data?: any) => {
         ...data,
       }
     );
-
     const inliner = new CSSInliner();
-
     return await inliner.inlineCSSAsync(html);
   } catch (ex) {
     throw ex;

@@ -1,6 +1,8 @@
 import { Schema } from 'mongoose';
+import { Expo } from 'expo-server-sdk';
 
 import Event, { IEvent } from '../models/Event';
+import { getAllMembers } from './member';
 
 export const getAllEvents = async () => {
   try {
@@ -61,6 +63,43 @@ export const attendEvent = async (
       }
     }
     return await event.save();
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const sendNotification = async (event: IEvent) => {
+  try {
+    const messages = [];
+    const members = await getAllMembers();
+
+    let expo = new Expo();
+
+    members.forEach(member => {
+      if (member.expoPushToken) {
+        messages.push({
+          to: member.expoPushToken,
+          sound: 'default',
+          title: "S'ha publicat un nou event!",
+          body: event.name,
+          data: {
+            route: 'Events',
+            params: {
+              screen: 'EventDetails',
+              params: {
+                event: event,
+              },
+            },
+          },
+        });
+      }
+    });
+
+    const chunks = expo.chunkPushNotifications(messages);
+
+    for (let chunk of chunks) {
+      await expo.sendPushNotificationsAsync(chunk);
+    }
   } catch (ex) {
     throw ex;
   }

@@ -5,7 +5,9 @@ import {
   attendEvent,
   getById,
   getPagedEvents,
+  sendNotification,
 } from '../services/event';
+
 import checkForErrors from '../utils/ErrorThrowing';
 
 export const index = async (req, res, next) => {
@@ -31,7 +33,9 @@ export const show = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    res.status(201).json(await createEvent({ ...req.body }));
+    const event = await createEvent({ ...req.body });
+    sendNotification(event);
+    res.status(201).json(event);
   } catch (ex) {
     next(ex);
   }

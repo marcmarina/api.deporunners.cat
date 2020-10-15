@@ -6,7 +6,7 @@ import { getAllMembers } from './member';
 
 export const getAllEvents = async () => {
   try {
-    return await Event.find();
+    return await Event.find().sort({ createdAt: 'desc', name: 'asc' });
   } catch (ex) {
     throw ex;
   }
@@ -15,6 +15,7 @@ export const getAllEvents = async () => {
 export const getPagedEvents = async (page: number, perPage: number) => {
   try {
     return await Event.find()
+      .sort({ createdAt: 'desc', name: 'asc' })
       .skip((page - 1) * perPage)
       .limit(perPage);
   } catch (ex) {

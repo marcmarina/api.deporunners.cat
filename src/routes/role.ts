@@ -2,6 +2,7 @@ import { Router } from 'express';
 
 import { getAllRoles } from '../services/role';
 import * as RoleController from '../controllers/role';
+import mailService, { getTemplate } from '../mail/mailService';
 
 const router = Router();
 

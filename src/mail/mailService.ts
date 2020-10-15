@@ -3,7 +3,7 @@ import sendgridTransport from 'nodemailer-sendgrid-transport';
 import dotenv from 'dotenv';
 import pug from 'pug';
 import pathNode from 'path';
-import inlineCss from 'inline-css';
+import CSSInliner from 'css-inliner';
 
 dotenv.config();
 
@@ -16,15 +16,20 @@ const transporter = nodemailer.createTransport(
 );
 
 export const getTemplate = async (path: string, data?: any) => {
-  const html = pug.renderFile(
-    pathNode.resolve(`${__dirname}\\..\\..\\public\\emails\\${path}`),
-    {
-      ...data,
-    }
-  );
-  return await inlineCss(html, {
-    url: '/',
-  });
+  try {
+    const html = pug.renderFile(
+      pathNode.resolve(`${__dirname}\\..\\..\\public\\emails\\${path}`),
+      {
+        ...data,
+      }
+    );
+
+    const inliner = new CSSInliner();
+
+    return await inliner.inlineCSSAsync(html);
+  } catch (ex) {
+    throw ex;
+  }
 };
 
 export default transporter;

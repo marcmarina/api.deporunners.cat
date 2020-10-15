@@ -156,3 +156,21 @@ export const updatePassword = async (
     throw ex;
   }
 };
+
+export const registerToken = async (memberId: string, token: string) => {
+  try {
+    const member = await Member.findById(memberId);
+
+    if (!member)
+      throw {
+        status: 404,
+        message: 'The member id is not valid',
+      };
+
+    member.expoPushToken = token;
+
+    return await member.save();
+  } catch (ex) {
+    throw ex;
+  }
+};

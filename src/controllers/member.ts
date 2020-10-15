@@ -9,6 +9,7 @@ import {
   loginCredentials,
   updatePassword,
   sendSignupEmail,
+  registerToken,
 } from '../services/member';
 import checkForErrors from '../utils/ErrorThrowing';
 
@@ -108,6 +109,16 @@ export const signupSecret = async (req, res, next) => {
     });
 
     res.status(200).json({ clientSecret: intent.client_secret });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const expoToken = async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    const { userId } = req;
+    res.status(200).json(await registerToken(userId, token));
   } catch (ex) {
     next(ex);
   }

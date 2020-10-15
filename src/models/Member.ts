@@ -12,6 +12,7 @@ export interface IMember extends Document {
   address: IAddress;
   refreshToken?: string;
   passwordResetToken?: string;
+  expoPushToken?: string;
 }
 
 export interface IAddress {
@@ -67,6 +68,7 @@ const memberSchema = new Schema({
   },
   refreshToken: String,
   passwordResetToken: String,
+  expoPushToken: String,
 });
 
 const populateData = function (this: IMember, next: any) {

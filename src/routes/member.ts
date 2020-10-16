@@ -11,7 +11,6 @@ import {
 const router = Router();
 
 router.post('/login', memberLogin, MemberController.login);
-router.post('/signup/:id/email', MemberController.signupEmail);
 router.post('', createMember, MemberController.create);
 router.post('/expoPushToken', auth, MemberController.expoToken);
 

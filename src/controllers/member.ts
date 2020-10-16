@@ -1,4 +1,5 @@
 import Stripe from 'stripe';
+import eventEmitter from '../events/EventEmitter';
 
 import {
   createMember,
@@ -19,16 +20,9 @@ export const create = async (req, res, next) => {
 
     const result = await createMember({ ...req.body });
 
-    res.status(201).json(result);
-  } catch (ex) {
-    next(ex);
-  }
-};
+    eventEmitter.emit('memberSignup', result._id);
 
-export const signupEmail = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-    res.status(200).json(await sendSignupEmail(id));
+    res.status(201).json(result);
   } catch (ex) {
     next(ex);
   }

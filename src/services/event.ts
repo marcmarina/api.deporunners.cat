@@ -25,7 +25,13 @@ export const getPagedEvents = async (page: number, perPage: number) => {
 
 export const getById = async (id: Schema.Types.ObjectId) => {
   try {
-    return await Event.findById(id);
+    const event = await Event.findById(id);
+    if (!event)
+      throw {
+        status: 404,
+        message: 'Event id not valid',
+      };
+    return event;
   } catch (ex) {
     throw ex;
   }

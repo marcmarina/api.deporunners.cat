@@ -2,7 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
+
+import 'dotenv/config';
 
 import UserRoutes from './routes/user';
 import RoleRoutes from './routes/role';
@@ -10,8 +11,6 @@ import MemberRoutes from './routes/member';
 import TownRoutes from './routes/town';
 import TShirtSizeRoutes from './routes/tshirtSize';
 import EventRoutes from './routes/event';
-
-dotenv.config();
 
 const app = express();
 
@@ -53,11 +52,7 @@ app.use('/event', EventRoutes);
 
 app.use((error, req, res, next) => {
   const status = error.status || 500;
-  const result = {
-    status: status,
-    errors: error.errors || [{ msg: error.message }],
-  };
-  res.status(status).json(result);
+  res.status(status).json(error);
 });
 
 mongoose

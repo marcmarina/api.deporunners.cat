@@ -1,11 +1,10 @@
 import nodemailer from 'nodemailer';
 import sendgridTransport from 'nodemailer-sendgrid-transport';
-import dotenv from 'dotenv';
 import pug from 'pug';
 import pathNode from 'path';
 import CSSInliner from 'css-inliner';
 
-dotenv.config();
+import 'dotenv/config';
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({

@@ -1,3 +1,4 @@
+import eventEmitter from '../events/EventEmitter';
 import {
   createEvent,
   getAllEvents,
@@ -5,7 +6,6 @@ import {
   attendEvent,
   getById,
   getPagedEvents,
-  sendNotification,
 } from '../services/event';
 
 import checkForErrors from '../utils/ErrorThrowing';
@@ -34,7 +34,9 @@ export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
     const event = await createEvent({ ...req.body });
-    sendNotification(event);
+
+    eventEmitter.emit('newEvent', event);
+
     res.status(201).json(event);
   } catch (ex) {
     next(ex);

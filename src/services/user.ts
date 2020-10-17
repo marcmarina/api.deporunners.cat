@@ -1,7 +1,9 @@
 import bcrypt from 'bcrypt';
+import { create } from 'domain';
 import jwt from 'jsonwebtoken';
 
 import User, { IUser } from '../models/User';
+import { generateToken } from '../utils/Utils';
 
 export const getAllUsers = async (): Promise<IUser[]> => {
   return await User.find();
@@ -18,12 +20,9 @@ export const createUser = async (user: IUser): Promise<IUser> => {
   }
 };
 
-export const loginWithEmail = async (
-  email: string,
-  password: string
-): Promise<string> => {
+export const loginWithEmail = async (email: string, password: string) => {
   try {
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
 
     if (!user) {
       const error = {
@@ -41,14 +40,25 @@ export const loginWithEmail = async (
       };
       throw error;
     }
+
+    if (!user.refreshToken) {
+      user = await createSessionToken(user);
+    }
+
     const token = jwt.sign(
       {
         ...user.toObject(),
       },
-      process.env.APP_SECRET_KEY
+      process.env.APP_SECRET_KEY,
+      {
+        expiresIn: 900,
+      }
     );
 
-    return token;
+    return {
+      authToken: token,
+      refreshToken: user.refreshToken,
+    };
   } catch (ex) {
     throw ex;
   }
@@ -75,6 +85,16 @@ export const updatePassword = async (
       };
 
     user.password = await bcrypt.hash(newPassword, 12);
+    return await user.save();
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+const createSessionToken = async (user: IUser) => {
+  try {
+    const refreshToken = await generateToken(64);
+    user.refreshToken = refreshToken;
     return await user.save();
   } catch (ex) {
     throw ex;

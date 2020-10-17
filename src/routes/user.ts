@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 import * as UserController from '../controllers/user';
+import auth from '../middleware/auth';
 
 const router = Router();
 
@@ -24,6 +25,7 @@ router.patch('/changePassword/:id', UserController.changePassword);
 router.post(
   '',
   [
+    auth,
     check('email')
       .trim()
       .isEmail()

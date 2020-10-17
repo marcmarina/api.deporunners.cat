@@ -15,7 +15,17 @@ import EventRoutes from './routes/event';
 const app = express();
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(
+  cors({
+    allowedHeaders: [
+      'Content-Type',
+      'x-auth-token',
+      'x-refresh-token',
+      'x-api-token',
+    ],
+    exposedHeaders: ['x-auth-token', 'x-refresh-token'],
+  })
+);
 
 app.get('/', (req, res, next) => {
   const response = require('../package.json');
@@ -25,7 +35,7 @@ app.get('/', (req, res, next) => {
 
 app.use((req, res, next) => {
   try {
-    const apiToken = req.get('api-token');
+    const apiToken = req.get('x-api-token');
     if (!apiToken) {
       throw {
         status: 401,

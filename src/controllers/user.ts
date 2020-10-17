@@ -21,8 +21,11 @@ export const login = async (req, res, next) => {
     checkForErrors(req);
 
     const { email, password } = req.body;
-    const result = await loginWithEmail(email, password);
-    res.status(200).json(result);
+    const { refreshToken, authToken } = await loginWithEmail(email, password);
+    res.set({
+      'x-refresh-token': refreshToken,
+    });
+    res.status(200).json(authToken);
   } catch (ex) {
     next(ex);
   }

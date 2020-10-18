@@ -2,6 +2,7 @@ import User from '../models/User';
 import {
   createUser,
   getAllUsers,
+  getSelfInfo,
   loginWithEmail,
   updatePassword,
 } from '../services/user';
@@ -58,6 +59,15 @@ export const changePassword = async (req, res, next) => {
     const { id } = req.params;
 
     res.status(200).json(await updatePassword(id, oldPassword, newPassword));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const self = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    res.status(200).json(await getSelfInfo(userId));
   } catch (ex) {
     next(ex);
   }

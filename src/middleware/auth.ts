@@ -14,10 +14,9 @@ export default async (req, res, next) => {
 
     const decodedToken = jwt.decode(token);
 
-    console.log(token);
-
     try {
       jwt.verify(token, process.env.APP_SECRET_KEY);
+      res.set({ 'x-auth-token': token });
     } catch (ex) {
       if (ex.name === 'TokenExpiredError') {
         try {
@@ -39,7 +38,6 @@ export default async (req, res, next) => {
       }
     }
 
-    res.set({ 'x-auth-token': token });
     req.userId = decodedToken['_id'];
 
     next();

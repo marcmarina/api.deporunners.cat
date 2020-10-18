@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import { create } from 'domain';
 import jwt from 'jsonwebtoken';
+import { Schema } from 'mongoose';
 
 import User, { IUser } from '../models/User';
 import { generateToken } from '../utils/Utils';
@@ -51,7 +52,7 @@ export const loginWithEmail = async (email: string, password: string) => {
       },
       process.env.APP_SECRET_KEY,
       {
-        expiresIn: 900,
+        expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
       }
     );
 
@@ -96,6 +97,14 @@ const createSessionToken = async (user: IUser) => {
     const refreshToken = await generateToken(64);
     user.refreshToken = refreshToken;
     return await user.save();
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const getSelfInfo = async (id: Schema.Types.ObjectId) => {
+  try {
+    return await User.findById(id);
   } catch (ex) {
     throw ex;
   }

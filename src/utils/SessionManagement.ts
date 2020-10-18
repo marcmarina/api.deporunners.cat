@@ -21,7 +21,7 @@ export const generateNewJWT = async (
         },
         process.env.APP_SECRET_KEY,
         {
-          expiresIn: 900,
+          expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
         }
       );
     } else {

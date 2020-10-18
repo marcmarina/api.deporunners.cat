@@ -6,6 +6,7 @@ import auth from '../middleware/auth';
 
 const router = Router();
 
+router.get('/self', auth, UserController.self);
 router.get('', UserController.index);
 
 router.post(

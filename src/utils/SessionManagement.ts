@@ -1,23 +1,27 @@
 import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
-import Member from '../models/Member';
-import User from '../models/User';
+import Member, { IMember } from '../models/Member';
+import User, { IUser } from '../models/User';
 
 export const generateNewJWT = async (
   id: string,
-  refreshToken: string
+  refreshToken: string,
+  modelName: string
 ): Promise<string> => {
   try {
-    let model: mongoose.Document;
+    let model: IMember | IUser;
 
-    model = await Member.findById(id);
+    if (modelName === 'Member') {
+      model = await Member.findById(id);
+    } else if (modelName === 'User') {
+      model = await User.findById(id);
+    }
 
-    if (!model) model = await User.findById(id);
-
-    if (model['refreshToken'] === refreshToken) {
+    if (model.refreshToken === refreshToken) {
       return jwt.sign(
         {
-          ...model.toObject(),
+          _id: model._id,
+          model: modelName,
         },
         process.env.APP_SECRET_KEY,
         {

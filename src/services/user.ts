@@ -48,7 +48,8 @@ export const loginWithEmail = async (email: string, password: string) => {
 
     const token = jwt.sign(
       {
-        ...user.toObject(),
+        _id: user._id,
+        model: 'User',
       },
       process.env.APP_SECRET_KEY,
       {

@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import { decode } from 'punycode';
 import { generateNewJWT } from '../utils/SessionManagement';
 
 export default async (req, res, next) => {
@@ -13,7 +14,6 @@ export default async (req, res, next) => {
     }
 
     const decodedToken = jwt.decode(token);
-
     try {
       jwt.verify(token, process.env.APP_SECRET_KEY);
       res.set({ 'x-auth-token': token });
@@ -22,7 +22,8 @@ export default async (req, res, next) => {
         try {
           const newToken = await generateNewJWT(
             decodedToken['_id'],
-            refreshToken
+            refreshToken,
+            decodedToken['model']
           );
           res.set({
             'x-auth-token': newToken,

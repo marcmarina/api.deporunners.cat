@@ -1,12 +1,13 @@
 import jwt from 'jsonwebtoken';
-import mongoose from 'mongoose';
 import Member, { IMember } from '../models/Member';
 import User, { IUser } from '../models/User';
+
+type ModelName = 'User' | 'Member';
 
 export const generateNewJWT = async (
   id: string,
   refreshToken: string,
-  modelName: string
+  modelName: ModelName
 ): Promise<string> => {
   try {
     let model: IMember | IUser;
@@ -18,16 +19,7 @@ export const generateNewJWT = async (
     }
 
     if (model.refreshToken === refreshToken) {
-      return jwt.sign(
-        {
-          _id: model._id,
-          model: modelName,
-        },
-        process.env.APP_SECRET_KEY,
-        {
-          expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
-        }
-      );
+      return signJWT({ _id: model._id }, modelName);
     } else {
       throw {
         status: 401,
@@ -37,4 +29,17 @@ export const generateNewJWT = async (
   } catch (ex) {
     throw ex;
   }
+};
+
+export const signJWT = (data: any, modelName: ModelName) => {
+  return jwt.sign(
+    {
+      ...data,
+      model: modelName,
+    },
+    process.env.APP_SECRET_KEY,
+    {
+      expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
+    }
+  );
 };

@@ -15,6 +15,7 @@ router.post('', createMember, MemberController.create);
 router.post('/expoPushToken', auth, MemberController.expoToken);
 
 router.get('/signup/secret', MemberController.signupSecret);
+router.get('/self', auth, MemberController.self);
 router.get('', MemberController.index);
 router.get('/:id', MemberController.find);
 

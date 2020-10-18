@@ -68,7 +68,14 @@ export const login = async (req, res, next) => {
   try {
     checkForErrors(req);
     const { username, password } = req.body;
-    res.status(200).json(await loginCredentials(username, password));
+    const { authToken, refreshToken } = await loginCredentials(
+      username,
+      password
+    );
+    res.set({
+      'x-refresh-token': refreshToken,
+    });
+    res.status(200).json(authToken);
   } catch (ex) {
     next(ex);
   }
@@ -113,6 +120,15 @@ export const expoToken = async (req, res, next) => {
     const { token } = req.body;
     const { userId } = req;
     res.status(200).json(await registerToken(userId, token));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const self = async (req, res, next) => {
+  try {
+    const { userId } = req;
+    res.status(200).json(await findMemberById(userId));
   } catch (ex) {
     next(ex);
   }

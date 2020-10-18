@@ -2,7 +2,7 @@ import User from '../models/User';
 import {
   createUser,
   getAllUsers,
-  getSelfInfo,
+  findUserById,
   loginWithEmail,
   updatePassword,
 } from '../services/user';
@@ -67,7 +67,7 @@ export const changePassword = async (req, res, next) => {
 export const self = async (req, res, next) => {
   try {
     const { userId } = req;
-    res.status(200).json(await getSelfInfo(userId));
+    res.status(200).json(await findUserById(userId));
   } catch (ex) {
     next(ex);
   }

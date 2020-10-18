@@ -1,13 +1,24 @@
 import bcrypt from 'bcrypt';
-import { create } from 'domain';
-import jwt from 'jsonwebtoken';
 import { Schema } from 'mongoose';
 
 import User, { IUser } from '../models/User';
+import { signJWT } from '../utils/SessionManagement';
 import { generateToken } from '../utils/Utils';
 
 export const getAllUsers = async (): Promise<IUser[]> => {
-  return await User.find();
+  try {
+    return await User.find();
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const findUserById = async (id: Schema.Types.ObjectId) => {
+  try {
+    return await User.findById(id);
+  } catch (ex) {
+    throw ex;
+  }
 };
 
 export const createUser = async (user: IUser): Promise<IUser> => {
@@ -46,16 +57,7 @@ export const loginWithEmail = async (email: string, password: string) => {
       user = await createSessionToken(user);
     }
 
-    const token = jwt.sign(
-      {
-        _id: user._id,
-        model: 'User',
-      },
-      process.env.APP_SECRET_KEY,
-      {
-        expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
-      }
-    );
+    const token = signJWT({ _id: user._id }, 'User');
 
     return {
       authToken: token,
@@ -98,14 +100,6 @@ const createSessionToken = async (user: IUser) => {
     const refreshToken = await generateToken(64);
     user.refreshToken = refreshToken;
     return await user.save();
-  } catch (ex) {
-    throw ex;
-  }
-};
-
-export const getSelfInfo = async (id: Schema.Types.ObjectId) => {
-  try {
-    return await User.findById(id);
   } catch (ex) {
     throw ex;
   }

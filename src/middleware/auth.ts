@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken';
-import { decode } from 'punycode';
 import { generateNewJWT } from '../utils/SessionManagement';
 
 export default async (req, res, next) => {

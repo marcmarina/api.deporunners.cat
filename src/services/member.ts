@@ -1,9 +1,28 @@
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
 import { Schema } from 'mongoose';
 
 import mailService, { getTemplate } from '../mail/mailService';
 import Member, { IMember } from '../models/Member';
+import { signJWT } from '../utils/SessionManagement';
+import { generateToken } from '../utils/Utils';
+
+export const getAllMembers = async () => {
+  try {
+    const members = await Member.find();
+    return members;
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+export const findMemberById = async (id: string) => {
+  try {
+    const member = await Member.findOne({ _id: id });
+    return member;
+  } catch (ex) {
+    throw ex;
+  }
+};
 
 export const createMember = async (member: IMember): Promise<IMember> => {
   try {
@@ -45,24 +64,6 @@ export const sendSignupEmail = async (id: Schema.Types.ObjectId) => {
   }
 };
 
-export const getAllMembers = async () => {
-  try {
-    const members = await Member.find();
-    return members;
-  } catch (ex) {
-    throw ex;
-  }
-};
-
-export const findMemberById = async (id: string) => {
-  try {
-    const member = await Member.findOne({ _id: id });
-    return member;
-  } catch (ex) {
-    throw ex;
-  }
-};
-
 export const deleteById = async (id: string) => {
   try {
     return await Member.findByIdAndDelete(id);
@@ -79,10 +80,7 @@ export const update = async (member: IMember) => {
   }
 };
 
-export const loginCredentials = async (
-  username: string,
-  password: string
-): Promise<string> => {
+export const loginCredentials = async (username: string, password: string) => {
   try {
     let member: IMember;
 
@@ -117,14 +115,16 @@ export const loginCredentials = async (
       throw error;
     }
 
-    const token = jwt.sign(
-      {
-        ...member.toObject(),
-      },
-      process.env.APP_SECRET_KEY
-    );
+    if (!member.refreshToken) {
+      member = await createSessionToken(member);
+    }
 
-    return token;
+    const token = signJWT({ _id: member._id }, 'Member');
+
+    return {
+      authToken: token,
+      refreshToken: member.refreshToken,
+    };
   } catch (ex) {
     throw ex;
   }
@@ -170,6 +170,16 @@ export const registerToken = async (memberId: string, token: string) => {
     member.expoPushToken = token;
 
     return await member.save();
+  } catch (ex) {
+    throw ex;
+  }
+};
+
+const createSessionToken = async (mebmer: IMember) => {
+  try {
+    const refreshToken = await generateToken(64);
+    mebmer.refreshToken = refreshToken;
+    return await mebmer.save();
   } catch (ex) {
     throw ex;
   }

@@ -21,7 +21,7 @@ router.get('/:id', MemberController.find);
 
 router.delete('/:id', auth, MemberController.destroy);
 
-router.patch('/changePassword/:id', auth, MemberController.changePassword);
+router.patch('/changepassword', auth, MemberController.changePassword);
 
 router.put('', auth, updateMember, MemberController.put);
 

@@ -86,9 +86,11 @@ export const changePassword = async (req, res, next) => {
     checkForErrors(req);
 
     const { oldPassword, newPassword } = req.body;
-    const { id } = req.params;
+    const { userId } = req;
 
-    res.status(200).json(await updatePassword(id, oldPassword, newPassword));
+    res
+      .status(200)
+      .json(await updatePassword(userId, oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }

@@ -52,34 +52,38 @@ export const attendEvent = async (
 };
 
 export const sendNotification = async (event: IEvent) => {
-  const messages = [];
-  const members = await getAllMembers();
+  try {
+    const messages = [];
+    const members = await getAllMembers();
 
-  const expo = new Expo();
+    const expo = new Expo();
 
-  members.forEach(member => {
-    if (member.expoPushToken) {
-      messages.push({
-        to: member.expoPushToken,
-        sound: 'default',
-        title: "S'ha publicat un nou event!",
-        body: event.name,
-        data: {
-          route: 'Events',
-          params: {
-            screen: 'EventDetails',
+    members.forEach(member => {
+      if (member.expoPushToken) {
+        messages.push({
+          to: member.expoPushToken,
+          sound: 'default',
+          title: "S'ha publicat un nou event!",
+          body: event.name,
+          data: {
+            route: 'Events',
             params: {
-              event: event,
+              screen: 'EventDetails',
+              params: {
+                event: event,
+              },
             },
           },
-        },
-      });
+        });
+      }
+    });
+
+    const chunks = expo.chunkPushNotifications(messages);
+
+    for (const chunk of chunks) {
+      await expo.sendPushNotificationsAsync(chunk);
     }
-  });
-
-  const chunks = expo.chunkPushNotifications(messages);
-
-  for (const chunk of chunks) {
-    await expo.sendPushNotificationsAsync(chunk);
+  } catch (ex) {
+    console.log('Error sending notifications!', ex);
   }
 };

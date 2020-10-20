@@ -4,8 +4,8 @@
   "main": "build/index.js",
   "scripts": {
     "start": "node build/index.js",
+    "dev": "tsc-watch --onSuccess \"yarn serve\"",
     "serve": "eslint . --ext .ts && node --trace-deprecation --trace-warnings ./build/index.js",
-    "dev": "tsc-watch --onSuccess \"npm run serve\"",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
     "seed": "npx ts-node seed.ts",

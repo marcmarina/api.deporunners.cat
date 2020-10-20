@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -27,7 +27,7 @@ app.use(
   })
 );
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
   const response = require('../package.json');
   delete response['repository'];
   res.status(200).json(response);
@@ -60,9 +60,9 @@ app.use('/town', TownRoutes);
 app.use('/tshirtsize', TShirtSizeRoutes);
 app.use('/event', EventRoutes);
 
-app.use((error, req, res, next) => {
-  const status = error.status || 500;
-  res.status(status).json(error);
+app.use((error, req: Request, res: Response) => {
+  const status = error['status'] || 500;
+  return res.status(status).json(error);
 });
 
 mongoose
@@ -71,7 +71,7 @@ mongoose
     useUnifiedTopology: true,
     useCreateIndex: true,
   })
-  .then(result => {
+  .then(() => {
     app.listen(process.env.PORT || 8080);
   })
   .catch(err => console.log(err));

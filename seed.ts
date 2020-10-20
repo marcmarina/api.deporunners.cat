@@ -145,8 +145,8 @@ async function seed() {
 
   const users = [];
   for (let i = 0; i < userCount; i++) {
-    let { _id: roleId } = await Role.findOne();
-    let user = new User({
+    const { _id: roleId } = await Role.findOne();
+    const user = new User({
       ...userTemplate,
       email: `john${i > 0 ? i + 1 : ''}@doe.com`,
       role: roleId,

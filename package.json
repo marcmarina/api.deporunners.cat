@@ -4,10 +4,12 @@
   "main": "build/index.js",
   "scripts": {
     "start": "node build/index.js",
-    "dev": "tsc-watch --onSuccess \"node --trace-deprecation --trace-warnings ./build/index.js\"",
+    "serve": "eslint . --ext .ts && node --trace-deprecation --trace-warnings ./build/index.js",
+    "dev": "tsc-watch --onSuccess \"npm run serve\"",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "seed": "npx ts-node seed.ts"
+    "seed": "npx ts-node seed.ts",
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [],
   "author": "",
@@ -24,10 +26,12 @@
     "@types/pug": "^2.0.4",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
+    "concurrently": "^5.3.0",
     "eslint": "^7.11.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.1",
     "faker": "^5.1.0",
+    "nodemon": "^2.0.6",
     "tsc-watch": "^4.2.9",
     "typescript": "^3.9.6"
   },

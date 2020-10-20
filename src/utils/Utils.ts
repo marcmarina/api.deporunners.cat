@@ -11,7 +11,7 @@ export const generateToken = (size: number): Promise<string> => {
 };
 
 export const mapToJSON = (map: Map<any, any>) => {
-  let obj = {};
+  const obj = {};
   map.forEach((value, key) => {
     obj[key] = value;
   });

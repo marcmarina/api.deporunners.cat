@@ -9,25 +9,21 @@ export const generateNewJWT = async (
   refreshToken: string,
   modelName: ModelName
 ): Promise<string> => {
-  try {
-    let model: IMember | IUser;
+  let model: IMember | IUser;
 
-    if (modelName === 'Member') {
-      model = await Member.findById(id);
-    } else if (modelName === 'User') {
-      model = await User.findById(id);
-    }
+  if (modelName === 'Member') {
+    model = await Member.findById(id);
+  } else if (modelName === 'User') {
+    model = await User.findById(id);
+  }
 
-    if (model.refreshToken === refreshToken) {
-      return signJWT({ _id: model._id }, modelName);
-    } else {
-      throw {
-        status: 401,
-        message: 'Refresh token not valid',
-      };
-    }
-  } catch (ex) {
-    throw ex;
+  if (model.refreshToken === refreshToken) {
+    return signJWT({ _id: model._id }, modelName);
+  } else {
+    throw {
+      status: 401,
+      message: 'Refresh token not valid',
+    };
   }
 };
 

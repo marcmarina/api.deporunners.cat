@@ -18,18 +18,14 @@ export default async (req, res, next) => {
       res.set({ 'x-auth-token': token });
     } catch (ex) {
       if (ex.name === 'TokenExpiredError') {
-        try {
-          const newToken = await generateNewJWT(
-            decodedToken['_id'],
-            refreshToken,
-            decodedToken['model']
-          );
-          res.set({
-            'x-auth-token': newToken,
-          });
-        } catch (ex) {
-          throw ex;
-        }
+        const newToken = await generateNewJWT(
+          decodedToken['_id'],
+          refreshToken,
+          decodedToken['model']
+        );
+        res.set({
+          'x-auth-token': newToken,
+        });
       } else {
         throw {
           ...ex,

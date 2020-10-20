@@ -9,7 +9,6 @@ import {
   update,
   loginCredentials,
   updatePassword,
-  sendSignupEmail,
   registerToken,
 } from '../services/member';
 import checkForErrors from '../utils/ErrorThrowing';

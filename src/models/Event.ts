@@ -1,5 +1,4 @@
 import { Schema, Document, model } from 'mongoose';
-import { IMember } from './Member';
 
 export interface IEvent extends Document {
   name: string;

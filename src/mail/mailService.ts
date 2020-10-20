@@ -15,18 +15,14 @@ const transporter = nodemailer.createTransport(
 );
 
 export const getTemplate = async (path: string, data?: any) => {
-  try {
-    const html = pug.renderFile(
-      pathNode.resolve(`${__dirname}\\..\\..\\public\\emails\\${path}`),
-      {
-        ...data,
-      }
-    );
-    const inliner = new CSSInliner();
-    return await inliner.inlineCSSAsync(html);
-  } catch (ex) {
-    throw ex;
-  }
+  const html = pug.renderFile(
+    pathNode.resolve(`${__dirname}\\..\\..\\public\\emails\\${path}`),
+    {
+      ...data,
+    }
+  );
+  const inliner = new CSSInliner();
+  return inliner.inlineCSSAsync(html);
 };
 
 export default transporter;

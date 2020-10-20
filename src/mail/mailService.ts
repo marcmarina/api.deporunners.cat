@@ -19,7 +19,7 @@ const transporter = nodemailer.createTransport(
 
 export const getTemplate = async (path: string, data?: any) => {
   const html = pug.renderFile(
-    pathNode.resolve(`${__dirname}\\..\\..\\public\\emails\\${path}`),
+    pathNode.resolve(`${process.cwd()}\\public\\emails\\${path}`),
     {
       ...data,
     }

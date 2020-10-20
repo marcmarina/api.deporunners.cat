@@ -38,7 +38,6 @@ export const sendSignupEmail = async (id: Schema.Types.ObjectId) => {
 
   return mailService.sendMail({
     to: member.email,
-    from: 'marc.marina.miravitlles@gmail.com',
     subject: 'Benvingut/da a Deporunners!',
     html: await getTemplate('member/newMember.pug', {
       member: {

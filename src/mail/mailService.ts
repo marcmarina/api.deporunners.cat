@@ -11,7 +11,10 @@ const transporter = nodemailer.createTransport(
     auth: {
       api_key: process.env.SENDGRID_API_KEY,
     },
-  })
+  }),
+  {
+    from: process.env.EMAIL_FROM,
+  }
 );
 
 export const getTemplate = async (path: string, data?: any) => {

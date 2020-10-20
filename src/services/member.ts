@@ -23,7 +23,7 @@ export const createMember = async (member: IMember): Promise<IMember> => {
   const highestMemberNum = await Member.findOne({}).sort('-numMember');
   member.numMember = highestMemberNum ? highestMemberNum.numMember + 1 : 1;
 
-  const newMember = new Member({ ...member });
+  const newMember = new Member(member);
 
   return newMember.save();
 };
@@ -138,8 +138,8 @@ export const registerToken = async (memberId: string, token: string) => {
   return member.save();
 };
 
-const createSessionToken = async (mebmer: IMember) => {
+const createSessionToken = async (member: IMember) => {
   const refreshToken = await generateToken(64);
-  mebmer.refreshToken = refreshToken;
-  return mebmer.save();
+  member.refreshToken = refreshToken;
+  return member.save();
 };

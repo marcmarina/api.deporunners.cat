@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
@@ -60,9 +60,9 @@ app.use('/town', TownRoutes);
 app.use('/tshirtsize', TShirtSizeRoutes);
 app.use('/event', EventRoutes);
 
-app.use((error, req: Request, res: Response) => {
+app.use((error, req, res, next) => {
   const status = error['status'] || 500;
-  return res.status(status).json(error);
+  res.status(status).json(error);
 });
 
 mongoose

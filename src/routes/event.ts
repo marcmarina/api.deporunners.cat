@@ -1,8 +1,6 @@
-import { EventEmitter } from 'events';
 import { Router } from 'express';
 
 import * as EventController from '../controllers/event';
-import eventEmitter from '../events/EventEmitter';
 import auth from '../middleware/auth';
 import { fullEvent } from '../validators/EndpointValidators';
 

@@ -1,4 +1,5 @@
 import eventEmitter from '../events/EventEmitter';
+import { IEvent } from '../models/Event';
 import {
   createEvent,
   getAllEvents,
@@ -12,10 +13,12 @@ import checkForErrors from '../utils/ErrorThrowing';
 
 export const index = async (req, res, next) => {
   try {
-    let events;
-    if (req.query.page)
+    let events: IEvent[];
+    if (req.query.page) {
       events = await getPagedEvents(req.query.page, parseInt(req.query.limit));
-    else events = await getAllEvents();
+    } else {
+      events = await getAllEvents();
+    }
     res.status(200).json(events);
   } catch (ex) {
     next(ex);

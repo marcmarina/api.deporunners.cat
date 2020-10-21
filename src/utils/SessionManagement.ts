@@ -17,6 +17,13 @@ export const generateNewJWT = async (
     model = await User.findById(id);
   }
 
+  if (!model) {
+    throw {
+      status: 401,
+      message: 'Model id invalid',
+    };
+  }
+
   if (model.refreshToken === refreshToken) {
     return signJWT({ _id: model._id }, modelName);
   } else {

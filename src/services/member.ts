@@ -7,12 +7,16 @@ import { signJWT } from '../utils/SessionManagement';
 import { generateToken } from '../utils/Utils';
 
 export const getAllMembers = async () => {
-  const members = await Member.find();
-  return members;
+  return Member.find();
 };
 
 export const findMemberById = async (id: string) => {
   const member = await Member.findOne({ _id: id });
+  if (!member)
+    throw {
+      status: 404,
+      message: 'Member id invalid',
+    };
   return member;
 };
 

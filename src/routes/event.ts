@@ -6,7 +6,7 @@ import { fullEvent } from '../validators/EndpointValidators';
 
 const router = Router();
 
-router.get('', EventController.index);
+router.get('', auth, EventController.index);
 
 router.get('/:id', EventController.show);
 

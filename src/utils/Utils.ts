@@ -17,3 +17,6 @@ export const mapToJSON = (map: Map<any, any>) => {
   });
   return obj;
 };
+
+export const paginateArray = (arr: any[], page: number, pageSize: number) =>
+  arr.slice((page - 1) * pageSize, page * pageSize);

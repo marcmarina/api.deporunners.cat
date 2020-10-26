@@ -33,25 +33,25 @@ app.get('/', (req, res) => {
   return res.status(200).json(response);
 });
 
-app.use((req, res, next) => {
-  try {
-    const apiToken = req.get('x-api-token');
-    if (!apiToken) {
-      throw {
-        status: 401,
-        message: 'No API Token provided',
-      };
-    } else if (apiToken !== process.env.API_TOKEN) {
-      throw {
-        status: 401,
-        message: 'API Token is not valid',
-      };
-    }
-    next();
-  } catch (ex) {
-    next(ex);
-  }
-});
+// app.use((req, res, next) => {
+//   try {
+//     const apiToken = req.get('x-api-token');
+//     if (!apiToken) {
+//       throw {
+//         status: 401,
+//         message: 'No API Token provided',
+//       };
+//     } else if (apiToken !== process.env.API_TOKEN) {
+//       throw {
+//         status: 401,
+//         message: 'API Token is not valid',
+//       };
+//     }
+//     next();
+//   } catch (ex) {
+//     next(ex);
+//   }
+// });
 
 app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);
@@ -59,6 +59,10 @@ app.use('/member', MemberRoutes);
 app.use('/town', TownRoutes);
 app.use('/tshirtsize', TShirtSizeRoutes);
 app.use('/event', EventRoutes);
+
+app.use('/', (req, res, next) => {
+  res.status(404).send('Not Found');
+});
 
 app.use((error, req, res, next) => {
   console.log(error);

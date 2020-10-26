@@ -30,6 +30,7 @@
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.1",
     "faker": "^5.1.0",
+    "husky": "^4.3.0",
     "nodemon": "^2.0.6",
     "tsc-watch": "^4.2.9",
     "typescript": "^3.9.6"

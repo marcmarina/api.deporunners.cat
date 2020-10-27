@@ -3,37 +3,16 @@ import { Expo } from 'expo-server-sdk';
 
 import Event, { IEvent } from '../models/Event';
 import { getAllMembers } from './member';
-import { paginateArray } from '../utils/Utils';
 
 export const getAllEvents = async () => {
   return Event.find().sort({ createdAt: 'desc', name: 'asc' });
 };
 
-export const getPagedEvents = async (
-  page: number,
-  perPage: number,
-  memberId?: Schema.Types.ObjectId
-) => {
-  const fetchedEvents = await getAllEvents();
-
-  let events = fetchedEvents;
-
-  if (memberId) {
-    events = fetchedEvents.sort((a, b) => {
-      if (a.members.includes(memberId) && !b.members.includes(memberId)) {
-        return -1;
-      } else if (
-        !a.members.includes(memberId) &&
-        b.members.includes(memberId)
-      ) {
-        return 1;
-      } else {
-        return 0;
-      }
-    });
-  }
-
-  return paginateArray(events, page, perPage);
+export const getPagedEvents = async (page: number, perPage: number) => {
+  return Event.find()
+    .sort({ createdAt: 'desc', name: 'asc' })
+    .skip((page - 1) * perPage)
+    .limit(perPage);
 };
 
 export const getById = async (id: Schema.Types.ObjectId) => {

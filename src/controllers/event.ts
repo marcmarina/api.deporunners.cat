@@ -17,8 +17,7 @@ export const index = async (req, res, next) => {
     if (req.query.page) {
       events = await getPagedEvents(
         req.query.page,
-        parseInt(req.query.limit),
-        req.userId
+        parseInt(req.query.limit)
       );
     } else {
       events = await getAllEvents();

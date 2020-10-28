@@ -1,10 +1,10 @@
 import bcrypt from 'bcrypt';
 import { Schema } from 'mongoose';
 
-import mailService, { getTemplate } from '../mail/mailService';
+import mailService from '../mail/mailService';
 import Member, { IMember } from '../models/Member';
 import { signJWT } from '../utils/SessionManagement';
-import { generateToken } from '../utils/Utils';
+import { generateToken, getPugTemplate } from '../utils/Utils';
 
 export const getAllMembers = async () => {
   return Member.find();
@@ -43,7 +43,7 @@ export const sendSignupEmail = async (id: Schema.Types.ObjectId) => {
   return mailService.sendMail({
     to: member.email,
     subject: 'Benvingut/da a Deporunners!',
-    html: await getTemplate('member/newMember.pug', {
+    html: await getPugTemplate('emails/member/newMember.pug', {
       member: {
         dni: member.dni,
       },

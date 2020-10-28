@@ -11,7 +11,7 @@ import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
 import Event from './src/models/Event';
 
-import randomInt from './src/utils/RandomInt';
+import { randomInt } from './src/utils/Utils';
 
 dotenv.config();
 

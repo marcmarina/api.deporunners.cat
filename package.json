@@ -23,6 +23,7 @@
     "@types/node": "^14.0.14",
     "@types/nodemailer": "^6.4.0",
     "@types/pug": "^2.0.4",
+    "@types/serve-favicon": "^2.5.1",
     "@typescript-eslint/eslint-plugin": "^4.5.0",
     "@typescript-eslint/parser": "^4.5.0",
     "concurrently": "^5.3.0",
@@ -51,6 +52,7 @@
     "nodemailer": "^6.4.13",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "pug": "^3.0.0",
+    "serve-favicon": "^2.5.0",
     "stripe": "^8.111.0"
   }
 }

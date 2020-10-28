@@ -2,6 +2,8 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
+import favicon from 'serve-favicon';
+import path from 'path';
 
 import 'dotenv/config';
 
@@ -29,6 +31,8 @@ app.use(
     exposedHeaders: ['x-auth-token', 'x-refresh-token'],
   })
 );
+
+app.use(favicon(path.join(__dirname, '..', 'public', 'favicon.ico')));
 
 app.get('/', (req, res) => {
   const response = require('../package.json');

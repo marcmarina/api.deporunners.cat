@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+import Role from './Role';
 
 export interface IUser extends Document {
   name: string;
@@ -24,7 +25,7 @@ const userSchema = new Schema({
   },
   role: {
     type: Schema.Types.ObjectId,
-    ref: 'Role',
+    ref: Role,
   },
   refreshToken: String,
   passwordResetToken: String,

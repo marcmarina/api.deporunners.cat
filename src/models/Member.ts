@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+import Town from './Town';
 
 export interface IMember extends Document {
   numMember: number;
@@ -63,7 +64,7 @@ const memberSchema = new Schema({
     },
     town: {
       type: Schema.Types.ObjectId,
-      ref: 'Town',
+      ref: Town,
     },
   },
   refreshToken: String,

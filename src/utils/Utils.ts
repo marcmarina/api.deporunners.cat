@@ -2,6 +2,7 @@ import crypto from 'crypto';
 import pug from 'pug';
 import pathNode from 'path';
 import CSSInliner from 'css-inliner';
+import fs from 'fs';
 
 export const generateToken = (size: number): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -37,3 +38,9 @@ export const getPugTemplate = async (path: string, data?: any) => {
 
 export const randomInt = (min: number, max: number) =>
   Math.random() * (max - min + 1) + min;
+
+export const deleteFile = (filePath: string) => {
+  fs.unlink(filePath, err => {
+    if (err) throw err;
+  });
+};

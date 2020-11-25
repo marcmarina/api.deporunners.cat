@@ -56,3 +56,11 @@ export const fullEvent = [
   }),
   check('coordinates').isString().isLatLong(),
 ];
+
+export const fullClothing = [
+  check('name')
+    .isLength({ min: 4 })
+    .withMessage('The name has to be at least 4 characters long')
+    .trim(),
+  check('price').isNumeric().withMessage('The price has to be a number'),
+];

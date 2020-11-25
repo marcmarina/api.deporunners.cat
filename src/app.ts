@@ -4,8 +4,8 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import favicon from 'serve-favicon';
 import path from 'path';
-
 import 'dotenv/config';
+import multer from 'multer';
 
 import UserRoutes from './routes/user';
 import RoleRoutes from './routes/role';
@@ -18,6 +18,18 @@ import ClothingRoutes from './routes/clothing';
 import apiToken from './middleware/apiToken';
 
 const app = express();
+
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images');
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      `${new Date().toISOString().replace(/:/g, '-')}-${file.originalname}`
+    );
+  },
+});
 
 app.use(bodyParser.json());
 app.use(
@@ -41,6 +53,9 @@ app.get('/', (req, res) => {
 });
 
 app.use(apiToken);
+
+app.use(multer({ storage: fileStorage }).single('image'));
+app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);

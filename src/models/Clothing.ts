@@ -1,6 +1,13 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
 import TShirtSize from './TShirtSize';
+
+export interface IClothing extends Document {
+  name: string;
+  sizes: Schema.Types.ObjectId[];
+  image: string;
+  price: number;
+}
 
 const clothingSchema = new Schema({
   name: {
@@ -24,4 +31,4 @@ const clothingSchema = new Schema({
   },
 });
 
-export default model('Clothing', clothingSchema, 'clothes');
+export default model<IClothing>('Clothing', clothingSchema, 'clothes');

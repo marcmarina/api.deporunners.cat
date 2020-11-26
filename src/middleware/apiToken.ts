@@ -4,12 +4,12 @@ export default (req, res, next) => {
     if (!apiToken) {
       throw {
         status: 401,
-        message: 'No API Token provided',
+        msg: 'No API Token provided',
       };
     } else if (apiToken !== process.env.API_TOKEN) {
       throw {
         status: 401,
-        message: 'API Token is not valid',
+        msg: 'API Token is not valid',
       };
     }
     next();

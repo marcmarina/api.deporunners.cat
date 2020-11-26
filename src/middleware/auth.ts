@@ -8,7 +8,7 @@ export default async (req, res, next) => {
     if (!refreshToken || !token) {
       throw {
         status: 401,
-        message: 'Not authenticated',
+        msg: 'Not authenticated',
       };
     }
 

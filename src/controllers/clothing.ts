@@ -1,6 +1,5 @@
 import { createClothing, getAllClothing } from '../services/clothing';
 import checkForErrors from '../utils/ErrorThrowing';
-import { deleteFile } from '../utils/Utils';
 
 export const index = async (req, res, next) => {
   try {
@@ -13,12 +12,8 @@ export const index = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    const image = req.file;
-    res
-      .status(201)
-      .json(await createClothing({ ...req.body, image: image.filename }));
+    res.status(201).json(await createClothing({ ...req.body }));
   } catch (ex) {
-    deleteFile(req.file.path);
     next(ex);
   }
 };

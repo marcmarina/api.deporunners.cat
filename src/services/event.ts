@@ -20,7 +20,7 @@ export const getById = async (id: Schema.Types.ObjectId) => {
   if (!event)
     throw {
       status: 404,
-      message: 'Event id not valid',
+      msg: 'Event id not valid',
     };
   return event;
 };

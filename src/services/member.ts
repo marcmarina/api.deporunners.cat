@@ -15,7 +15,7 @@ export const findMemberById = async (id: string) => {
   if (!member)
     throw {
       status: 404,
-      message: 'Member id invalid',
+      msg: 'Member id invalid',
     };
   return member;
 };
@@ -37,7 +37,7 @@ export const sendSignupEmail = async (id: Schema.Types.ObjectId) => {
   if (!member)
     throw {
       status: 404,
-      message: 'Invalid member id',
+      msg: 'Invalid member id',
     };
 
   return mailService.sendMail({
@@ -68,7 +68,7 @@ export const loginCredentials = async (username: string, password: string) => {
     if (!member) {
       const error = {
         status: 400,
-        message: 'These credentials are invalid.',
+        msg: 'These credentials are invalid.',
       };
       throw error;
     }
@@ -77,7 +77,7 @@ export const loginCredentials = async (username: string, password: string) => {
     if (!member) {
       const error = {
         status: 400,
-        message: 'These credentials are invalid.',
+        msg: 'These credentials are invalid.',
       };
       throw error;
     }
@@ -88,7 +88,7 @@ export const loginCredentials = async (username: string, password: string) => {
   if (!validPassword) {
     const error = {
       status: 400,
-      message: 'These credentials are invalid.',
+      msg: 'These credentials are invalid.',
     };
     throw error;
   }
@@ -114,14 +114,14 @@ export const updatePassword = async (
   if (!member)
     throw {
       status: 400,
-      message: 'The member id is not valid',
+      msg: 'The member id is not valid',
     };
 
   const validPassword = await bcrypt.compare(oldPassword, member.password);
   if (!validPassword)
     throw {
       status: 400,
-      message: 'The old password is not valid',
+      msg: 'The old password is not valid',
     };
 
   member.password = await bcrypt.hash(newPassword, 12);
@@ -134,7 +134,7 @@ export const registerToken = async (memberId: string, token: string) => {
   if (!member)
     throw {
       status: 404,
-      message: 'The member id is not valid',
+      msg: 'The member id is not valid',
     };
 
   member.expoPushToken = token;

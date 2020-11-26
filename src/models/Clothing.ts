@@ -5,7 +5,7 @@ import TShirtSize from './TShirtSize';
 export interface IClothing extends Document {
   name: string;
   sizes: Schema.Types.ObjectId[];
-  image: string;
+  image?: string;
   price: number;
 }
 
@@ -23,7 +23,6 @@ const clothingSchema = new Schema({
   ],
   image: {
     type: String,
-    required: true,
   },
   price: {
     type: Number,

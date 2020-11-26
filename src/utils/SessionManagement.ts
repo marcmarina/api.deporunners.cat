@@ -20,7 +20,7 @@ export const generateNewJWT = async (
   if (!model) {
     throw {
       status: 401,
-      message: 'Model id invalid',
+      msg: 'Model id invalid',
     };
   }
 
@@ -29,7 +29,7 @@ export const generateNewJWT = async (
   } else {
     throw {
       status: 401,
-      message: 'Refresh token not valid',
+      msg: 'Refresh token not valid',
     };
   }
 };

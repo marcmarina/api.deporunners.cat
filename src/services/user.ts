@@ -26,7 +26,7 @@ export const loginWithEmail = async (email: string, password: string) => {
   if (!user) {
     const error = {
       status: 400,
-      message: 'These credentials are invalid.',
+      msg: 'These credentials are invalid.',
     };
     throw error;
   }
@@ -35,7 +35,7 @@ export const loginWithEmail = async (email: string, password: string) => {
   if (!match) {
     const error = {
       status: 400,
-      message: 'These credentials are invalid.',
+      msg: 'These credentials are invalid.',
     };
     throw error;
   }
@@ -61,14 +61,14 @@ export const updatePassword = async (
   if (!user)
     throw {
       status: 400,
-      message: 'The user id is not valid',
+      msg: 'The user id is not valid',
     };
 
   const validPassword = await bcrypt.compare(oldPassword, user.password);
   if (!validPassword)
     throw {
       status: 400,
-      message: 'The old password is not valid',
+      msg: 'The old password is not valid',
     };
 
   user.password = await bcrypt.hash(newPassword, 12);

@@ -1,4 +1,4 @@
-# Deporunners - API
+# Deporunners - API 
 This is the API that powers the other two parts of this project: [website](https://github.com/marcmarina/gestor.deporunners.cat) and [app](https://github.com/marcmarina/Deporunners).
 
 ## Setup
@@ -15,7 +15,7 @@ yarn seed
 yarn dev
 ```
 
-# `.env` help
+## `.env` help
 Almost all variables in the `.env` file are required.
 
 `APP_SECRET_KEY` and `API_TOKEN` are meant to be fairly long (60-30 characters) hexadecimal strings. They can be the same but there's no need.
@@ -29,4 +29,9 @@ Almost all variables in the `.env` file are required.
 All the `SEED_` variables are not needed, as they have default values inside the script, but feel free to change them here.
 
 `SENDGRID_API_KEY` is necessary for sending emails. `EMAIL_FROM` is your preferred address to send emails from (must be set up on your Sendgrid account).
-> Soon, I will make it so the API detects if Sendgrid is set up, and choose whether or not to attempt to send emails. (If the API key is not correct, it will not detect it, just if one is set or not).
+> Soon I will make it so the API detects if Sendgrid is set up, and choose whether or not to attempt to send emails. (If the API key is not correct it will not detect it, just if one is set or not).
+
+## Deployment
+This API is currently deployed twice: one for production and one for live staging.
+* Production: https://deporunners-api.herokuapp.com
+* Staging: https://deporunners-api-development.herokuapp.com

@@ -15,7 +15,7 @@ yarn seed
 yarn dev
 ```
 
-## `.env` help
+### `.env` help
 Almost all variables in the `.env` file are required.
 
 `APP_SECRET_KEY` and `API_TOKEN` are meant to be fairly long (60-30 characters) hexadecimal strings. They can be the same but there's no need.

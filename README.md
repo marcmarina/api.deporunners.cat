@@ -1,5 +1,5 @@
 # Deporunners - API
-[![Build Status](https://travis-ci.org/marcmarina/ScholarAPI.svg?branch=develop)](https://travis-ci.org/marcmarina/api.deporunners.cat)
+[![Build Status](https://travis-ci.com/marcmarina/api.deporunners.cat.svg?branch=develop)](https://travis-ci.com/marcmarina/api.deporunners.cat)
 
 [![node](https://img.shields.io/badge/Node.js-v.14.X-brightgreen)](https://nodejs.org)
 [![node](https://img.shields.io/badge/Express-v.4.17.X-brightgreen)](https://expressjs.com/)

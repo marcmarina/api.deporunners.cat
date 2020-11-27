@@ -7,6 +7,7 @@ import {
   attendEvent,
   getById,
   getPagedEvents,
+  deleteById,
 } from '../services/event';
 
 import checkForErrors from '../utils/ErrorThrowing';
@@ -15,10 +16,7 @@ export const index = async (req, res, next) => {
   try {
     let events: IEvent[];
     if (req.query.page) {
-      events = await getPagedEvents(
-        req.query.page,
-        parseInt(req.query.limit)
-      );
+      events = await getPagedEvents(req.query.page, parseInt(req.query.limit));
     } else {
       events = await getAllEvents();
     }
@@ -64,6 +62,15 @@ export const attend = async (req, res, next) => {
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
     res.status(201).json(await attendEvent(eventId, userId, attending));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const destroy = async (req, res, next) => {
+  try {
+    const eventId = req.params.id;
+    res.status(200).json(await deleteById(eventId));
   } catch (ex) {
     next(ex);
   }

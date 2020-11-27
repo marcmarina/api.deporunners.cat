@@ -1,4 +1,4 @@
-# Deporunners - API 
+# Deporunners - API
 This is the API that powers the other two parts of this project: [website][web] and [app][app].
 
 ## Setup

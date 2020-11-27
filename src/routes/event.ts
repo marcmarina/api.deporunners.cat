@@ -16,4 +16,6 @@ router.put('', auth, fullEvent, EventController.update);
 
 router.patch('/:id/attend', auth, EventController.attend);
 
+router.delete('/:id', auth, EventController.destroy);
+
 export default router;

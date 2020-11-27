@@ -3,6 +3,7 @@ import { Schema, model, Document } from 'mongoose';
 import TShirtSize from './TShirtSize';
 
 export interface IClothing extends Document {
+  ref: string;
   name: string;
   sizes: Schema.Types.ObjectId[];
   image?: string;
@@ -10,6 +11,10 @@ export interface IClothing extends Document {
 }
 
 const clothingSchema = new Schema({
+  ref: {
+    type: String,
+    required: true,
+  },
   name: {
     type: String,
     required: true,

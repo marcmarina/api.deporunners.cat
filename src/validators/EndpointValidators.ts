@@ -58,6 +58,9 @@ export const fullEvent = [
 ];
 
 export const fullClothing = [
+  check('ref')
+    .isLength({ min: 4 })
+    .withMessage('The ref has to be at least 4 characters long'),
   check('name')
     .isLength({ min: 4 })
     .withMessage('The name has to be at least 4 characters long')

@@ -15,7 +15,7 @@ Requirements:
 
 To set up the project, install dependencies using `yarn` and then create a `.env` file using the provided example. If you need help, go to [this section](#env-help).
 
-To populate the database and start the development server, defaults to port 8080:
+To populate the database and start the development server (defaults to port 8080):
 ```
 yarn seed
 yarn dev

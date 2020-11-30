@@ -57,3 +57,7 @@ export const changeImage = async (
 export const updateClothing = async (clothing: IClothing) => {
   return Clothing.updateOne({ _id: clothing._id }, clothing);
 };
+
+export const deleteClothing = async (id: Schema.Types.ObjectId) => {
+  return Clothing.findByIdAndDelete(id);
+};

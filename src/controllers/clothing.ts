@@ -1,6 +1,7 @@
 import {
   changeImage,
   createClothing,
+  deleteClothing,
   getAllClothing,
   updateClothing,
 } from '../services/clothing';
@@ -37,6 +38,14 @@ export const setImage = async (req, res, next) => {
 export const update = async (req, res, next) => {
   try {
     res.status(201).json(await updateClothing({ ...req.body }));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const destroy = async (req, res, next) => {
+  try {
+    res.status(200).json(await deleteClothing(req.params.id));
   } catch (ex) {
     next(ex);
   }

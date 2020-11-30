@@ -7,5 +7,6 @@ const router = Router();
 
 router.get('/', ClothingController.index);
 router.post('/', fullClothing, ClothingController.create);
+router.put('/:id/image', ClothingController.setImage);
 
 export default router;

@@ -1,3 +1,4 @@
+import { Schema } from 'mongoose';
 import Clothing, { IClothing } from '../models/Clothing';
 import TShirtSize from '../models/TShirtSize';
 
@@ -35,4 +36,20 @@ export const createClothing = async (clothing: IClothing) => {
   }
 
   return newClothing.save();
+};
+
+export const changeImage = async (
+  imagePath: string,
+  id: Schema.Types.ObjectId
+) => {
+  const clothing = await Clothing.findById(id);
+
+  if (!clothing)
+    throw {
+      status: 404,
+      msg: 'Clothing not found',
+    };
+
+  clothing.image = imagePath;
+  return clothing.save();
 };

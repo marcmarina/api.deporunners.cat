@@ -1,4 +1,8 @@
-import { createClothing, getAllClothing } from '../services/clothing';
+import {
+  changeImage,
+  createClothing,
+  getAllClothing,
+} from '../services/clothing';
 import checkForErrors from '../utils/ErrorThrowing';
 
 export const index = async (req, res, next) => {
@@ -13,6 +17,17 @@ export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
     res.status(201).json(await createClothing({ ...req.body }));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const setImage = async (req, res, next) => {
+  try {
+    const clothingId = req.params.id;
+    res
+      .status(201)
+      .json(await changeImage(`images/${req.file.filename}`, clothingId));
   } catch (ex) {
     next(ex);
   }

@@ -10,6 +10,7 @@ import Role from './src/models/Role';
 import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
 import Event from './src/models/Event';
+import Clothing from './src/models/Clothing';
 
 import { randomInt } from './src/utils/Utils';
 
@@ -117,10 +118,24 @@ async function seed() {
   await Town.deleteMany({});
   await TShirtSize.deleteMany({});
   await Event.deleteMany({});
+  await Clothing.deleteMany({});
 
   await Town.insertMany(towns);
   await TShirtSize.insertMany(tShirtSizes);
   await Role.insertMany(roles);
+
+  const clothing = [];
+  for (let i = 0; i < 10; i++) {
+    const newClothing = new Clothing({
+      name: `Samarreta ${i + 1}`,
+      ref: '123ABC',
+      price: 12,
+      sizes: (await TShirtSize.find()).map(i => i._id),
+      image: 'images/placeholder.jpg',
+    });
+    clothing.push(newClothing);
+  }
+  await Clothing.insertMany(clothing);
 
   const members = [];
   for (let i = 0; i < memberCount; i++) {

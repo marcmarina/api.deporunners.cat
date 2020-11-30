@@ -52,10 +52,10 @@ app.get('/', (req, res) => {
   return res.status(200).json(response);
 });
 
-app.use(apiToken);
-
 app.use(multer({ storage: fileStorage }).single('image'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
+
+app.use(apiToken);
 
 app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);

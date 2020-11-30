@@ -15,10 +15,7 @@ export const index = async (req, res, next) => {
   try {
     let events: IEvent[];
     if (req.query.page) {
-      events = await getPagedEvents(
-        req.query.page,
-        parseInt(req.query.limit)
-      );
+      events = await getPagedEvents(req.query.page, parseInt(req.query.limit));
     } else {
       events = await getAllEvents();
     }

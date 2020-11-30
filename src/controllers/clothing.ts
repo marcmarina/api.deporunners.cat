@@ -2,6 +2,7 @@ import {
   changeImage,
   createClothing,
   getAllClothing,
+  updateClothing,
 } from '../services/clothing';
 import checkForErrors from '../utils/ErrorThrowing';
 
@@ -28,6 +29,14 @@ export const setImage = async (req, res, next) => {
     res
       .status(201)
       .json(await changeImage(`images/${req.file.filename}`, clothingId));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const update = async (req, res, next) => {
+  try {
+    res.status(201).json(await updateClothing({ ...req.body }));
   } catch (ex) {
     next(ex);
   }

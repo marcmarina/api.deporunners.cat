@@ -53,3 +53,7 @@ export const changeImage = async (
   clothing.image = imagePath;
   return clothing.save();
 };
+
+export const updateClothing = async (clothing: IClothing) => {
+  return Clothing.updateOne({ _id: clothing._id }, clothing);
+};

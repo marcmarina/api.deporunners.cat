@@ -87,3 +87,14 @@ export const sendNotification = async (event: IEvent) => {
     console.log('Error sending notifications!', ex);
   }
 };
+
+export const deleteById = async (id: Schema.Types.ObjectId) => {
+  const event = await Event.findById(id);
+  if (!event)
+    throw {
+      status: 404,
+      msg: 'The id is not valid',
+    };
+
+  return Event.findByIdAndDelete(id);
+};

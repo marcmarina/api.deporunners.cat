@@ -1,6 +1,5 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import mongoose from 'mongoose';
 import cors from 'cors';
 import favicon from 'serve-favicon';
 import path from 'path';
@@ -16,6 +15,7 @@ import EventRoutes from './routes/event';
 import ClothingRoutes from './routes/clothing';
 
 import apiToken from './middleware/apiToken';
+import db from './utils/db';
 
 const app = express();
 
@@ -77,12 +77,6 @@ app.use((error, req, res, next) => {
   res.status(status).json(error);
 });
 
-mongoose
-  .connect(process.env.MONGODB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .catch(err => console.log(err));
+db.connect(process.env.MONGODB_URI);
 
 export default app;

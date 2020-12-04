@@ -7,7 +7,7 @@
     "dev": "tsc-watch --onSuccess \"yarn serve\"",
     "serve": "eslint . --ext .ts && node --trace-deprecation --trace-warnings ./build/index.js",
     "build": "tsc",
-    "test": "jest --passWithNoTests",
+    "test": "jest",
     "seed": "npx ts-node seed.ts",
     "lint": "eslint . --ext .ts"
   },
@@ -35,6 +35,7 @@
     "jest": "^26.6.3",
     "nodemon": "^2.0.6",
     "prettier": "2.1.2",
+    "ts-jest": "^26.4.4",
     "tsc-watch": "^4.2.9",
     "typescript": "^3.9.6"
   },

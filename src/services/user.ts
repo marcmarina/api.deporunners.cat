@@ -75,7 +75,7 @@ export const updatePassword = async (
   return user.save();
 };
 
-const createSessionToken = async (user: IUser) => {
+export const createSessionToken = async (user: IUser) => {
   const refreshToken = await generateToken(64);
   user.refreshToken = refreshToken;
   return user.save();

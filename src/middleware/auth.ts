@@ -3,15 +3,7 @@ import { generateNewJWT } from '../utils/SessionManagement';
 
 export default async (req, res, next) => {
   try {
-    const token = req.get('x-auth-token');
-    const refreshToken = req.get('x-refresh-token');
-    if (!refreshToken || !token) {
-      throw {
-        status: 401,
-        msg: 'Not authenticated',
-      };
-    }
-
+    const { token, refreshToken } = getTokens(req);
     const decodedToken = jwt.decode(token);
     try {
       jwt.verify(token, process.env.APP_SECRET_KEY);
@@ -40,4 +32,20 @@ export default async (req, res, next) => {
   } catch (ex) {
     next(ex);
   }
+};
+
+export const getTokens = req => {
+  const token = req.headers['x-auth-token'];
+  const refreshToken = req.headers['x-refresh-token'];
+
+  if (!refreshToken || !token) {
+    throw {
+      status: 401,
+      msg: 'Not authenticated',
+    };
+  }
+  return {
+    token,
+    refreshToken,
+  };
 };

@@ -1,25 +1,30 @@
+import 'dotenv/config';
+
 import User from '../models/User';
+import { createSessionToken } from '../services/user';
 import { generateNewJWT } from './SessionManagement';
 import db from './db';
-import 'dotenv/config';
+
+let user;
 
 beforeAll(async () => {
   await db.connect(process.env.MONGODB_URI);
+
+  user = await User.findOne({});
+
+  if (!user.refreshToken) user = await createSessionToken(user);
 });
 afterAll(async () => {
   await db.disconnect();
 });
 
 test('returns a new JWT when given valid information', async () => {
-  const user = await User.findOne({});
-  expect(
-    await generateNewJWT(user._id, user.refreshToken, 'User')
-  ).toBeTruthy();
+  await expect(
+    generateNewJWT(user._id, user.refreshToken, 'User')
+  ).resolves.toBeDefined();
 });
 
 test('throws an error when wrong refresh token is given', async () => {
-  const user = await User.findOne({});
-
   await expect(
     generateNewJWT(user._id, 'invalid token', 'User')
   ).rejects.toEqual({
@@ -29,8 +34,6 @@ test('throws an error when wrong refresh token is given', async () => {
 });
 
 test('throws an error when wrong model name is given', async () => {
-  const user = await User.findOne({});
-
   await expect(
     generateNewJWT(user._id, user.refreshToken, 'Member')
   ).rejects.toEqual({

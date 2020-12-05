@@ -1,11 +1,11 @@
 import 'dotenv/config';
 
-import User from '../models/User';
+import User, { IUser } from '../models/User';
 import { createSessionToken } from '../services/user';
 import { generateNewJWT } from './SessionManagement';
 import db from './db';
 
-let user;
+let user: IUser;
 
 beforeAll(async () => {
   await db.connect(process.env.MONGODB_URI);

@@ -55,6 +55,32 @@ export const changeImage = async (
 };
 
 export const updateClothing = async (clothing: IClothing) => {
+  if (clothing.sizes.length === 0) {
+    throw {
+      status: 400,
+      errors: [
+        {
+          msg: 'The provides sizes are not valid',
+          param: 'sizes',
+        },
+      ],
+    };
+  }
+
+  for (const size of clothing.sizes) {
+    if (!(await TShirtSize.findById(size))) {
+      throw {
+        status: 400,
+        errors: [
+          {
+            msg: 'The provides sizes are not valid',
+            param: 'sizes',
+          },
+        ],
+      };
+    }
+  }
+
   return Clothing.updateOne({ _id: clothing._id }, clothing);
 };
 

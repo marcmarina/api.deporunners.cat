@@ -2,8 +2,7 @@ import mongoose from 'mongoose';
 
 const connect = async (connectionString: string) => {
   try {
-    //
-    mongoose.connect(connectionString, {
+    await mongoose.connect(connectionString, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useCreateIndex: true,
@@ -15,7 +14,7 @@ const connect = async (connectionString: string) => {
 
 const disconnect = async () => {
   try {
-    mongoose.disconnect();
+    await mongoose.disconnect();
   } catch (ex) {
     console.log(ex);
   }

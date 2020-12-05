@@ -3,12 +3,12 @@ import 'dotenv/config';
 
 import Clothing from '../models/Clothing';
 
-beforeAll(() => {
-  db.connect(process.env.MONGODB_URI);
+beforeAll(async () => {
+  await db.connect(process.env.MONGODB_URI);
 });
 
-afterAll(() => {
-  db.disconnect();
+afterAll(async () => {
+  await db.disconnect();
 });
 
 test('returns a correct array of clothing', async () => {

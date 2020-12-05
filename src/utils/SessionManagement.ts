@@ -20,7 +20,7 @@ export const generateNewJWT = async (
   if (!model) {
     throw {
       status: 401,
-      msg: 'Model id invalid',
+      msg: 'Model id not valid',
     };
   }
 

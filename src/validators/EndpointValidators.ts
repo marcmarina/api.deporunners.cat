@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import mongoose from 'mongoose';
 
 import { check } from 'express-validator';
 import { existingMemberEmail, validTown } from './DatabaseValidators';
@@ -66,4 +67,11 @@ export const fullClothing = [
     .withMessage('The name has to be at least 4 characters long')
     .trim(),
   check('price').isNumeric().withMessage('The price has to be a number'),
+  check('sizes').custom(value => {
+    if (value.length === 0) return false;
+    for (const size of value) {
+      if (!mongoose.isValidObjectId(size)) return false;
+    }
+    return true;
+  }),
 ];

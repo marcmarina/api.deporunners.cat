@@ -11,8 +11,9 @@
     "seed": "npx ts-node seed.ts",
     "lint": "eslint . --ext .ts"
   },
-  "author": "",
+  "author": "Marc Marina",
   "license": "ISC",
+  "repository": "https://github.com/marcmarina/api.deporunners.cat",
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.7",

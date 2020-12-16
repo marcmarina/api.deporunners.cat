@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+import { ITShirtSize } from './TShirtSize';
 
 export interface IMember extends Document {
   numMember: number;
@@ -13,6 +14,7 @@ export interface IMember extends Document {
   refreshToken?: string;
   passwordResetToken?: string;
   expoPushToken?: string;
+  tshirtSize: ITShirtSize | string;
 }
 
 export interface IAddress {
@@ -65,6 +67,10 @@ const memberSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Town',
     },
+  },
+  tshirtSize: {
+    type: Schema.Types.ObjectId,
+    ref: 'TShirtSize',
   },
   refreshToken: String,
   passwordResetToken: String,

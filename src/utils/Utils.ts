@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { Document } from 'mongoose';
 
 export const generateToken = (size: number): Promise<string> => {
   return new Promise((resolve, reject) => {
@@ -20,3 +21,6 @@ export const mapToJSON = (map: Map<any, any>) => {
 
 export const paginateArray = (arr: any[], page: number, pageSize: number) =>
   arr.slice((page - 1) * pageSize, page * pageSize);
+
+export const getModelName = (model: Document) =>
+  ((model.constructor as unknown) as Document).modelName;

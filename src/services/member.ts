@@ -1,10 +1,12 @@
 import bcrypt from 'bcrypt';
 import { Schema } from 'mongoose';
+import xl from 'excel4node';
 
 import mailService, { getTemplate } from '../mail/mailService';
 import Member, { IMember } from '../models/Member';
 import { signJWT } from '../utils/SessionManagement';
 import { generateToken } from '../utils/Utils';
+import { ITShirtSize } from '../models/TShirtSize';
 
 export const getAllMembers = async () => {
   return Member.find();
@@ -146,4 +148,35 @@ const createSessionToken = async (member: IMember) => {
   const refreshToken = await generateToken(64);
   member.refreshToken = refreshToken;
   return member.save();
+};
+
+export const generateExcel = async () => {
+  const members = await Member.find().populate('tshirtSize');
+
+  const wb = new xl.Workbook();
+
+  const ws = wb.addWorksheet('Sheet 1');
+
+  ws.cell(1, 1).string('Nom');
+  ws.cell(1, 2).string('Cognoms');
+  ws.cell(1, 3).string('Email');
+  ws.cell(1, 4).string('DNI');
+  ws.cell(1, 5).string('Num. Soci');
+  ws.cell(1, 6).string('IBAN');
+  ws.cell(1, 7).string('Talla');
+  ws.cell(1, 8).string('Telefon');
+
+  for (let i = 0; i < members.length; i++) {
+    const member = members[i];
+    ws.cell(i + 2, 1).string(member.firstName);
+    ws.cell(i + 2, 2).string(member.lastName);
+    ws.cell(i + 2, 3).string(member.email);
+    ws.cell(i + 2, 4).string(member.dni);
+    ws.cell(i + 2, 5).number(member.numMember);
+    ws.cell(i + 2, 6).string(member.iban);
+    ws.cell(i + 2, 7).string((member.tshirtSize as ITShirtSize).name);
+    ws.cell(i + 2, 8).string(member.telephone);
+  }
+
+  return wb.writeToBuffer('Excel.xlsx');
 };

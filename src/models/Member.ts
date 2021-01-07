@@ -79,6 +79,7 @@ const memberSchema = new Schema({
 
 const populateData = function (this: IMember, next: any) {
   this.populate('address.town');
+  this.populate('tshirtSize');
   next();
 };
 

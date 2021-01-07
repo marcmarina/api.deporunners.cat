@@ -9,7 +9,7 @@ import { generateToken } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
 
 export const getAllMembers = async () => {
-  return Member.find();
+  return Member.find().sort({ numMember: 'asc' });
 };
 
 export const findMemberById = async (id: string) => {

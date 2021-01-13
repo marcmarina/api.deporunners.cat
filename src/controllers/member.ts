@@ -10,6 +10,7 @@ import {
   loginCredentials,
   updatePassword,
   registerToken,
+  sendSignupEmail,
 } from '../services/member';
 import checkForErrors from '../utils/ErrorThrowing';
 
@@ -149,7 +150,7 @@ export const signupFailure = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    res.status(200).json(await deleteById(id));
+    res.status(200).json(await sendSignupEmail(id));
   } catch (ex) {
     next(ex);
   }

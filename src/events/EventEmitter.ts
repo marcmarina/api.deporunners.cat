@@ -7,7 +7,11 @@ import { sendSignupEmail } from '../services/member';
 const eventEmitter = new EventEmitter();
 
 eventEmitter.on('memberSignup', (id: Schema.Types.ObjectId) => {
-  sendSignupEmail(id);
+  try {
+    sendSignupEmail(id);
+  } catch (ex) {
+    console.log(ex);
+  }
 });
 
 eventEmitter.on('newEvent', (event: IEvent) => {

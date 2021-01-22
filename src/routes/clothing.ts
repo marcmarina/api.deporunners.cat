@@ -5,6 +5,7 @@ import { fullClothing } from '../validators/EndpointValidators';
 
 const router = Router();
 
+router.get('/:id', ClothingController.show);
 router.get('/', ClothingController.index);
 
 router.post('/', fullClothing, ClothingController.create);

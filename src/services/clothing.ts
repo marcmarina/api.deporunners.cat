@@ -6,6 +6,10 @@ export const getAllClothing = async () => {
   return Clothing.find().populate('sizes');
 };
 
+export const findClothingById = async (id: string) => {
+  return Clothing.findById(id).populate('sizes');
+};
+
 export const createClothing = async (clothing: IClothing) => {
   const newClothing = new Clothing(clothing);
 

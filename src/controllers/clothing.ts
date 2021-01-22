@@ -2,6 +2,7 @@ import {
   changeImage,
   createClothing,
   deleteClothing,
+  findClothingById,
   getAllClothing,
   updateClothing,
 } from '../services/clothing';
@@ -10,6 +11,15 @@ import checkForErrors from '../utils/ErrorThrowing';
 export const index = async (req, res, next) => {
   try {
     res.status(200).json(await getAllClothing());
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const show = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    res.status(200).json(await findClothingById(id));
   } catch (ex) {
     next(ex);
   }

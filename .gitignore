@@ -119,3 +119,5 @@ build
 .env
 .vscode
 *.swp
+
+public/images

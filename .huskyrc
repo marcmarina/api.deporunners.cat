@@ -1,5 +1,7 @@
 {
     "hooks": {
-        "pre-commit": "yarn lint"
+        "pre-commit": "yarn lint",
+        "post-merge": "yarn",
+        "post-checkout": "yarn"
     }
 }

@@ -19,8 +19,6 @@ export const create = async (req, res, next) => {
 
     const result = await createMember({ ...req.body });
 
-    eventEmitter.emit('memberSignup', result._id);
-
     res.status(201).json(result);
   } catch (ex) {
     next(ex);
@@ -130,6 +128,28 @@ export const self = async (req, res, next) => {
   try {
     const { userId } = req;
     res.status(200).json(await findMemberById(userId));
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const signupSuccess = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    eventEmitter.emit('memberSignup', id);
+
+    res.status(200).json();
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const signupFailure = async (req, res, next) => {
+  try {
+    const { id } = req.params;
+
+    res.status(200).json(await deleteById(id));
   } catch (ex) {
     next(ex);
   }

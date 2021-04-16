@@ -1,5 +1,6 @@
 import { Schema, Document, model } from 'mongoose';
 import Town from './Town';
+import { ITShirtSize } from './TShirtSize';
 
 export interface IMember extends Document {
   numMember: number;
@@ -14,6 +15,7 @@ export interface IMember extends Document {
   refreshToken?: string;
   passwordResetToken?: string;
   expoPushToken?: string;
+  tshirtSize: ITShirtSize | string;
 }
 
 export interface IAddress {
@@ -67,6 +69,10 @@ const memberSchema = new Schema({
       ref: Town,
     },
   },
+  tshirtSize: {
+    type: Schema.Types.ObjectId,
+    ref: 'TShirtSize',
+  },
   refreshToken: String,
   passwordResetToken: String,
   expoPushToken: String,
@@ -74,6 +80,7 @@ const memberSchema = new Schema({
 
 const populateData = function (this: IMember, next: any) {
   this.populate('address.town');
+  this.populate('tshirtSize');
   next();
 };
 

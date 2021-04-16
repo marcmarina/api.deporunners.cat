@@ -4,7 +4,6 @@ on: [push, pull_request]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -12,22 +11,22 @@ jobs:
         node-version: [14.x]
 
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v2
-      with:
-        node-version: ${{ matrix.node-version }}
-    
-    - name: "Start mongodb Docker container"
-      run: docker run -d -p 27017:27017 mongo:latest
-    
-    - run: yarn
-    - run: yarn seed
-    - run: yarn test
-  
+      - uses: actions/checkout@v2
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: 'Start mongodb Docker container'
+        run: docker run -d -p 27017:27017 mongo:latest
+
+      - run: yarn
+      - run: yarn seed
+      - run: yarn test
+
     env:
-          MONGODB_URI: "mongodb://localhost/deporunners"
-          API_TOKEN: "apitoken"
-          APP_SECRET_KEY: "appsecretkey"
-          JWT_EXPIRATION_TIME: 900
+      MONGODB_URI: 'mongodb://localhost/deporunners'
+      API_TOKEN: 'apitoken'
+      APP_SECRET_KEY: 'appsecretkey'
+      JWT_EXPIRATION_TIME: 900

@@ -3,7 +3,7 @@ name: Node.js CI
 on: [push, pull_request]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
@@ -11,8 +11,6 @@ jobs:
         node-version: [14.x]
 
     steps:
-      - uses: actions/checkout@v2
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
         with:
@@ -21,9 +19,12 @@ jobs:
       - name: 'Start mongodb Docker container'
         run: docker run -d -p 27017:27017 mongo:latest
 
-      - run: yarn
-      - run: yarn seed
-      - run: yarn test
+      - name: Install dependencies
+        run: yarn
+      - name: Seed the database
+        run: yarn seed
+      - name: Run unit tests
+        run: yarn test
 
     env:
       MONGODB_URI: 'mongodb://localhost/deporunners'

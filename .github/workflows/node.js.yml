@@ -23,10 +23,11 @@ jobs:
       run: docker run -d -p 27017:27017 mongo:latest
     
     - run: yarn
-
+    - run: yarn seed
     - run: yarn test
-      env:
-        MONGODB_URI: "mongodb://localhost/deporunners"
-        API_TOKEN: "apitoken"
-        APP_SECRET_KEY: "appsecretkey"
-        JWT_EXPIRATION_TIME: 900
+  
+    env:
+          MONGODB_URI: "mongodb://localhost/deporunners"
+          API_TOKEN: "apitoken"
+          APP_SECRET_KEY: "appsecretkey"
+          JWT_EXPIRATION_TIME: 900

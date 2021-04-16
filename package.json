@@ -9,7 +9,8 @@
     "build": "tsc",
     "test": "jest --passWithNoTests",
     "seed": "npx ts-node seed.ts",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "mongo-docker": "docker run -d -p 27017:27017 mongo"
   },
   "author": "",
   "license": "ISC",

@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { Schema } from 'mongoose';
 
 import User, { IUser } from '../models/User';
 import { signJWT } from '../utils/SessionManagement';

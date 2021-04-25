@@ -9,7 +9,7 @@ const appSecretKey = () => (isTest ? 'secretKey' : process.env.APP_SECRET_KEY);
 
 const apiToken = () => (isTest ? 'apiToken' : process.env.API_TOKEN);
 
-const jwtExpiration = () => process.env.API_TOKEN ?? '900';
+const jwtExpiration = () => process.env.JWT_EXPIRATION_TIME ?? '900';
 
 const emailFrom = () => process.env.EMAIL_FROM ?? 'cedeporunners@gmail.com';
 

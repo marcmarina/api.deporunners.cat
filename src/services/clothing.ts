@@ -7,7 +7,15 @@ export const getAllClothing = async () => {
 };
 
 export const findClothingById = async (id: string) => {
-  return Clothing.findById(id).populate('sizes');
+  const clothing = await Clothing.findById(id).populate('sizes');
+
+  if (!clothing)
+    throw {
+      status: 404,
+      msg: 'Clothing not found',
+    };
+
+  return clothing;
 };
 
 export const createClothing = async (clothing: IClothing) => {

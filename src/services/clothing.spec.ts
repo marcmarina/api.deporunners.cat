@@ -1,44 +1,122 @@
-import db from '../utils/db';
-import 'dotenv/config';
-
 import Clothing from '../models/Clothing';
-import {
-  getAllClothing,
-  changeImage,
-  updateClothing,
-} from '../services/clothing';
-import environment from '../utils/environment';
+import * as ClothingService from '../services/clothing';
 
-beforeAll(async () => {
-  await db.connect(environment.mongoURI());
+jest.mock('../models/Clothing');
+
+const mockedClothing = Clothing as jest.Mocked<typeof Clothing>;
+
+const clothesArray = [
+  {
+    _id: '6085b02b6b4b295ab8ee93f0',
+    sizes: [
+      '6085b02b6b4b295ab8ee93e9',
+      '6085b02b6b4b295ab8ee93ea',
+      '6085b02b6b4b295ab8ee93eb',
+      '6085b02b6b4b295ab8ee93ec',
+      '6085b02b6b4b295ab8ee93ed',
+      '6085b02b6b4b295ab8ee93ee',
+    ],
+    name: 'Test',
+    ref: '123ABC',
+    price: 15,
+    image: 'test',
+  },
+  {
+    _id: '6085b02b6b4b295ab8ee93f0',
+    sizes: [
+      '6085b02b6b4b295ab8ee93e9',
+      '6085b02b6b4b295ab8ee93ea',
+      '6085b02b6b4b295ab8ee93eb',
+      '6085b02b6b4b295ab8ee93ec',
+      '6085b02b6b4b295ab8ee93ed',
+      '6085b02b6b4b295ab8ee93ee',
+    ],
+    name: 'Test',
+    ref: '123ABC',
+    price: 15,
+    image: 'test',
+  },
+  {
+    _id: '6085b02b6b4b295ab8ee93f0',
+    sizes: [
+      '6085b02b6b4b295ab8ee93e9',
+      '6085b02b6b4b295ab8ee93ea',
+      '6085b02b6b4b295ab8ee93eb',
+      '6085b02b6b4b295ab8ee93ec',
+      '6085b02b6b4b295ab8ee93ed',
+      '6085b02b6b4b295ab8ee93ee',
+    ],
+    name: 'Test',
+    ref: '123ABC',
+    price: 15,
+    image: 'test',
+  },
+];
+
+const singleClothing = {
+  _id: '6085b02b6b4b295ab8ee93f0',
+  sizes: [
+    '6085b02b6b4b295ab8ee93e9',
+    '6085b02b6b4b295ab8ee93ea',
+    '6085b02b6b4b295ab8ee93eb',
+    '6085b02b6b4b295ab8ee93ec',
+    '6085b02b6b4b295ab8ee93ed',
+    '6085b02b6b4b295ab8ee93ee',
+  ],
+  name: 'Test',
+  ref: '123ABC',
+  price: 15,
+  image: 'test',
+};
+
+mockedClothing.find.mockReturnValue(clothesArray);
+
+describe('getAllClothing', () => {
+  it('returns a correct array of clothing', async () => {
+    mockedClothing.find.mockReturnValueOnce({
+      populate: jest.fn().mockReturnValue(clothesArray),
+    });
+
+    const result = await ClothingService.getAllClothing();
+
+    expect(result).toMatchObject(clothesArray);
+  });
 });
 
-afterAll(async () => {
-  await db.disconnect();
+describe('findClothingById', () => {
+  it('returns a single clothing item for a specific id', async () => {
+    mockedClothing.findById.mockReturnValueOnce({
+      populate: jest.fn().mockReturnValue(singleClothing),
+    });
+
+    const result = await ClothingService.findClothingById('123123123');
+
+    expect(result).toMatchObject(singleClothing);
+  });
+
+  it("throws an error if it can't find the item", async () => {
+    mockedClothing.findById.mockReturnValueOnce({
+      populate: jest.fn().mockReturnValue(undefined),
+    });
+
+    await expect(
+      ClothingService.findClothingById('123123123')
+    ).rejects.toBeDefined();
+  });
 });
 
-test('returns a correct array of clothing', async () => {
-  expect((await getAllClothing()).length).toBe(10);
-});
+// it('updates the clothing record', async () => {
+//   const clothing = await Clothing.findOne();
+//   clothing.name = 'Test';
+//   clothing.price = 15;
 
-test('changes the clothing image path', async () => {
-  const clothing = await Clothing.findOne();
-  const res = await changeImage('test', clothing._id);
-  expect(res.image).toBe('test');
-});
+//   const res = await updateClothing(clothing);
+//   expect(res.ok).toBe(1);
+// });
 
-test('updates the clothing record', async () => {
-  const clothing = await Clothing.findOne();
-  clothing.name = 'Test';
-  clothing.price = 15;
+// it('throws error on non valid data', async () => {
+//   const clothing = await Clothing.findOne();
+//   clothing.sizes = [];
 
-  const res = await updateClothing(clothing);
-  expect(res.ok).toBe(1);
-});
-
-test('throws error on non valid data', async () => {
-  const clothing = await Clothing.findOne();
-  clothing.sizes = [];
-
-  await expect(updateClothing(clothing)).rejects.toBeDefined();
-});
+//   await expect(updateClothing(clothing)).rejects.toBeDefined();
+// });

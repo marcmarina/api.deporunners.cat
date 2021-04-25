@@ -147,10 +147,3 @@ describe('createClothing', () => {
 //   const res = await updateClothing(clothing);
 //   expect(res.ok).toBe(1);
 // });
-
-// it('throws error on non valid data', async () => {
-//   const clothing = await Clothing.findOne();
-//   clothing.sizes = [];
-
-//   await expect(updateClothing(clothing)).rejects.toBeDefined();
-// });

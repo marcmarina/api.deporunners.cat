@@ -102,9 +102,11 @@ const userTemplate = {
   password: bcrypt.hashSync('123456', 12),
 };
 
-const memberCount = parseInt(process.env.SEED_MEMBER_COUNT) || 150;
-const userCount = parseInt(process.env.SEED_USER_COUNT) || 2;
-const eventCount = parseInt(process.env.SEED_EVENT_COUNT) || 20;
+const {
+  members: memberCount,
+  users: userCount,
+  events: eventCount,
+} = environment.seedNumbers();
 
 async function seed() {
   await db.connect(environment.mongoURI());

@@ -69,7 +69,12 @@ const singleClothing = {
   image: 'test',
 };
 
+const saveModel = jest.fn();
+
 mockedClothing.find.mockReturnValue(clothesArray);
+mockedClothing.create.mockImplementation(singleClothing => {
+  return { ...singleClothing, save: saveModel.mockReturnValue(singleClothing) };
+});
 
 describe('getAllClothing', () => {
   it('returns a correct array of clothing', async () => {
@@ -101,7 +106,36 @@ describe('findClothingById', () => {
 
     await expect(
       ClothingService.findClothingById('123123123')
-    ).rejects.toBeDefined();
+    ).rejects.toMatchObject({
+      status: 404,
+      msg: 'Clothing not found',
+    });
+  });
+});
+
+describe('createClothing', () => {
+  it('returns a new item of clothing', async () => {
+    const result = await ClothingService.createClothing(singleClothing);
+
+    expect(saveModel).toHaveBeenCalled();
+    expect(result).toMatchObject(singleClothing);
+  });
+
+  it('throws if no sizes are provided', async () => {
+    await expect(
+      ClothingService.createClothing({
+        ...singleClothing,
+        sizes: [],
+      })
+    ).rejects.toMatchObject({
+      status: 400,
+      errors: [
+        {
+          msg: 'The provides sizes are not valid',
+          param: 'sizes',
+        },
+      ],
+    });
   });
 });
 

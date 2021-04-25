@@ -18,8 +18,8 @@ export const findClothingById = async (id: string) => {
   return clothing;
 };
 
-export const createClothing = async (clothing: IClothing) => {
-  const newClothing = new Clothing(clothing);
+export const createClothing = async clothing => {
+  const newClothing = await Clothing.create(clothing);
 
   if (newClothing.sizes.length === 0) {
     throw {
@@ -33,19 +33,21 @@ export const createClothing = async (clothing: IClothing) => {
     };
   }
 
-  for (const size of newClothing.sizes) {
-    if (!(await TShirtSize.findById(size))) {
-      throw {
-        status: 400,
-        errors: [
-          {
-            msg: 'The provides sizes are not valid',
-            param: 'sizes',
-          },
-        ],
-      };
-    }
-  }
+  // TODO Re-enable this block
+
+  // for (const size of newClothing.sizes) {
+  //   if (!(await TShirtSize.findById(size))) {
+  //     throw {
+  //       status: 400,
+  //       errors: [
+  //         {
+  //           msg: 'The provides sizes are not valid',
+  //           param: 'sizes',
+  //         },
+  //       ],
+  //     };
+  //   }
+  // }
 
   return newClothing.save();
 };

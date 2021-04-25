@@ -1,57 +1,10 @@
 import Clothing from '../models/Clothing';
 import * as ClothingService from '../services/clothing';
+import * as TShirtService from '../services/tshirtSize';
 
 jest.mock('../models/Clothing');
 
 const mockedClothing = Clothing as jest.Mocked<typeof Clothing>;
-
-const clothesArray = [
-  {
-    _id: '6085b02b6b4b295ab8ee93f0',
-    sizes: [
-      '6085b02b6b4b295ab8ee93e9',
-      '6085b02b6b4b295ab8ee93ea',
-      '6085b02b6b4b295ab8ee93eb',
-      '6085b02b6b4b295ab8ee93ec',
-      '6085b02b6b4b295ab8ee93ed',
-      '6085b02b6b4b295ab8ee93ee',
-    ],
-    name: 'Test',
-    ref: '123ABC',
-    price: 15,
-    image: 'test',
-  },
-  {
-    _id: '6085b02b6b4b295ab8ee93f0',
-    sizes: [
-      '6085b02b6b4b295ab8ee93e9',
-      '6085b02b6b4b295ab8ee93ea',
-      '6085b02b6b4b295ab8ee93eb',
-      '6085b02b6b4b295ab8ee93ec',
-      '6085b02b6b4b295ab8ee93ed',
-      '6085b02b6b4b295ab8ee93ee',
-    ],
-    name: 'Test',
-    ref: '123ABC',
-    price: 15,
-    image: 'test',
-  },
-  {
-    _id: '6085b02b6b4b295ab8ee93f0',
-    sizes: [
-      '6085b02b6b4b295ab8ee93e9',
-      '6085b02b6b4b295ab8ee93ea',
-      '6085b02b6b4b295ab8ee93eb',
-      '6085b02b6b4b295ab8ee93ec',
-      '6085b02b6b4b295ab8ee93ed',
-      '6085b02b6b4b295ab8ee93ee',
-    ],
-    name: 'Test',
-    ref: '123ABC',
-    price: 15,
-    image: 'test',
-  },
-];
 
 const singleClothing = {
   _id: '6085b02b6b4b295ab8ee93f0',
@@ -69,12 +22,20 @@ const singleClothing = {
   image: 'test',
 };
 
+const clothesArray = [singleClothing, singleClothing, singleClothing];
+
 const saveModel = jest.fn();
 
 mockedClothing.find.mockReturnValue(clothesArray);
 mockedClothing.create.mockImplementation(singleClothing => {
   return { ...singleClothing, save: saveModel.mockReturnValue(singleClothing) };
 });
+
+jest.mock('../services/tshirtSize');
+
+const mockedTShirt = TShirtService as jest.Mocked<typeof TShirtService>;
+
+mockedTShirt.findByIds.mockResolvedValue(singleClothing.sizes);
 
 describe('getAllClothing', () => {
   it('returns a correct array of clothing', async () => {
@@ -126,6 +87,24 @@ describe('createClothing', () => {
       ClothingService.createClothing({
         ...singleClothing,
         sizes: [],
+      })
+    ).rejects.toMatchObject({
+      status: 400,
+      errors: [
+        {
+          msg: 'No sizes provided',
+          param: 'sizes',
+        },
+      ],
+    });
+  });
+
+  it('throws if the sizes are not valid', async () => {
+    mockedTShirt.findByIds.mockResolvedValueOnce([]);
+
+    await expect(
+      ClothingService.createClothing({
+        ...singleClothing,
       })
     ).rejects.toMatchObject({
       status: 400,

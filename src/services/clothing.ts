@@ -2,6 +2,8 @@ import { Schema } from 'mongoose';
 import Clothing, { IClothing } from '../models/Clothing';
 import TShirtSize from '../models/TShirtSize';
 
+import * as TShirtSizeService from '../services/tshirtSize';
+
 export const getAllClothing = async () => {
   return Clothing.find().populate('sizes');
 };
@@ -26,28 +28,27 @@ export const createClothing = async clothing => {
       status: 400,
       errors: [
         {
-          msg: 'The provides sizes are not valid',
+          msg: 'No sizes provided',
           param: 'sizes',
         },
       ],
     };
   }
 
-  // TODO Re-enable this block
+  const validatedSizes = await TShirtSizeService.findByIds(
+    newClothing.sizes.map(id => `${id}`)
+  );
 
-  // for (const size of newClothing.sizes) {
-  //   if (!(await TShirtSize.findById(size))) {
-  //     throw {
-  //       status: 400,
-  //       errors: [
-  //         {
-  //           msg: 'The provides sizes are not valid',
-  //           param: 'sizes',
-  //         },
-  //       ],
-  //     };
-  //   }
-  // }
+  if (validatedSizes.length === 0)
+    throw {
+      status: 400,
+      errors: [
+        {
+          msg: 'The provides sizes are not valid',
+          param: 'sizes',
+        },
+      ],
+    };
 
   return newClothing.save();
 };

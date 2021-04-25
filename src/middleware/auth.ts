@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { generateNewJWT } from '../utils/SessionManagement';
-import context from '../utils/Context';
+import Context from '../utils/Context';
 import environment from '../utils/environment';
 
 export default async (req, res, next) => {
@@ -28,9 +28,7 @@ export default async (req, res, next) => {
       }
     }
 
-    req.userId = decodedToken['_id'];
-
-    context.setUserId(decodedToken['_id']);
+    Context.setUserId(decodedToken['_id']);
 
     next();
   } catch (ex) {

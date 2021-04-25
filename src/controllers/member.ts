@@ -11,6 +11,7 @@ import {
   updatePassword,
   registerToken,
 } from '../services/member';
+import Context from '../utils/Context';
 import env from '../utils/environment';
 import checkForErrors from '../utils/ErrorThrowing';
 
@@ -84,11 +85,8 @@ export const changePassword = async (req, res, next) => {
     checkForErrors(req);
 
     const { oldPassword, newPassword } = req.body;
-    const { userId } = req;
 
-    res
-      .status(200)
-      .json(await updatePassword(userId, oldPassword, newPassword));
+    res.status(200).json(await updatePassword(oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }
@@ -118,8 +116,7 @@ export const signupSecret = async (req, res, next) => {
 export const expoToken = async (req, res, next) => {
   try {
     const { token } = req.body;
-    const { userId } = req;
-    res.status(200).json(await registerToken(userId, token));
+    res.status(200).json(await registerToken(token));
   } catch (ex) {
     next(ex);
   }
@@ -127,8 +124,7 @@ export const expoToken = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    const { userId } = req;
-    res.status(200).json(await findMemberById(userId));
+    res.status(200).json(await findMemberById(Context.getUserId()));
   } catch (ex) {
     next(ex);
   }

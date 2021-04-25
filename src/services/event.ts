@@ -3,6 +3,7 @@ import { Expo } from 'expo-server-sdk';
 
 import Event, { IEvent } from '../models/Event';
 import { getAllMembers } from './member';
+import Context from '../utils/Context';
 
 export const getAllEvents = async () => {
   return Event.find().sort({ createdAt: 'desc', name: 'asc' });
@@ -34,11 +35,8 @@ export const updateEvent = async (event: IEvent) => {
   return Event.updateOne({ _id: event._id }, event);
 };
 
-export const attendEvent = async (
-  eventId: string,
-  userId: Schema.Types.ObjectId,
-  attending: boolean
-) => {
+export const attendEvent = async (eventId: string, attending: boolean) => {
+  const userId = Context.getUserId();
   const event = await Event.findById(eventId);
   if (attending) {
     if (!event.members.includes(userId)) event.members.push(userId);

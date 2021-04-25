@@ -7,6 +7,7 @@ import Member, { IMember } from '../models/Member';
 import { signJWT } from '../utils/SessionManagement';
 import { generateToken, getPugTemplate } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
+import Context from '../utils/Context';
 
 export const getAllMembers = async () => {
   return Member.find().sort({ numMember: 'asc' });
@@ -108,11 +109,10 @@ export const loginCredentials = async (username: string, password: string) => {
 };
 
 export const updatePassword = async (
-  id: string,
   oldPassword: string,
   newPassword: string
 ) => {
-  const member = await Member.findById(id);
+  const member = await Member.findById(Context.getUserId());
   if (!member)
     throw {
       status: 400,
@@ -130,8 +130,8 @@ export const updatePassword = async (
   return member.save();
 };
 
-export const registerToken = async (memberId: string, token: string) => {
-  const member = await Member.findById(memberId);
+export const registerToken = async (token: string) => {
+  const member = await Member.findById(Context.getUserId());
 
   if (!member)
     throw {

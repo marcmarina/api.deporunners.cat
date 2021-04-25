@@ -58,10 +58,9 @@ export const update = async (req, res, next) => {
 
 export const attend = async (req, res, next) => {
   try {
-    const userId = req.userId;
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
-    res.status(201).json(await attendEvent(eventId, userId, attending));
+    res.status(201).json(await attendEvent(eventId, attending));
   } catch (ex) {
     next(ex);
   }

@@ -1,16 +1,15 @@
 import nodemailer from 'nodemailer';
 import sendgridTransport from 'nodemailer-sendgrid-transport';
-
-import 'dotenv/config';
+import env from '../utils/environment';
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: process.env.SENDGRID_API_KEY,
+      api_key: env.sendgridKey(),
     },
   }),
   {
-    from: process.env.EMAIL_FROM,
+    from: env.emailFrom(),
   }
 );
 

@@ -1,11 +1,11 @@
-import 'dotenv/config';
+import env from '../utils/environment';
 
 import apiToken, { checkToken } from './apiToken';
 
 test('middleware calls next without an exception when the token is present and valid', () => {
   const req = {
     headers: {
-      'x-api-token': process.env.API_TOKEN,
+      'x-api-token': env.apiToken(),
     },
   };
   const next = jest.fn(ex => {
@@ -62,7 +62,7 @@ test('throws error when given token is not valid', () => {
 test("doesn't throw error when given token is valid", () => {
   const req = {
     headers: {
-      'x-api-token': process.env.API_TOKEN,
+      'x-api-token': env.apiToken(),
     },
   };
   expect(() => {

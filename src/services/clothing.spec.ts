@@ -7,9 +7,10 @@ import {
   changeImage,
   updateClothing,
 } from '../services/clothing';
+import environment from '../utils/environment';
 
 beforeAll(async () => {
-  await db.connect(process.env.MONGODB_URI);
+  await db.connect(environment.mongoURI());
 });
 
 afterAll(async () => {

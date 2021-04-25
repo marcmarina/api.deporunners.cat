@@ -11,6 +11,7 @@ import {
   updatePassword,
   registerToken,
 } from '../services/member';
+import env from '../utils/environment';
 import checkForErrors from '../utils/ErrorThrowing';
 
 export const create = async (req, res, next) => {
@@ -95,7 +96,7 @@ export const changePassword = async (req, res, next) => {
 
 export const signupSecret = async (req, res, next) => {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+    const stripe = new Stripe(env.stripeKey(), {
       apiVersion: '2020-08-27',
     });
 

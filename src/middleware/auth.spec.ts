@@ -5,11 +5,12 @@ import { signJWT } from '../utils/SessionManagement';
 import auth, { getTokens } from './auth';
 import db from '../utils/db';
 import { createSessionToken } from '../services/user';
+import environment from '../utils/environment';
 
 let user: IUser;
 
 beforeAll(async () => {
-  await db.connect(process.env.MONGODB_URI);
+  await db.connect(environment.mongoURI());
 
   user = await User.findOne({});
 

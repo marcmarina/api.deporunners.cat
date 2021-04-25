@@ -5,9 +5,9 @@ import * as OrderService from './order';
 
 jest.mock('../models/Order');
 
-const mockedOrderModel = Order as jest.Mocked<typeof Order>;
+const mockedOrder = Order as jest.Mocked<typeof Order>;
 
-mockedOrderModel.findById.mockResolvedValue({
+mockedOrder.findById.mockResolvedValue({
   _id: 'asdasdasd',
   member: '123123123',
   price: 1499,

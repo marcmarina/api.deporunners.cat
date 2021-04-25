@@ -16,6 +16,7 @@ import ClothingRoutes from './routes/clothing';
 
 import apiToken from './middleware/apiToken';
 import db from './utils/db';
+import env from './utils/environment';
 
 const app = express();
 
@@ -78,6 +79,6 @@ app.use((error, req, res, next) => {
   res.status(status).json(error);
 });
 
-db.connect(process.env.MONGODB_URI);
+db.connect(env.mongoURI());
 
 export default app;

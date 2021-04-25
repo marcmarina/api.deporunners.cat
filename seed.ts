@@ -13,6 +13,7 @@ import Clothing from './src/models/Clothing';
 
 import db from './src/utils/db';
 import { randomInt } from './src/utils/Utils';
+import environment from './src/utils/environment';
 
 dotenv.config();
 
@@ -106,7 +107,7 @@ const userCount = parseInt(process.env.SEED_USER_COUNT) || 2;
 const eventCount = parseInt(process.env.SEED_EVENT_COUNT) || 20;
 
 async function seed() {
-  await db.connect(process.env.MONGODB_URI);
+  await db.connect(environment.mongoURI());
 
   await Member.deleteMany({});
   await User.deleteMany({});

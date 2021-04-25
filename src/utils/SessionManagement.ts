@@ -1,6 +1,7 @@
 import jwt from 'jsonwebtoken';
 import Member, { IMember } from '../models/Member';
 import User, { IUser } from '../models/User';
+import environment from './environment';
 
 type ModelName = 'User' | 'Member';
 
@@ -40,9 +41,9 @@ export const signJWT = (data: any, modelName: ModelName) => {
       ...data,
       model: modelName,
     },
-    process.env.APP_SECRET_KEY,
+    environment.appSecretKey(),
     {
-      expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
+      expiresIn: parseInt(environment.jwtExpiration()),
     }
   );
 };

@@ -1,3 +1,5 @@
+import environment from '../utils/environment';
+
 export default (req, res, next) => {
   try {
     checkToken(req);
@@ -14,7 +16,7 @@ export const checkToken = req => {
       status: 401,
       msg: 'No API Token provided',
     };
-  } else if (apiToken !== process.env.API_TOKEN) {
+  } else if (apiToken !== environment.apiToken()) {
     throw {
       status: 401,
       msg: 'API Token is not valid',

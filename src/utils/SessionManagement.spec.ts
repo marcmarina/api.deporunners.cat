@@ -4,11 +4,12 @@ import User, { IUser } from '../models/User';
 import { createSessionToken } from '../services/user';
 import { generateNewJWT } from './SessionManagement';
 import db from './db';
+import environment from './environment';
 
 let user: IUser;
 
 beforeAll(async () => {
-  await db.connect(process.env.MONGODB_URI);
+  await db.connect(environment.mongoURI());
 
   user = await User.findOne({});
 

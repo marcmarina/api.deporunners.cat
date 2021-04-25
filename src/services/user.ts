@@ -9,8 +9,8 @@ export const getAllUsers = async (): Promise<IUser[]> => {
   return User.find();
 };
 
-export const findUserById = async (id: Schema.Types.ObjectId) => {
-  return User.findById(id);
+export const findUserById = async (id: string) => {
+  return await User.findById(id);
 };
 
 export const createUser = async (user: IUser): Promise<IUser> => {

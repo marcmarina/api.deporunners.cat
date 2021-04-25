@@ -1,26 +1,7 @@
-import 'dotenv/config';
-
-import User, { IUser } from '../models/User';
 import { signJWT } from '../utils/SessionManagement';
 import auth, { getTokens } from './auth';
-import db from '../utils/db';
-import { createSessionToken } from '../services/user';
-import environment from '../utils/environment';
 
-let user: IUser;
-
-beforeAll(async () => {
-  await db.connect(environment.mongoURI());
-
-  user = await User.findOne({});
-
-  if (!user.refreshToken) user = await createSessionToken(user);
-});
-afterAll(async () => {
-  await db.disconnect();
-});
-
-test('throws an error when tokens are missing', () => {
+it('throws an error when tokens are missing', () => {
   const req = {
     headers: {},
   };
@@ -30,7 +11,7 @@ test('throws an error when tokens are missing', () => {
   }).toThrow();
 });
 
-test('extracts the correct tokens', () => {
+it('extracts the correct tokens', () => {
   const req = {
     headers: {
       'x-refresh-token': 'refreshtoken',
@@ -44,7 +25,12 @@ test('extracts the correct tokens', () => {
   });
 });
 
-test('inserts right info in request', async () => {
+it('inserts right info in request', async () => {
+  const user = {
+    refreshToken: 'refreshToken',
+    _id: '123123123',
+  };
+
   const req = {
     headers: {
       'x-refresh-token': user.refreshToken,
@@ -64,6 +50,5 @@ test('inserts right info in request', async () => {
   const next = jest.fn();
   auth(req, res, next);
 
-  expect(req['userId']).toBe(user._id.toString());
   expect(res.headers).toHaveProperty('x-auth-token');
 });

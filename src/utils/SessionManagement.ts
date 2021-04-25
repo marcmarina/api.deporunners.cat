@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
-import Member, { IMember } from '../models/Member';
-import User, { IUser } from '../models/User';
+import { IMember } from '../models/Member';
+import { IUser } from '../models/User';
+import { findMemberById } from '../services/member';
+import { findUserById } from '../services/user';
 import environment from './environment';
 
 type ModelName = 'User' | 'Member';
@@ -13,9 +15,9 @@ export const generateNewJWT = async (
   let model: IMember | IUser;
 
   if (modelName === 'Member') {
-    model = await Member.findById(id);
+    model = await findMemberById(id);
   } else if (modelName === 'User') {
-    model = await User.findById(id);
+    model = await findUserById(id);
   }
 
   if (!model) {

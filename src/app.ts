@@ -1,10 +1,10 @@
 import express from 'express';
-import bodyParser from 'body-parser';
 import cors from 'cors';
 import favicon from 'serve-favicon';
 import path from 'path';
 import 'dotenv/config';
 import multer from 'multer';
+import httpContext from 'express-http-context';
 
 import UserRoutes from './routes/user';
 import RoleRoutes from './routes/role';
@@ -33,7 +33,8 @@ const fileStorage = multer.diskStorage({
   },
 });
 
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(httpContext.middleware);
 app.use(
   cors({
     allowedHeaders: [

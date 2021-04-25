@@ -69,11 +69,11 @@ app.use('/tshirtsize', TShirtSizeRoutes);
 app.use('/event', EventRoutes);
 app.use('/clothing', ClothingRoutes);
 
-app.use('/', (req, res, next) => {
+app.use('/', (req, res, _next) => {
   res.status(404).send('Not Found');
 });
 
-app.use((error, req, res, next) => {
+app.use((error, req, res, _next) => {
   console.log(error);
   const status = error['status'] || 500;
   res.status(status).json(error);

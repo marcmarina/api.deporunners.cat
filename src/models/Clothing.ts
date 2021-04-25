@@ -1,7 +1,5 @@
 import { Schema, model, Document } from 'mongoose';
 
-import TShirtSize from './TShirtSize';
-
 export interface IClothing extends Document {
   ref: string;
   name: string;
@@ -22,7 +20,7 @@ const clothingSchema = new Schema({
   sizes: [
     {
       type: Schema.Types.ObjectId,
-      ref: TShirtSize,
+      ref: 'TShirtSize',
       required: true,
     },
   ],

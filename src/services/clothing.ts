@@ -20,7 +20,7 @@ export const findClothingById = async (id: string) => {
   return clothing;
 };
 
-export const createClothing = async clothing => {
+export const createClothing = async (clothing: IClothing) => {
   const newClothing = await Clothing.create(clothing);
 
   if (newClothing.sizes.length === 0) {

@@ -77,7 +77,9 @@ describe('findClothingById', () => {
 
 describe('createClothing', () => {
   it('returns a new item of clothing', async () => {
-    const result = await ClothingService.createClothing(singleClothing);
+    const result = await ClothingService.createClothing(
+      await Clothing.create(singleClothing)
+    );
 
     expect(saveModel).toHaveBeenCalled();
     expect(result).toMatchObject(singleClothing);
@@ -85,10 +87,12 @@ describe('createClothing', () => {
 
   it('throws if no sizes are provided', async () => {
     await expect(
-      ClothingService.createClothing({
-        ...singleClothing,
-        sizes: [],
-      })
+      ClothingService.createClothing(
+        await Clothing.create({
+          ...singleClothing,
+          sizes: [],
+        })
+      )
     ).rejects.toMatchObject({
       status: 400,
       errors: [
@@ -104,9 +108,11 @@ describe('createClothing', () => {
     mockedTShirt.findByIds.mockResolvedValueOnce([]);
 
     await expect(
-      ClothingService.createClothing({
-        ...singleClothing,
-      })
+      ClothingService.createClothing(
+        await Clothing.create({
+          ...singleClothing,
+        })
+      )
     ).rejects.toMatchObject({
       status: 400,
       errors: [
@@ -118,12 +124,3 @@ describe('createClothing', () => {
     });
   });
 });
-
-// it('updates the clothing record', async () => {
-//   const clothing = await Clothing.findOne();
-//   clothing.name = 'Test';
-//   clothing.price = 15;
-
-//   const res = await updateClothing(clothing);
-//   expect(res.ok).toBe(1);
-// });

@@ -1,8 +1,11 @@
 import dayjs from 'dayjs';
-import mongoose from 'mongoose';
-
 import { check } from 'express-validator';
-import { existingMemberEmail, validTown } from './DatabaseValidators';
+
+import { existingMemberEmail, validateModelId } from './DatabaseValidators';
+import Clothing from '../models/Clothing';
+import Town from '../models/Town';
+import TShirtSize from '../models/TShirtSize';
+import Member from '../models/Member';
 
 export const createMember = [
   check('firstName')
@@ -20,7 +23,7 @@ export const createMember = [
   check('address.streetAddress').isString(),
   check('address.postCode').isString(),
   check('address.town').notEmpty(),
-  validTown('address.town'),
+  validateModelId(Town, 'address.town'),
 ];
 
 export const updateMember = [
@@ -38,7 +41,7 @@ export const updateMember = [
   check('address.streetAddress').isString(),
   check('address.postCode').isString(),
   check('address.town').notEmpty(),
-  validTown('address.town'),
+  validateModelId(Town, 'address.town'),
 ];
 
 export const memberLogin = [
@@ -67,11 +70,13 @@ export const fullClothing = [
     .withMessage('The name has to be at least 4 characters long')
     .trim(),
   check('price').isNumeric().withMessage('The price has to be a number'),
-  check('sizes').custom(value => {
-    if (value.length === 0) return false;
-    for (const size of value) {
-      if (!mongoose.isValidObjectId(size)) return false;
-    }
-    return true;
-  }),
+  validateModelId(TShirtSize, 'sizes.*'),
+];
+
+export const createOrder = [
+  check('member').notEmpty().withMessage('The member id cannot be empty'),
+  check('price').isNumeric().withMessage('The price has to be a number'),
+  validateModelId(TShirtSize, 'items.*.size'),
+  validateModelId(Member, 'member'),
+  validateModelId(Clothing, 'items.*.clothing'),
 ];

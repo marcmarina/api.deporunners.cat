@@ -56,7 +56,9 @@ describe('findById', () => {
 
 describe('createOrder', () => {
   it('should return a newly created order', async () => {
-    const result = await OrderService.createOrder(sampleData.singleOrder);
+    const result = await OrderService.createOrder(
+      await Order.create(sampleData.singleOrder)
+    );
 
     expect(saveModel).toHaveBeenCalled();
     expect(result).toMatchObject(sampleData.singleOrder);

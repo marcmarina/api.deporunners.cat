@@ -13,6 +13,7 @@ import TownRoutes from './routes/town';
 import TShirtSizeRoutes from './routes/tshirtSize';
 import EventRoutes from './routes/event';
 import ClothingRoutes from './routes/clothing';
+import OrderRoutes from './routes/order';
 
 import apiToken from './middleware/apiToken';
 import db from './utils/db';
@@ -68,6 +69,7 @@ app.use('/town', TownRoutes);
 app.use('/tshirtsize', TShirtSizeRoutes);
 app.use('/event', EventRoutes);
 app.use('/clothing', ClothingRoutes);
+app.use('/order', OrderRoutes);
 
 app.use('/', (req, res, _next) => {
   res.status(404).send('Not Found');

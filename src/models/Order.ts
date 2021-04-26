@@ -1,6 +1,6 @@
 import { Schema, Types, Document, model } from 'mongoose';
 
-export interface IOrder {
+export interface IOrder extends Document {
   member: Types.ObjectId;
   items: IOrderItem[];
   price: number;
@@ -12,7 +12,7 @@ export interface IOrderItem {
   size: Types.ObjectId;
 }
 
-const clothingSchema = new Schema(
+const orderSchema = new Schema(
   {
     member: {
       type: Types.ObjectId,
@@ -23,24 +23,27 @@ const clothingSchema = new Schema(
       type: Number,
       required: true,
     },
-    items: [
-      {
-        size: {
-          type: Types.ObjectId,
-          ref: 'TShirtSize',
-          required: true,
+    items: {
+      type: [
+        {
+          size: {
+            type: Types.ObjectId,
+            ref: 'TShirtSize',
+            required: true,
+          },
+          clothing: {
+            type: Types.ObjectId,
+            ref: 'Clothing',
+            required: true,
+          },
+          amount: {
+            type: Number,
+            required: true,
+          },
         },
-        clothing: {
-          type: Types.ObjectId,
-          ref: 'Clothing',
-          required: true,
-        },
-        amount: {
-          type: Number,
-          required: true,
-        },
-      },
-    ],
+      ],
+      required: true,
+    },
     completed: Boolean,
   },
   {
@@ -48,4 +51,4 @@ const clothingSchema = new Schema(
   }
 );
 
-export default model<Document<IOrder>>('Clothing', clothingSchema);
+export default model<IOrder>('Order', orderSchema);

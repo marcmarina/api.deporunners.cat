@@ -46,12 +46,6 @@ describe('findById', () => {
 
     expect(result).toMatchObject(sampleData.singleOrder);
   });
-
-  it('should throw if the current user id does not own the order', async () => {
-    mockedContext.getUserId.mockReturnValueOnce('asdasdasd');
-
-    await expect(OrderService.findById('123123123')).rejects.toBeDefined();
-  });
 });
 
 describe('createOrder', () => {

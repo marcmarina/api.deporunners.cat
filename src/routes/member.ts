@@ -6,7 +6,7 @@ import {
   createMember,
   memberLogin,
   updateMember,
-} from '../validators/EndpointValidators';
+} from '../validators/endpoint-validators';
 import { generateExcel } from '../services/member';
 
 const router = Router();

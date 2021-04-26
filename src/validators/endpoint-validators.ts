@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { check } from 'express-validator';
 
-import { existingMemberEmail, validateModelId } from './DatabaseValidators';
+import { existingMemberEmail, validateModelId } from './database-validators';
 import Clothing from '../models/Clothing';
 import Town from '../models/Town';
 import TShirtSize from '../models/TShirtSize';

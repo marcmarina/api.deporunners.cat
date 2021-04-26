@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import * as ClothingController from '../controllers/clothing';
-import { fullClothing } from '../validators/EndpointValidators';
+import { fullClothing } from '../validators/endpoint-validators';
 
 const router = Router();
 

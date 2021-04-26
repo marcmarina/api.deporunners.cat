@@ -2,7 +2,7 @@ import env from '../config/environment';
 
 import apiToken, { checkToken } from './apiToken';
 
-test('middleware calls next without an exception when the token is present and valid', () => {
+it('middleware calls next without an exception when the token is present and valid', () => {
   const req = {
     headers: {
       'x-api-token': env.apiToken(),
@@ -15,7 +15,7 @@ test('middleware calls next without an exception when the token is present and v
   apiToken(req, {}, next);
 });
 
-test('middleware calls next with an exception when the token is invalid', () => {
+it('middleware calls next with an exception when the token is invalid', () => {
   const req = {
     headers: {
       'x-api-token': 'invalidtoken',
@@ -28,7 +28,7 @@ test('middleware calls next with an exception when the token is invalid', () => 
   apiToken(req, {}, next);
 });
 
-test('middleware calls next with an exception when the token is not provided', () => {
+it('middleware calls next with an exception when the token is not provided', () => {
   const req = {
     headers: {},
   };
@@ -39,7 +39,7 @@ test('middleware calls next with an exception when the token is not provided', (
   apiToken(req, {}, next);
 });
 
-test('throws error when no token is present', () => {
+it('throws error when no token is present', () => {
   const req = {
     headers: {},
   };
@@ -48,7 +48,7 @@ test('throws error when no token is present', () => {
   }).toThrow();
 });
 
-test('throws error when given token is not valid', () => {
+it('throws error when given token is not valid', () => {
   const req = {
     headers: {
       'x-api-token': 'randomToken',
@@ -59,7 +59,7 @@ test('throws error when given token is not valid', () => {
   }).toThrow();
 });
 
-test("doesn't throw error when given token is valid", () => {
+it("doesn't throw error when given token is valid", () => {
   const req = {
     headers: {
       'x-api-token': env.apiToken(),

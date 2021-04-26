@@ -1,4 +1,4 @@
-import environment from '../utils/environment';
+import environment from '../config/environment';
 
 export default (req, res, next) => {
   try {

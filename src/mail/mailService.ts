@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 import sendgridTransport from 'nodemailer-sendgrid-transport';
-import env from '../utils/environment';
+import env from '../config/environment';
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({

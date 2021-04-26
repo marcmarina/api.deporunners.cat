@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { generateNewJWT } from '../utils/SessionManagement';
 import Context from '../utils/Context';
-import environment from '../utils/environment';
+import environment from '../config/environment';
 
 export default async (req, res, next) => {
   try {

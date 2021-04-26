@@ -1,4 +1,4 @@
-import env from '../utils/environment';
+import env from '../config/environment';
 
 import apiToken, { checkToken } from './apiToken';
 

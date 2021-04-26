@@ -12,7 +12,7 @@ import {
   registerToken,
 } from '../services/member';
 import Context from '../utils/Context';
-import env from '../utils/environment';
+import env from '../config/environment';
 import checkForErrors from '../utils/ErrorThrowing';
 
 export const create = async (req, res, next) => {

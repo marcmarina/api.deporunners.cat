@@ -3,7 +3,7 @@ import { IMember } from '../models/Member';
 import { IUser } from '../models/User';
 import { findMemberById } from '../services/member';
 import { findUserById } from '../services/user';
-import environment from './environment';
+import environment from '../config/environment';
 
 type ModelName = 'User' | 'Member';
 

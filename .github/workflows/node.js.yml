@@ -23,9 +23,3 @@ jobs:
 
       - name: Run unit tests
         run: yarn test
-
-    env:
-      MONGODB_URI: 'mongodb://localhost/deporunners'
-      API_TOKEN: 'apitoken'
-      APP_SECRET_KEY: 'appsecretkey'
-      JWT_EXPIRATION_TIME: 900

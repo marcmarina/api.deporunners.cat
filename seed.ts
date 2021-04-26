@@ -13,7 +13,7 @@ import Clothing from './src/models/Clothing';
 
 import db from './src/utils/db';
 import { randomInt } from './src/utils/Utils';
-import environment from './src/utils/environment';
+import environment from './src/config/environment';
 
 dotenv.config();
 

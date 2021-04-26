@@ -76,7 +76,6 @@ app.use('/', (req, res, _next) => {
 });
 
 app.use((error, req, res, _next) => {
-  console.log(error);
   const status = error['status'] || 500;
   res.status(status).json(error);
 });

@@ -70,6 +70,7 @@ export const fullClothing = [
     .withMessage('The name has to be at least 4 characters long')
     .trim(),
   check('price').isNumeric().withMessage('The price has to be a number'),
+  check('sizes').isArray({ min: 1 }),
   validateModelId(TShirtSize, 'sizes.*'),
 ];
 
@@ -78,5 +79,8 @@ export const createOrder = [
   check('price').isNumeric().withMessage('The price has to be a number'),
   validateModelId(TShirtSize, 'items.*.size'),
   validateModelId(Member, 'member'),
+  check('items')
+    .isArray({ min: 1 })
+    .withMessage('The items array cannot be empty'),
   validateModelId(Clothing, 'items.*.clothing'),
 ];

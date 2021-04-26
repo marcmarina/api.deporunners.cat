@@ -4,14 +4,8 @@ import pathNode from 'path';
 import CSSInliner from 'css-inliner';
 import fs from 'fs';
 
-export const generateToken = (size: number): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    crypto.randomBytes(size, (err, buffer) => {
-      if (err) reject(err);
-      const token = buffer.toString('hex');
-      resolve(token);
-    });
-  });
+export const generateToken = (size: number) => {
+  return crypto.randomBytes(size).toString('hex');
 };
 
 export const mapToJSON = (map: Map<any, any>) => {

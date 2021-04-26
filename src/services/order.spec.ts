@@ -1,55 +1,64 @@
 import Order from '../models/Order';
 import Context from '../utils/Context';
+import testing from '../utils/testing';
 
 import * as OrderService from './order';
+
+const sampleUserId = testing.mongodbId();
+
+const sampleData = {
+  singleOrder: {
+    _id: testing.mongodbId(),
+    member: sampleUserId,
+    price: 1499,
+    items: [
+      {
+        size: testing.mongodbId(),
+        clothing: testing.mongodbId(),
+        amount: 1,
+      },
+    ],
+    completed: false,
+  },
+};
+
+const saveModel = jest.fn();
 
 jest.mock('../models/Order');
 
 const mockedOrder = Order as jest.Mocked<typeof Order>;
 
-mockedOrder.findById.mockResolvedValue({
-  _id: 'asdasdasd',
-  member: '123123123',
-  price: 1499,
-  items: [
-    {
-      size: 'asdasdasd',
-      clothing: 'asdasdasd',
-      amount: 1,
-    },
-  ],
-  completed: false,
-});
+mockedOrder.findById.mockResolvedValue(sampleData.singleOrder);
 
-const sampleData = {
-  userId: '123123123',
-};
+mockedOrder.create.mockImplementation(order => ({
+  ...order,
+  save: saveModel.mockReturnValue(order),
+}));
 
 jest.mock('../utils/Context');
 
 const mockedContext = Context as jest.Mocked<typeof Context>;
-mockedContext.getUserId.mockReturnValue(sampleData.userId);
+mockedContext.getUserId.mockReturnValue(`${sampleUserId}`);
 
-it('should return one order for a specific id', async () => {
-  const result = await OrderService.findById('123123123');
+describe('findById', () => {
+  it('should return one order for a specific id', async () => {
+    const result = await OrderService.findById('123123123');
 
-  expect(result).toMatchObject({
-    _id: 'asdasdasd',
-    member: sampleData.userId,
-    price: 1499,
-    items: [
-      {
-        size: 'asdasdasd',
-        clothing: 'asdasdasd',
-        amount: 1,
-      },
-    ],
-    completed: false,
+    expect(result).toMatchObject(sampleData.singleOrder);
+  });
+
+  it('should throw if the current user id does not own the order', async () => {
+    mockedContext.getUserId.mockReturnValueOnce('asdasdasd');
+
+    await expect(OrderService.findById('123123123')).rejects.toBeDefined();
   });
 });
 
-it('should throw if the current user id does not own the order', async () => {
-  mockedContext.getUserId.mockReturnValueOnce('asdasdasd');
+describe('createOrder', () => {
+  it('should return a newly created order', async () => {
+    const result = await OrderService.createOrder(sampleData.singleOrder);
 
-  await expect(OrderService.findById('123123123')).rejects.toBeDefined();
+    expect(saveModel).toHaveBeenCalled();
+    expect(result).toMatchObject(sampleData.singleOrder);
+  });
 });

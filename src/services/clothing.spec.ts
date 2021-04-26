@@ -27,9 +27,10 @@ const clothesArray = [singleClothing, singleClothing, singleClothing];
 const saveModel = jest.fn();
 
 mockedClothing.find.mockReturnValue(clothesArray);
-mockedClothing.create.mockImplementation(singleClothing => {
-  return { ...singleClothing, save: saveModel.mockReturnValue(singleClothing) };
-});
+mockedClothing.create.mockImplementation(singleClothing => ({
+  ...singleClothing,
+  save: saveModel.mockReturnValue(singleClothing),
+}));
 
 jest.mock('../services/tshirtSize');
 

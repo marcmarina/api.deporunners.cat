@@ -1,22 +1,21 @@
-import { Schema, Document, model } from 'mongoose';
+import { Schema, Types, Document, model } from 'mongoose';
 
-export interface IOrder extends Document {
-  member: Schema.Types.ObjectId;
+export interface IOrder {
+  member: Types.ObjectId;
   items: IOrderItem[];
   price: number;
   completed: boolean;
 }
-
 export interface IOrderItem {
-  clothing: Schema.Types.ObjectId;
+  clothing: Types.ObjectId;
   amount: number;
-  size: Schema.Types.ObjectId;
+  size: Types.ObjectId;
 }
 
 const clothingSchema = new Schema(
   {
     member: {
-      type: Schema.Types.ObjectId,
+      type: Types.ObjectId,
       ref: 'Member',
       required: true,
     },
@@ -27,12 +26,12 @@ const clothingSchema = new Schema(
     items: [
       {
         size: {
-          type: Schema.Types.ObjectId,
+          type: Types.ObjectId,
           ref: 'TShirtSize',
           required: true,
         },
         clothing: {
-          type: Schema.Types.ObjectId,
+          type: Types.ObjectId,
           ref: 'Clothing',
           required: true,
         },
@@ -49,4 +48,4 @@ const clothingSchema = new Schema(
   }
 );
 
-export default model<IOrder>('Clothing', clothingSchema);
+export default model<Document<IOrder>>('Clothing', clothingSchema);

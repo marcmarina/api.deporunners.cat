@@ -10,7 +10,7 @@
     "test": "jest --passWithNoTests",
     "seed": "ts-node seed.ts",
     "lint": "eslint . --ext .ts",
-    "mongo:start": "docker run -d -p 27017:27017 mongo"
+    "mongo:start": "docker run --rm -d -p 27017:27017 mongo:latest"
   },
   "author": "Marc Marina",
   "license": "ISC",

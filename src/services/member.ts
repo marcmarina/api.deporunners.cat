@@ -144,8 +144,8 @@ export const registerToken = async (token: string) => {
   return member.save();
 };
 
-const createSessionToken = async (member: IMember) => {
-  const refreshToken = await generateToken(64);
+const createSessionToken = (member: IMember) => {
+  const refreshToken = generateToken(64);
   member.refreshToken = refreshToken;
   return member.save();
 };

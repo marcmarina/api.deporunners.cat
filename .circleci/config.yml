@@ -5,13 +5,12 @@ orbs:
 jobs:
   unit-testing: 
     docker:       
-      - image: node:15-alpine3.10        
-    steps:
-      - run: curl -o- -L https://yarnpkg.com/install.sh | bash
-      - run: cp package.json ./       
-      - run: cp yarn.lock ./       
+      - image: circleci/node      
+    steps:      
+      - run: cp package.json ./ 
+      - run: cp yarn.lock ./ 
+      - run: cp -r src ./src 
       - run: yarn
-      - run: cp -r src ./src
       - run: yarn test
 
 workflows:
@@ -21,4 +20,3 @@ workflows:
         filters: 
           branches:
             only: /*/
-          

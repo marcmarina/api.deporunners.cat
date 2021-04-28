@@ -3,17 +3,17 @@ orbs:
   node: circleci/node@3.0.0
 
 jobs:
-  test: 
+  unit-testing: 
     docker:       
       - image: node:15-alpine3.10        
     steps:       
-      - run: echo "hello world"  
-     
+      - run: yarn
+      - run: yarn test
 
 workflows:
   testing:
     jobs:
-      - test:
+      - unit-testing:
         filters: 
           branches:
             only: /*/  

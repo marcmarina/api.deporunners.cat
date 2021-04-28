@@ -6,10 +6,8 @@ jobs:
   unit-testing: 
     docker:       
       - image: circleci/node      
-    steps:      
-      - run: cp package.json ./ 
-      - run: cp yarn.lock ./ 
-      - run: cp -r src ./src 
+    steps:
+      - checkout
       - run: yarn
       - run: yarn test
 

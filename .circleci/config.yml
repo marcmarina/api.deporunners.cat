@@ -5,7 +5,7 @@ orbs:
 jobs:
   test: 
     docker:       
-      - image: node-14:latest        
+      - image: node:15-alpine3.10        
     steps:       
       - run: echo "hello world"  
      

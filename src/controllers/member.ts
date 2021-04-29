@@ -1,25 +1,18 @@
 import Stripe from 'stripe';
 import eventEmitter from '../events/EventEmitter';
 
-import {
-  createMember,
-  getAllMembers,
-  findMemberById,
-  deleteById,
-  update,
-  loginCredentials,
-  updatePassword,
-  registerToken,
-} from '../services/member';
+import { MemberService } from '../services/MemberService';
 import Context from '../utils/Context';
 import env from '../config/environment';
 import checkForErrors from '../utils/ErrorThrowing';
+
+const service = new MemberService();
 
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
 
-    const result = await createMember({ ...req.body });
+    const result = await service.createMember({ ...req.body });
 
     res.status(201).json(result);
   } catch (ex) {
@@ -29,7 +22,7 @@ export const create = async (req, res, next) => {
 
 export const index = async (req, res, next) => {
   try {
-    res.status(200).json(await getAllMembers());
+    res.status(200).json(await service.getAllMembers());
   } catch (ex) {
     next(ex);
   }
@@ -38,7 +31,7 @@ export const index = async (req, res, next) => {
 export const find = async (req, res, next) => {
   try {
     const { id } = req.params;
-    res.status(200).json(await findMemberById(id));
+    res.status(200).json(await service.findMemberById(id));
   } catch (ex) {
     next(ex);
   }
@@ -47,7 +40,7 @@ export const find = async (req, res, next) => {
 export const destroy = async (req, res, next) => {
   try {
     const { id } = req.params;
-    res.status(200).json(await deleteById(id));
+    res.status(200).json(await service.deleteById(id));
   } catch (ex) {
     next(ex);
   }
@@ -57,7 +50,7 @@ export const put = async (req, res, next) => {
   try {
     checkForErrors(req);
     const member = req.body;
-    res.status(200).json(await update(member));
+    res.status(200).json(await service.update(member));
   } catch (ex) {
     next(ex);
   }
@@ -67,7 +60,7 @@ export const login = async (req, res, next) => {
   try {
     checkForErrors(req);
     const { username, password } = req.body;
-    const { authToken, refreshToken } = await loginCredentials(
+    const { authToken, refreshToken } = await service.loginCredentials(
       username,
       password
     );
@@ -86,7 +79,9 @@ export const changePassword = async (req, res, next) => {
 
     const { oldPassword, newPassword } = req.body;
 
-    res.status(200).json(await updatePassword(oldPassword, newPassword));
+    res
+      .status(200)
+      .json(await service.updatePassword(oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }
@@ -116,7 +111,7 @@ export const signupSecret = async (req, res, next) => {
 export const expoToken = async (req, res, next) => {
   try {
     const { token } = req.body;
-    res.status(200).json(await registerToken(token));
+    res.status(200).json(await service.registerToken(token));
   } catch (ex) {
     next(ex);
   }
@@ -124,7 +119,7 @@ export const expoToken = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await findMemberById(Context.getUserId()));
+    res.status(200).json(await service.findMemberById(Context.getUserId()));
   } catch (ex) {
     next(ex);
   }
@@ -146,7 +141,7 @@ export const signupFailure = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    res.status(200).json(await deleteById(id));
+    res.status(200).json(await service.deleteById(id));
   } catch (ex) {
     next(ex);
   }

@@ -2,8 +2,10 @@ import { Schema } from 'mongoose';
 import { Expo } from 'expo-server-sdk';
 
 import Event, { IEvent } from '../models/Event';
-import { getAllMembers } from './member';
+import { MemberService } from './MemberService';
 import Context from '../utils/Context';
+
+const memberService = new MemberService();
 
 export const getAllEvents = async () => {
   return Event.find().sort({ createdAt: 'desc', name: 'asc' });
@@ -52,7 +54,7 @@ export const attendEvent = async (eventId: string, attending: boolean) => {
 export const sendNotification = async (event: IEvent) => {
   try {
     const messages = [];
-    const members = await getAllMembers();
+    const members = await memberService.getAllMembers();
 
     const expo = new Expo();
 

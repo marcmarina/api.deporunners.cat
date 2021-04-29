@@ -1,11 +1,13 @@
 import jwt from 'jsonwebtoken';
 import { IMember } from '../models/Member';
 import { IUser } from '../models/User';
-import { findMemberById } from '../services/member';
+import { MemberService } from '../services/MemberService';
 import { findUserById } from '../services/user';
 import environment from '../config/environment';
 
 type ModelName = 'User' | 'Member';
+
+const memberService = new MemberService();
 
 export const generateNewJWT = async (
   id: string,
@@ -15,7 +17,7 @@ export const generateNewJWT = async (
   let model: IMember | IUser;
 
   if (modelName === 'Member') {
-    model = await findMemberById(id);
+    model = await memberService.findMemberById(id);
   } else if (modelName === 'User') {
     model = await findUserById(id);
   }

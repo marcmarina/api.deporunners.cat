@@ -7,7 +7,9 @@ import {
   memberLogin,
   updateMember,
 } from '../validators/endpoint-validators';
-import { generateExcel } from '../services/member';
+import { MemberService } from '../services/MemberService';
+
+const service = new MemberService();
 
 const router = Router();
 
@@ -18,7 +20,7 @@ router.post('/expoPushToken', auth, MemberController.expoToken);
 
 router.get('/excel', async (req, res, next) => {
   try {
-    const buffer = await generateExcel();
+    const buffer = await service.generateExcel();
     res.attachment('Socis.xlsx');
     res.send(buffer);
   } catch (err) {

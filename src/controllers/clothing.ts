@@ -1,16 +1,12 @@
-import {
-  changeImage,
-  createClothing,
-  deleteClothing,
-  findClothingById,
-  getAllClothing,
-  updateClothing,
-} from '../services/clothing';
+import { ClothingService } from '../services/ClothingService';
+
 import checkForErrors from '../utils/ErrorThrowing';
+
+const service = new ClothingService();
 
 export const index = async (req, res, next) => {
   try {
-    res.status(200).json(await getAllClothing());
+    res.status(200).json(await service.getAllClothing());
   } catch (ex) {
     next(ex);
   }
@@ -19,7 +15,7 @@ export const index = async (req, res, next) => {
 export const show = async (req, res, next) => {
   try {
     const id = req.params.id;
-    res.status(200).json(await findClothingById(id));
+    res.status(200).json(await service.findById(id));
   } catch (ex) {
     next(ex);
   }
@@ -28,7 +24,7 @@ export const show = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    res.status(201).json(await createClothing({ ...req.body }));
+    res.status(201).json(await service.createClothing({ ...req.body }));
   } catch (ex) {
     next(ex);
   }
@@ -39,7 +35,9 @@ export const setImage = async (req, res, next) => {
     const clothingId = req.params.id;
     res
       .status(201)
-      .json(await changeImage(`images/${req.file.filename}`, clothingId));
+      .json(
+        await service.changeImage(`images/${req.file.filename}`, clothingId)
+      );
   } catch (ex) {
     next(ex);
   }
@@ -47,7 +45,7 @@ export const setImage = async (req, res, next) => {
 
 export const update = async (req, res, next) => {
   try {
-    res.status(201).json(await updateClothing({ ...req.body }));
+    res.status(201).json(await service.updateClothing({ ...req.body }));
   } catch (ex) {
     next(ex);
   }
@@ -55,7 +53,7 @@ export const update = async (req, res, next) => {
 
 export const destroy = async (req, res, next) => {
   try {
-    res.status(200).json(await deleteClothing(req.params.id));
+    res.status(200).json(await service.deleteClothing(req.params.id));
   } catch (ex) {
     next(ex);
   }

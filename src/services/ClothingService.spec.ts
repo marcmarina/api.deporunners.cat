@@ -1,6 +1,7 @@
 import Clothing from '../models/Clothing';
-import * as ClothingService from '../services/clothing';
-import * as TShirtService from '../services/tshirtSize';
+import { ClothingService } from './ClothingService';
+import * as TShirtService from './tshirtSize';
+import testing from '../utils/testing';
 
 jest.mock('../models/Clothing');
 
@@ -38,13 +39,14 @@ const mockedTShirt = TShirtService as jest.Mocked<typeof TShirtService>;
 
 mockedTShirt.findByIds.mockResolvedValue(singleClothing.sizes);
 
+const service = new ClothingService();
 describe('getAllClothing', () => {
   it('returns a correct array of clothing', async () => {
     mockedClothing.find.mockReturnValueOnce({
       populate: jest.fn().mockReturnValue(clothesArray),
     });
 
-    const result = await ClothingService.getAllClothing();
+    const result = await service.getAllClothing();
 
     expect(result).toMatchObject(clothesArray);
   });
@@ -56,7 +58,7 @@ describe('findClothingById', () => {
       populate: jest.fn().mockReturnValue(singleClothing),
     });
 
-    const result = await ClothingService.findClothingById('123123123');
+    const result = await service.findById(testing.mongodbId());
 
     expect(result).toMatchObject(singleClothing);
   });
@@ -66,9 +68,7 @@ describe('findClothingById', () => {
       populate: jest.fn().mockReturnValue(undefined),
     });
 
-    await expect(
-      ClothingService.findClothingById('123123123')
-    ).rejects.toMatchObject({
+    await expect(service.findById(testing.mongodbId())).rejects.toMatchObject({
       status: 404,
       msg: 'Clothing not found',
     });
@@ -77,7 +77,7 @@ describe('findClothingById', () => {
 
 describe('createClothing', () => {
   it('returns a new item of clothing', async () => {
-    const result = await ClothingService.createClothing(
+    const result = await service.createClothing(
       await Clothing.create(singleClothing)
     );
 
@@ -87,7 +87,7 @@ describe('createClothing', () => {
 
   it('throws if no sizes are provided', async () => {
     await expect(
-      ClothingService.createClothing(
+      service.createClothing(
         await Clothing.create({
           ...singleClothing,
           sizes: [],
@@ -108,7 +108,7 @@ describe('createClothing', () => {
     mockedTShirt.findByIds.mockResolvedValueOnce([]);
 
     await expect(
-      ClothingService.createClothing(
+      service.createClothing(
         await Clothing.create({
           ...singleClothing,
         })

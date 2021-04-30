@@ -1,6 +1,6 @@
 # Deporunners - API
 
-[![marcmarina](https://circleci.com/gh/marcmarina/api.deporunners.cat.svg?style=svg)](<LINK>)
+[![marcmarina](https://circleci.com/gh/marcmarina/api.deporunners.cat/tree/feature%2Fclothing.svg?style=svg)](https://app.circleci.com/pipelines/github/marcmarina/api.deporunners.cat?branch=feature%2Fclothing)
 
 [![node](https://img.shields.io/badge/Node.js-v.14.X-brightgreen)](https://nodejs.org)
 [![express](https://img.shields.io/badge/Express-v.4.17.X-brightgreen)](https://expressjs.com/)

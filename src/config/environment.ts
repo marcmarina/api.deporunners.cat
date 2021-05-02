@@ -3,7 +3,9 @@ import 'dotenv/config';
 const isTest = process.env.NODE_ENV === 'test';
 
 const mongoURI = () =>
-  isTest ? 'mongodb://localhost/deporunners' : process.env.MONGODB_URI;
+  isTest
+    ? 'mongodb://localhost/deporunners'
+    : process.env.MONGODB_URI ?? 'mongodb://localhost/deporunners';
 
 const appSecretKey = () => (isTest ? 'secretKey' : process.env.APP_SECRET_KEY);
 

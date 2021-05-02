@@ -1,0 +1,12 @@
+services:
+  web:
+    image: marcmarina/docker-deporunners
+    ports:
+      - '8080:8080'
+    environment: 
+      - MONGODB_URI=mongodb://mongo/deporunners
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - '27017:27017'

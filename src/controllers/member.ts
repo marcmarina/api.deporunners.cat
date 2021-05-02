@@ -31,7 +31,7 @@ export const index = async (req, res, next) => {
 export const find = async (req, res, next) => {
   try {
     const { id } = req.params;
-    res.status(200).json(await service.findMemberById(id));
+    res.status(200).json(await service.findById(id));
   } catch (ex) {
     next(ex);
   }
@@ -119,7 +119,7 @@ export const expoToken = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await service.findMemberById(Context.getUserId()));
+    res.status(200).json(await service.findById(Context.getUserId()));
   } catch (ex) {
     next(ex);
   }

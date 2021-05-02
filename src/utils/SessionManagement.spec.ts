@@ -1,11 +1,16 @@
-import * as MemberService from '../services/member';
+// import { MemberService } from '../services/MemberService';
 import * as UserService from '../services/user';
 import { generateNewJWT } from './SessionManagement';
 
 jest.mock('../services/user');
-jest.mock('../services/member');
+jest.mock('../services/MemberService', () => {
+  return {
+    MemberService: jest.fn().mockReturnValue({
+      findById: jest.fn().mockReturnValue(undefined),
+    }),
+  };
+});
 
-const mockedMember = MemberService as jest.Mocked<typeof MemberService>;
 const mockedUser = UserService as jest.Mocked<typeof UserService>;
 
 const sampleUser = {
@@ -19,7 +24,6 @@ const sampleUser = {
 };
 
 mockedUser.findUserById.mockResolvedValue(sampleUser);
-mockedMember.findMemberById.mockResolvedValue(null);
 
 it('returns a new JWT when given valid information', async () => {
   await expect(

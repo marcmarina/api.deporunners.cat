@@ -17,7 +17,7 @@ export const generateNewJWT = async (
   let model: IMember | IUser;
 
   if (modelName === 'Member') {
-    model = await memberService.findMemberById(id);
+    model = await memberService.findById(id);
   } else if (modelName === 'User') {
     model = await findUserById(id);
   }

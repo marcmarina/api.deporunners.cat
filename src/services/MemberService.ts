@@ -14,7 +14,7 @@ export class MemberService {
     return Member.find().sort({ numMember: 'asc' });
   }
 
-  async findMemberById(id: string) {
+  async findById(id: string) {
     const member = await Member.findOne({ _id: id });
     if (!member)
       throw {

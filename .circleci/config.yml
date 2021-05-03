@@ -25,7 +25,7 @@ jobs:
           command: docker build . -t $IMAGE_NAME:latest
   publish-latest:
     environment:
-      IMAGE_NAME: docker-deporunners
+      IMAGE_NAME: marcmarina/docker-deporunners
     docker:
       - image: circleci/buildpack-deps:stretch
     steps:

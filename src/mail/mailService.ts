@@ -1,15 +1,15 @@
 import nodemailer from 'nodemailer';
 import sendgridTransport from 'nodemailer-sendgrid-transport';
-import env from '../config/environment';
+import config from '../config/config';
 
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: env.sendgridKey(),
+      api_key: config.sendgridKey(),
     },
   }),
   {
-    from: env.emailFrom(),
+    from: config.emailFrom(),
   }
 );
 

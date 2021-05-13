@@ -3,7 +3,7 @@ import { IMember } from '../models/Member';
 import { IUser } from '../models/User';
 import { MemberService } from '../services/MemberService';
 import { findUserById } from '../services/user';
-import environment from '../config/environment';
+import config from '../config/config';
 
 type ModelName = 'User' | 'Member';
 
@@ -45,9 +45,9 @@ export const signJWT = (data: any, modelName: ModelName) => {
       ...data,
       model: modelName,
     },
-    environment.appSecretKey(),
+    config.appSecretKey(),
     {
-      expiresIn: parseInt(environment.jwtExpiration()),
+      expiresIn: parseInt(config.jwtExpiration()),
     }
   );
 };

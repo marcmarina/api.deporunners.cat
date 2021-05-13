@@ -17,7 +17,7 @@ import OrderRoutes from './routes/order';
 
 import apiToken from './middleware/apiToken';
 import db from './utils/db';
-import env from './config/environment';
+import env from './config/config';
 
 const app = express();
 

@@ -1,4 +1,8 @@
 import app from './app';
-import environment from './config/environment';
+import config from './config/config';
 
-app.listen(environment.port());
+app.listen(config.port(), () => {
+  console.debug(`
+🚀 App listening on http://localhost:${config.port()}
+  `);
+});

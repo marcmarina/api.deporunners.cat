@@ -3,7 +3,7 @@ import eventEmitter from '../events/EventEmitter';
 
 import { MemberService } from '../services/MemberService';
 import Context from '../utils/Context';
-import env from '../config/environment';
+import config from '../config/config';
 import checkForErrors from '../utils/ErrorThrowing';
 
 const service = new MemberService();
@@ -89,7 +89,7 @@ export const changePassword = async (req, res, next) => {
 
 export const signupSecret = async (req, res, next) => {
   try {
-    const stripe = new Stripe(env.stripeKey(), {
+    const stripe = new Stripe(config.stripeKey(), {
       apiVersion: '2020-08-27',
     });
 

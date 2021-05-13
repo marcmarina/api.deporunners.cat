@@ -13,7 +13,7 @@ import Clothing from './src/models/Clothing';
 
 import db from './src/utils/db';
 import { randomInt } from './src/utils/Utils';
-import environment from './src/config/environment';
+import config from './src/config/config';
 
 dotenv.config();
 
@@ -106,10 +106,10 @@ const {
   members: memberCount,
   users: userCount,
   events: eventCount,
-} = environment.seedNumbers();
+} = config.seedNumbers();
 
 async function seed() {
-  await db.connect(environment.mongoURI());
+  await db.connect(config.mongoURI());
 
   await Member.deleteMany({});
   await User.deleteMany({});

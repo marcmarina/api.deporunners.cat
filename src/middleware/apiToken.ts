@@ -1,4 +1,4 @@
-import environment from '../config/environment';
+import config from '../config/config';
 
 export default (req, res, next) => {
   try {
@@ -16,7 +16,7 @@ export const checkToken = req => {
       status: 401,
       msg: 'No API Token provided',
     };
-  } else if (apiToken !== environment.apiToken()) {
+  } else if (apiToken !== config.apiToken()) {
     throw {
       status: 401,
       msg: 'API Token is not valid',

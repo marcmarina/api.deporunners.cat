@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 import { generateNewJWT } from '../utils/SessionManagement';
 import Context from '../utils/Context';
-import environment from '../config/environment';
+import config from '../config/config';
 
 export default async (req, res, next) => {
   try {
     const { token, refreshToken } = getTokens(req);
     const decodedToken = jwt.decode(token);
     try {
-      jwt.verify(token, environment.appSecretKey());
+      jwt.verify(token, config.appSecretKey());
       res.set({ 'x-auth-token': token });
     } catch (ex) {
       if (ex.name === 'TokenExpiredError') {

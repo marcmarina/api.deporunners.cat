@@ -56,22 +56,22 @@ export const put = async (req, res, next) => {
   }
 };
 
-export const login = async (req, res, next) => {
-  try {
-    checkForErrors(req);
-    const { username, password } = req.body;
-    const { authToken, refreshToken } = await service.loginCredentials(
-      username,
-      password
-    );
-    res.set({
-      'x-refresh-token': refreshToken,
-    });
-    res.status(200).json(authToken);
-  } catch (ex) {
-    next(ex);
-  }
-};
+// export const login = async (req, res, next) => {
+//   try {
+//     checkForErrors(req);
+//     const { username, password } = req.body;
+//     const { authToken, refreshToken } = await service.loginCredentials(
+//       username,
+//       password
+//     );
+//     res.set({
+//       'x-refresh-token': refreshToken,
+//     });
+//     res.status(200).json(authToken);
+//   } catch (ex) {
+//     next(ex);
+//   }
+// };
 
 export const changePassword = async (req, res, next) => {
   try {

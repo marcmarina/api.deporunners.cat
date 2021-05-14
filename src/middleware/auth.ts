@@ -2,21 +2,25 @@ import jwt from 'jsonwebtoken';
 import { generateNewJWT } from '../utils/SessionManagement';
 import Context from '../utils/Context';
 import config from '../config/config';
+import * as z from 'zod';
 
 export default async (req, res, next) => {
   try {
     const { token, refreshToken } = getTokens(req);
-    const decodedToken = jwt.decode(token);
+    const decodedToken = decodedTokenSchema.parse(jwt.decode(token));
+
     try {
       jwt.verify(token, config.appSecretKey());
+
       res.set({ 'x-auth-token': token });
     } catch (ex) {
       if (ex.name === 'TokenExpiredError') {
         const newToken = await generateNewJWT(
-          decodedToken['_id'],
+          decodedToken._id,
           refreshToken,
-          decodedToken['model']
+          decodedToken.model
         );
+
         res.set({
           'x-auth-token': newToken,
         });
@@ -28,7 +32,7 @@ export default async (req, res, next) => {
       }
     }
 
-    Context.setUserId(decodedToken['_id']);
+    Context.setUserId(decodedToken._id);
 
     next();
   } catch (ex) {
@@ -51,3 +55,8 @@ export const getTokens = req => {
     refreshToken,
   };
 };
+
+const decodedTokenSchema = z.object({
+  _id: z.string(),
+  model: z.enum(['Member', 'User']),
+});

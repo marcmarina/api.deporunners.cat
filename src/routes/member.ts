@@ -2,11 +2,7 @@ import { Router } from 'express';
 
 import * as MemberController from '../controllers/member';
 import auth from '../middleware/auth';
-import {
-  createMember,
-  memberLogin,
-  updateMember,
-} from '../validators/endpoint-validators';
+import { createMember, updateMember } from '../validators/endpoint-validators';
 import { MemberService } from '../services/MemberService';
 
 const service = new MemberService();
@@ -14,7 +10,7 @@ const service = new MemberService();
 const router = Router();
 
 router.post('/signup/success/:id', MemberController.signupSuccess);
-router.post('/login', memberLogin, MemberController.login);
+// router.post('/login', memberLogin, MemberController.login);
 router.post('', createMember, MemberController.create);
 router.post('/expoPushToken', auth, MemberController.expoToken);
 

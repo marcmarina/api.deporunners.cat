@@ -3,6 +3,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,9 +13,29 @@ export type Scalars = {
   Float: number;
 };
 
+export type Member = {
+  __typename?: 'Member';
+  id: Scalars['ID'];
+  numMember: Scalars['Int'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  email: Scalars['String'];
+  password: Scalars['String'];
+  dni: Scalars['String'];
+  iban?: Maybe<Scalars['String']>;
+  telephone: Scalars['String'];
+  refreshToken?: Maybe<Scalars['String']>;
+  expoPushToken?: Maybe<Scalars['String']>;
+};
+
 export type Query = {
   __typename?: 'Query';
-  test: Scalars['String'];
+  member?: Maybe<Member>;
+};
+
+
+export type QueryMemberArgs = {
+  id: Scalars['ID'];
 };
 
 
@@ -95,23 +116,45 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
+  Member: ResolverTypeWrapper<Member>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
+  Member: Member;
+  ID: Scalars['ID'];
+  Int: Scalars['Int'];
   String: Scalars['String'];
+  Query: {};
   Boolean: Scalars['Boolean'];
 };
 
+export type MemberResolvers<ContextType = any, ParentType extends ResolversParentTypes['Member'] = ResolversParentTypes['Member']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  numMember?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  password?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  dni?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  iban?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  telephone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  refreshToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  expoPushToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  test?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  member?: Resolver<Maybe<ResolversTypes['Member']>, ParentType, ContextType, RequireFields<QueryMemberArgs, 'id'>>;
 };
 
 export type Resolvers<ContextType = any> = {
+  Member?: MemberResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
 

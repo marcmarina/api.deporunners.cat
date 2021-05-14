@@ -1,43 +1,41 @@
 import bcrypt from 'bcrypt';
 import { Schema } from 'mongoose';
 import xl from 'excel4node';
+import * as z from 'zod';
 
 import mailService from '../mail/mailService';
-import Member, { IMember } from '../models/Member';
-import { signJWT } from '../utils/SessionManagement';
+import MemberModel from '../models/Member';
 import { generateToken, getPugTemplate } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
 import Context from '../utils/Context';
+import { Member } from '../graphql/codegen-types';
 
 export class MemberService {
   async getAllMembers() {
-    return Member.find().sort({ numMember: 'asc' });
+    return MemberModel.find().sort({ numMember: 'asc' });
   }
 
-  async findById(id: string) {
-    const member = await Member.findOne({ _id: id });
-    if (!member)
-      throw {
-        status: 404,
-        msg: 'Member id invalid',
-      };
+  async findById(id: string): Promise<Member> {
+    const member = await MemberModel.findOne({ _id: id });
+
     return member;
   }
 
-  async createMember(member: IMember): Promise<IMember> {
+  async createMember(member: Member): Promise<Member> {
     const hashedPassword = await bcrypt.hash(member.dni, 12);
     member.password = hashedPassword;
 
-    const highestMemberNum = await Member.findOne({}).sort('-numMember');
+    const highestMemberNum = await MemberModel.findOne({}).sort('-numMember');
     member.numMember = highestMemberNum ? highestMemberNum.numMember + 1 : 1;
 
-    const newMember = new Member(member);
+    const newMember = new MemberModel(member);
 
-    return newMember.save();
+    const saved = await newMember.save();
+    return memberSchema.parse(saved);
   }
 
   async sendSignupEmail(id: Schema.Types.ObjectId) {
-    const member = await Member.findById(id);
+    const member = await MemberModel.findById(id);
     if (!member)
       throw {
         status: 404,
@@ -56,61 +54,62 @@ export class MemberService {
   }
 
   async deleteById(id: string) {
-    return Member.findByIdAndDelete(id);
+    return MemberModel.findByIdAndDelete(id);
   }
 
-  async update(member: IMember) {
-    return Member.updateOne({ _id: member._id }, member);
+  // TODO Change type
+  async update(member: any) {
+    return MemberModel.updateOne({ _id: member._id }, member);
   }
 
-  async loginCredentials(username: string, password: string) {
-    let member: IMember;
+  // async loginCredentials(username: string, password: string) {
+  //   let member: IMember;
 
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (re.test(username)) {
-      member = await Member.findOne({ email: username });
-      if (!member) {
-        const error = {
-          status: 400,
-          msg: 'These credentials are invalid.',
-        };
-        throw error;
-      }
-    } else {
-      member = await Member.findOne({ dni: username });
-      if (!member) {
-        const error = {
-          status: 400,
-          msg: 'These credentials are invalid.',
-        };
-        throw error;
-      }
-    }
+  //   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  //   if (re.test(username)) {
+  //     member = await MemberModel.findOne({ email: username });
+  //     if (!member) {
+  //       const error = {
+  //         status: 400,
+  //         msg: 'These credentials are invalid.',
+  //       };
+  //       throw error;
+  //     }
+  //   } else {
+  //     member = await MemberModel.findOne({ dni: username });
+  //     if (!member) {
+  //       const error = {
+  //         status: 400,
+  //         msg: 'These credentials are invalid.',
+  //       };
+  //       throw error;
+  //     }
+  //   }
 
-    const validPassword = await bcrypt.compare(password, member.password);
+  //   const validPassword = await bcrypt.compare(password, member.password);
 
-    if (!validPassword) {
-      const error = {
-        status: 400,
-        msg: 'These credentials are invalid.',
-      };
-      throw error;
-    }
+  //   if (!validPassword) {
+  //     const error = {
+  //       status: 400,
+  //       msg: 'These credentials are invalid.',
+  //     };
+  //     throw error;
+  //   }
 
-    if (!member.refreshToken) {
-      member = await this.createSessionToken(member);
-    }
+  //   if (!member.refreshToken) {
+  //     member = await this.createSessionToken(member);
+  //   }
 
-    const token = signJWT({ _id: member._id }, 'Member');
+  //   const token = signJWT({ _id: member._id }, 'Member');
 
-    return {
-      authToken: token,
-      refreshToken: member.refreshToken,
-    };
-  }
+  //   return {
+  //     authToken: token,
+  //     refreshToken: member.refreshToken,
+  //   };
+  // }
 
   async updatePassword(oldPassword: string, newPassword: string) {
-    const member = await Member.findById(Context.getUserId());
+    const member = await MemberModel.findById(Context.getUserId());
     if (!member)
       throw {
         status: 400,
@@ -129,7 +128,7 @@ export class MemberService {
   }
 
   async registerToken(token: string) {
-    const member = await Member.findById(Context.getUserId());
+    const member = await MemberModel.findById(Context.getUserId());
 
     if (!member)
       throw {
@@ -142,14 +141,15 @@ export class MemberService {
     return member.save();
   }
 
-  createSessionToken(member: IMember) {
+  // TODO Change type
+  createSessionToken(member: any) {
     const refreshToken = generateToken(64);
     member.refreshToken = refreshToken;
     return member.save();
   }
 
   async generateExcel() {
-    const members = await Member.find().populate('tshirtSize');
+    const members = await MemberModel.find().populate('tshirtSize');
 
     const wb = new xl.Workbook();
 
@@ -179,3 +179,17 @@ export class MemberService {
     return wb.writeToBuffer('Excel.xlsx');
   }
 }
+
+const memberSchema = z.object({
+  id: z.string(),
+  numMember: z.number(),
+  firstName: z.string(),
+  lastName: z.string(),
+  email: z.string(),
+  password: z.string(),
+  dni: z.string(),
+  iban: z.string().nullable(),
+  telephone: z.string(),
+  refreshToken: z.string().nullable(),
+  expoPushToken: z.string().nullable(),
+});

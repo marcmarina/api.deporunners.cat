@@ -1,3 +1,19 @@
 type Query {
-  test: String!
+  member(id: ID!): Member
+}
+
+type Member {
+  id: ID!
+  numMember: Int!
+  firstName: String!
+  lastName: String!
+  email: String!
+  password: String!
+  dni: String!
+  # address: Address
+  iban: String
+  telephone: String!
+  refreshToken: String
+  expoPushToken: String
+  # tshirtSize: ITShirtSize | String
 }

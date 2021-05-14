@@ -1,22 +1,5 @@
-import { Schema, Document, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import Town from './Town';
-import { ITShirtSize } from './TShirtSize';
-
-export interface IMember extends Document {
-  numMember: number;
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  dni: string;
-  iban?: string;
-  telephone: string;
-  address: IAddress;
-  refreshToken?: string;
-  passwordResetToken?: string;
-  expoPushToken?: string;
-  tshirtSize: ITShirtSize | string;
-}
 
 export interface IAddress {
   streetAddress: string;
@@ -78,12 +61,4 @@ const memberSchema = new Schema({
   expoPushToken: String,
 });
 
-const populateData = function (this: IMember, next: any) {
-  this.populate('address.town');
-  this.populate('tshirtSize');
-  next();
-};
-
-memberSchema.pre('find', populateData).pre('findOne', populateData);
-
-export default model<IMember>('Member', memberSchema);
+export default model('Member', memberSchema);

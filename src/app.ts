@@ -18,8 +18,12 @@ import OrderRoutes from './routes/order';
 import apiToken from './middleware/apiToken';
 import db from './utils/db';
 import env from './config/config';
+import { createGraphQLServer } from './graphql/create-graphql-server';
 
 const app = express();
+
+export const apolloServer = createGraphQLServer();
+apolloServer.applyMiddleware({ app });
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {

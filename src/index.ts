@@ -1,8 +1,12 @@
-import app from './app';
+import app, { apolloServer } from './app';
 import config from './config/config';
 
-app.listen(config.port(), () => {
-  console.debug(`
-🚀 App listening on http://localhost:${config.port()}
+const PORT = config.port();
+
+app.listen(PORT, () => {
+  console.debug(`🚀 App listening on http://localhost:${PORT}
   `);
+  console.log(
+    `🚀 Server ready at http://localhost:${PORT}${apolloServer.graphqlPath}`
+  );
 });

@@ -45,7 +45,7 @@ export class MemberService {
     return await newMember.save();
   }
 
-  async createSignupIntent(stripeId: string) {
+  async createSignupIntent(stripeId: string, payment_method_id: string = null) {
     const product = await stripeClient.products.retrieve('prod_JNZ8IP1iZtIbp4');
 
     const prices = await stripeClient.prices.list({
@@ -62,6 +62,9 @@ export class MemberService {
       payment_method_types: ['card'],
       customer: stripeId,
       setup_future_usage: 'on_session',
+      payment_method: payment_method_id,
+      confirm: true,
+      confirmation_method: 'manual',
     });
 
     return paymentIntent;

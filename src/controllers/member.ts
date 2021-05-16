@@ -3,6 +3,7 @@ import { MemberService } from '../services/MemberService';
 import Context from '../utils/Context';
 import checkForErrors from '../utils/ErrorThrowing';
 import { stripeClient } from '../stripe/stripe-client';
+import Stripe from 'stripe';
 
 const service = new MemberService();
 
@@ -14,11 +15,50 @@ export const create = async (req, res, next) => {
 
     const createdMember = await service.createMember(member);
 
-    const intent = await service.createSignupIntent(createdMember.stripeId);
+    res.status(201).json({ member: createdMember });
+  } catch (ex) {
+    next(ex);
+  }
+};
 
-    res
-      .status(201)
-      .json({ member: createdMember, client_secret: intent.client_secret });
+export const signupPayment = async (req, res, next) => {
+  try {
+    let response;
+
+    const { memberId } = req.body;
+
+    console.log(memberId);
+
+    let intent: Stripe.PaymentIntent;
+
+    if (req.body.payment_method_id) {
+      intent = await service.createSignupIntent(
+        memberId,
+        req.body.payment_method_id
+      );
+    } else if (req.body.payment_intent_id) {
+      intent = await stripeClient.paymentIntents.confirm(
+        req.body.payment_intent_id
+      );
+    }
+
+    if (
+      intent.status === 'requires_action' &&
+      intent.next_action.type === 'use_stripe_sdk'
+    ) {
+      response = {
+        requires_action: true,
+        payment_client_secret: intent.client_secret,
+      };
+    } else if (intent.status === 'succeeded') {
+      response = {
+        success: true,
+      };
+    }
+
+    console.log({ intent, response });
+
+    return res.send(response);
   } catch (ex) {
     next(ex);
   }

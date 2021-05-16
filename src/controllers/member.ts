@@ -27,8 +27,6 @@ export const signupPayment = async (req, res, next) => {
 
     const { memberId } = req.body;
 
-    console.log(memberId);
-
     let intent: Stripe.PaymentIntent;
 
     if (req.body.payment_method_id) {
@@ -55,8 +53,6 @@ export const signupPayment = async (req, res, next) => {
         success: true,
       };
     }
-
-    console.log({ intent, response });
 
     return res.send(response);
   } catch (ex) {

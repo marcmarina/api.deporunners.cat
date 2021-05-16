@@ -1,19 +1,68 @@
 type Query {
+  """
+  Member of the club
+  """
   member(id: ID!): Member
 }
 
 type Member {
-  id: ID!
+  """
+  The member's unique identifier
+  """
+  _id: ID!
+  """
+  Member number
+  """
   numMember: Int!
+  """
+  First name
+  """
   firstName: String!
+  """
+  Last name
+  """
   lastName: String!
+  """
+  Email
+  """
   email: String!
+  """
+  Encrypted password
+  """
   password: String!
+  """
+  National ID
+  """
   dni: String!
-  # address: Address
+  """
+  IBAN number
+  """
   iban: String
+  """
+  Telephone
+  """
   telephone: String!
+  """
+  Session refresh token
+  """
   refreshToken: String
+  """
+  Expo push notification token
+  """
   expoPushToken: String
-  # tshirtSize: ITShirtSize | String
+  """
+  The T-Shirt Size they own
+  """
+  tshirtSize: TShirtSize!
+}
+
+type TShirtSize {
+  """
+  TShirtSize unique identifier
+  """
+  id: ID!
+  """
+  Size name (S, M, L, XL)
+  """
+  name: String!
 }

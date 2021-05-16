@@ -9,19 +9,20 @@ import { generateToken, getPugTemplate } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
 import Context from '../utils/Context';
 import { Member } from '../graphql/codegen-types';
+import { WithReferences } from '../graphql/utility-types';
 
 export class MemberService {
   async getAllMembers() {
     return MemberModel.find().sort({ numMember: 'asc' });
   }
 
-  async findById(id: string): Promise<Member> {
+  async findById(id: string): Promise<WithReferences<Member>> {
     const member = await MemberModel.findOne({ _id: id });
 
     return member;
   }
 
-  async createMember(member: Member): Promise<Member> {
+  async createMember(member: Member): Promise<WithReferences<Member>> {
     const hashedPassword = await bcrypt.hash(member.dni, 12);
     member.password = hashedPassword;
 
@@ -31,7 +32,10 @@ export class MemberService {
     const newMember = new MemberModel(member);
 
     const saved = await newMember.save();
-    return memberSchema.parse(saved);
+
+    const parsedSaved = memberSchema.parse(saved);
+
+    return parsedSaved;
   }
 
   async sendSignupEmail(id: Schema.Types.ObjectId) {
@@ -181,15 +185,16 @@ export class MemberService {
 }
 
 const memberSchema = z.object({
-  id: z.string(),
+  _id: z.any().transform(val => `${val}`),
   numMember: z.number(),
   firstName: z.string(),
   lastName: z.string(),
   email: z.string(),
   password: z.string(),
   dni: z.string(),
-  iban: z.string().nullable(),
+  // iban: z.string().nullable(),
   telephone: z.string(),
-  refreshToken: z.string().nullable(),
+  // refreshToken: z.string().nullable(),
   expoPushToken: z.string().nullable(),
+  tshirtSize: z.any().transform(val => `${val}`),
 });

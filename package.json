@@ -5,7 +5,7 @@
   "scripts": {
     "codegen": "graphql-codegen",
     "start": "node build/index.js",
-    "dev": "tsc-watch --onSuccess \"node --trace-deprecation --trace-warnings ./build/index.js\"",
+    "dev": "tsc-watch --onSuccess \"node --trace-deprecation --trace-warnings ./dist/index.js\"",
     "build": "tsc",
     "test": "jest --passWithNoTests",
     "seed": "ts-node seed.ts",
@@ -46,7 +46,7 @@
     "ts-jest": "^26.4.4",
     "ts-node": "^9.1.1",
     "tsc-watch": "^4.2.9",
-    "typescript": "^3.9.6"
+    "typescript": "4.2.4"
   },
   "dependencies": {
     "apollo": "^2.33.2",

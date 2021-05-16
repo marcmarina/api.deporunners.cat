@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { WithReferences } from './utility-types';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
@@ -15,27 +16,49 @@ export type Scalars = {
 
 export type Member = {
   __typename?: 'Member';
-  id: Scalars['ID'];
+  /** The member's unique identifier */
+  _id: Scalars['ID'];
+  /** Member number */
   numMember: Scalars['Int'];
+  /** First name */
   firstName: Scalars['String'];
+  /** Last name */
   lastName: Scalars['String'];
+  /** Email */
   email: Scalars['String'];
+  /** Encrypted password */
   password: Scalars['String'];
+  /** National ID */
   dni: Scalars['String'];
+  /** IBAN number */
   iban?: Maybe<Scalars['String']>;
+  /** Telephone */
   telephone: Scalars['String'];
+  /** Session refresh token */
   refreshToken?: Maybe<Scalars['String']>;
+  /** Expo push notification token */
   expoPushToken?: Maybe<Scalars['String']>;
+  /** The T-Shirt Size they own */
+  tshirtSize: TShirtSize;
 };
 
 export type Query = {
   __typename?: 'Query';
+  /** Member of the club */
   member?: Maybe<Member>;
 };
 
 
 export type QueryMemberArgs = {
   id: Scalars['ID'];
+};
+
+export type TShirtSize = {
+  __typename?: 'TShirtSize';
+  /** TShirtSize unique identifier */
+  id: Scalars['ID'];
+  /** Size name (S, M, L, XL) */
+  name: Scalars['String'];
 };
 
 
@@ -116,26 +139,28 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Member: ResolverTypeWrapper<Member>;
-  ID: ResolverTypeWrapper<Scalars['ID']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
+  Member: ResolverTypeWrapper<WithReferences<Member>>;
+  ID: ResolverTypeWrapper<WithReferences<Scalars['ID']>>;
+  Int: ResolverTypeWrapper<WithReferences<Scalars['Int']>>;
+  String: ResolverTypeWrapper<WithReferences<Scalars['String']>>;
   Query: ResolverTypeWrapper<{}>;
-  Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  TShirtSize: ResolverTypeWrapper<WithReferences<TShirtSize>>;
+  Boolean: ResolverTypeWrapper<WithReferences<Scalars['Boolean']>>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Member: Member;
-  ID: Scalars['ID'];
-  Int: Scalars['Int'];
-  String: Scalars['String'];
+  Member: WithReferences<Member>;
+  ID: WithReferences<Scalars['ID']>;
+  Int: WithReferences<Scalars['Int']>;
+  String: WithReferences<Scalars['String']>;
   Query: {};
-  Boolean: Scalars['Boolean'];
+  TShirtSize: WithReferences<TShirtSize>;
+  Boolean: WithReferences<Scalars['Boolean']>;
 };
 
 export type MemberResolvers<ContextType = any, ParentType extends ResolversParentTypes['Member'] = ResolversParentTypes['Member']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  _id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   numMember?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -146,6 +171,7 @@ export type MemberResolvers<ContextType = any, ParentType extends ResolversParen
   telephone?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   refreshToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   expoPushToken?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  tshirtSize?: Resolver<ResolversTypes['TShirtSize'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -153,9 +179,16 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   member?: Resolver<Maybe<ResolversTypes['Member']>, ParentType, ContextType, RequireFields<QueryMemberArgs, 'id'>>;
 };
 
+export type TShirtSizeResolvers<ContextType = any, ParentType extends ResolversParentTypes['TShirtSize'] = ResolversParentTypes['TShirtSize']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = any> = {
   Member?: MemberResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  TShirtSize?: TShirtSizeResolvers<ContextType>;
 };
 
 

@@ -1,11 +1,18 @@
 overwrite: true
-schema: "./graphql-schema/*.graphql"
+schema: './graphql-schema/*.graphql'
 documents: null
 generates:
   src/graphql/codegen-types.ts:
     plugins:
-      - "typescript"
-      - "typescript-resolvers"
+      - 'typescript'
+      - 'typescript-resolvers'
+      - add:
+          content: "import { WithReferences } from './utility-types';"
+    config:
+      defaultMapper: WithReferences<{T}>
+      scalars:
+        Date: Date
+        Cursor: String
   combined-schema.graphql:
     plugins:
       - schema-ast

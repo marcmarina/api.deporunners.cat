@@ -8,22 +8,22 @@ import TShirtSize from '../models/TShirtSize';
 import Member from '../models/Member';
 
 export const createMember = [
-  check('firstName')
+  check('member.firstName')
     .isLength({ min: 2 })
     .withMessage('The firstName has to be at least 2 characters long')
     .trim(),
-  check('lastName')
+  check('member.lastName')
     .isLength({ min: 2 })
     .withMessage('The lastName has to be at least 2 characters long')
     .trim(),
-  check('email').trim().isEmail(),
-  existingMemberEmail('email'),
-  check('dni').isString(),
-  check('address').notEmpty(),
-  check('address.streetAddress').isString(),
-  check('address.postCode').isString(),
-  check('address.town').notEmpty(),
-  validateModelId(Town, 'address.town'),
+  check('member.email').trim().isEmail(),
+  existingMemberEmail('member.email'),
+  check('member.dni').isString(),
+  check('member.address').notEmpty(),
+  check('member.address.streetAddress').isString(),
+  check('member.address.postCode').isString(),
+  check('member.address.town').notEmpty(),
+  validateModelId(Town, 'member.address.town'),
 ];
 
 export const updateMember = [

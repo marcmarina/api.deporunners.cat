@@ -3,6 +3,7 @@ import Town from './Town';
 import { ITShirtSize } from './TShirtSize';
 
 export interface IMember extends Document {
+  stripeId?: string;
   numMember: number;
   firstName: string;
   lastName: string;
@@ -25,6 +26,9 @@ export interface IAddress {
 }
 
 const memberSchema = new Schema({
+  stripeId: {
+    type: String,
+  },
   numMember: {
     type: Number,
     required: true,

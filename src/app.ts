@@ -14,6 +14,7 @@ import TShirtSizeRoutes from './routes/tshirtSize';
 import EventRoutes from './routes/event';
 import ClothingRoutes from './routes/clothing';
 import OrderRoutes from './routes/order';
+import StripeWebhooks from './routes/stripeWebhooks';
 
 import apiToken from './middleware/apiToken';
 import db from './utils/db';
@@ -59,6 +60,8 @@ app.get('/', (req, res) => {
 
 app.use(multer({ storage: fileStorage }).single('image'));
 app.use(express.static(path.join(__dirname, '..', 'public')));
+
+app.use('/stripe', StripeWebhooks);
 
 app.use(apiToken);
 

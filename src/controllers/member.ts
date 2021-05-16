@@ -10,9 +10,15 @@ export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
 
-    const result = await service.createMember({ ...req.body });
+    const { member } = req.body;
 
-    res.status(201).json(result);
+    const createdMember = await service.createMember(member);
+
+    const intent = await service.createSignupIntent(createdMember.stripeId);
+
+    res
+      .status(201)
+      .json({ member: createdMember, client_secret: intent.client_secret });
   } catch (ex) {
     next(ex);
   }

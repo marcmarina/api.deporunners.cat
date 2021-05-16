@@ -8,6 +8,7 @@ import { signJWT } from '../utils/SessionManagement';
 import { generateToken, getPugTemplate } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
 import Context from '../utils/Context';
+import { stripeClient } from '../stripe/stripe-client';
 
 export class MemberService {
   async getAllMembers() {
@@ -33,7 +34,37 @@ export class MemberService {
 
     const newMember = new Member(member);
 
-    return newMember.save();
+    const stripeCustomer = await stripeClient.customers.create({
+      name: `${newMember.firstName} ${newMember.lastName}`,
+      email: newMember.email,
+      phone: newMember.telephone,
+    });
+
+    newMember.stripeId = stripeCustomer.id;
+
+    return await newMember.save();
+  }
+
+  async createSignupIntent(stripeId: string) {
+    const product = await stripeClient.products.retrieve('prod_JNZ8IP1iZtIbp4');
+
+    const prices = await stripeClient.prices.list({
+      product: product.id,
+      currency: 'eur',
+    });
+
+    const price = prices.data[0];
+
+    const paymentIntent = await stripeClient.paymentIntents.create({
+      amount: price.unit_amount,
+      description: product.description,
+      currency: price.currency,
+      payment_method_types: ['card'],
+      customer: stripeId,
+      setup_future_usage: 'on_session',
+    });
+
+    return paymentIntent;
   }
 
   async sendSignupEmail(id: Schema.Types.ObjectId) {
@@ -43,6 +74,24 @@ export class MemberService {
         status: 404,
         msg: 'Invalid member id',
       };
+
+    return mailService.sendMail({
+      to: member.email,
+      subject: 'Benvingut/da a Deporunners!',
+      html: await getPugTemplate('emails/member/newMember.pug', {
+        member: {
+          dni: member.dni,
+        },
+      }),
+    });
+  }
+
+  async sendStripeSignupEmail(stripeId: string) {
+    const member = await Member.findOne({
+      stripeId,
+    });
+
+    if (!member) return null;
 
     return mailService.sendMail({
       to: member.email,

@@ -7,6 +7,7 @@ import Member, { IMember } from '../models/Member';
 import { signJWT } from '../utils/SessionManagement';
 import { generateToken } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
+import dayjs from 'dayjs';
 
 export const getAllMembers = async () => {
   return Member.find().sort({ numMember: 'asc' });
@@ -45,10 +46,28 @@ export const sendSignupEmail = async (id: Schema.Types.ObjectId) => {
   return mailService.sendMail({
     to: member.email,
     subject: 'Benvingut/da a Deporunners!',
-    html: await getTemplate('member/newMember.pug', {
+    html: await getTemplate('emails/member/newMember.pug', {
       member: {
         dni: member.dni,
       },
+    }),
+  });
+};
+
+export const sendSignupEmailInternal = async (id: Schema.Types.ObjectId) => {
+  const member = await Member.findById(id);
+  if (!member)
+    throw {
+      status: 404,
+      message: 'Invalid member id',
+    };
+
+  return mailService.sendMail({
+    to: member.email,
+    subject: "S'ha registrat un nou soci",
+    html: await getTemplate('emails/member/newMemberInternal.pug', {
+      member,
+      dateString: dayjs().format('DD-MM-YYYY'),
     }),
   });
 };

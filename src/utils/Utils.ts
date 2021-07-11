@@ -27,13 +27,14 @@ export const paginateArray = (arr: any[], page: number, pageSize: number) =>
   arr.slice((page - 1) * pageSize, page * pageSize);
 
 export const getModelName = (model: Document) =>
-  ((model.constructor as unknown) as Document).modelName;
+  (model.constructor as unknown as Document).modelName;
+
 export const getPugTemplate = async (path: string, data?: any) => {
   const html = pug.renderFile(pathNode.resolve(process.cwd(), 'public', path), {
     ...data,
   });
   const inliner = new CSSInliner();
-  return inliner.inlineCSSAsync(html);
+  return await inliner.inlineCSSAsync(html);
 };
 
 export const randomInt = (min: number, max: number) =>

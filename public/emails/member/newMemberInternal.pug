@@ -1,0 +1,44 @@
+doctype html
+html
+  head
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Exo:300,400,500,600,700,800,900")
+    style(type='text/css').
+      body {
+        color: #545454;
+        font-size: 16px;
+        line-height: 1.5;
+        margin: 0 auto;
+        max-width: 800px;
+        padding: 2em 2em 4em;
+        font-family: Exo, Arial, sans-serif;
+      }
+      .header {
+        text-align: center;
+      }
+      .logo {
+        object-fit: cover;
+        width: 150px;
+        height: 150px;
+        border-radius: 100000px;
+        display: block;
+        margin: auto;
+      }
+      .logo-container {
+        width: 100%;
+      }
+
+    body
+      div.logo-container
+        img(class="logo" src="https://i.imgur.com/oqyC2p5.png" alt="App Logo")
+      
+      h2.header S'ha donat d'alta un nou soci!
+      p
+        br
+        | Nom: 
+        strong #{member.firstName} #{member.lastName}        
+        br
+        | Número de soci: 
+        strong #{member.numMember}
+        br
+        | Data d'alta: 
+        strong #{dateString}

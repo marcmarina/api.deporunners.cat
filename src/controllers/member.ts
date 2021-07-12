@@ -27,22 +27,13 @@ export const signupPayment = async (req, res, next) => {
 
     const { memberId } = req.body;
 
-    let intent: Stripe.PaymentIntent;
-
-    if (req.body.payment_method_id) {
-      intent = await service.createSignupIntent(
-        memberId,
-        req.body.payment_method_id
-      );
-    } else if (req.body.payment_intent_id) {
-      intent = await stripeClient.paymentIntents.confirm(
-        req.body.payment_intent_id
-      );
-    }
+    const intent: Stripe.PaymentIntent = req.body.payment_method_id
+      ? await service.createSignupIntent(memberId, req.body.payment_method_id)
+      : await stripeClient.paymentIntents.confirm(req.body.payment_intent_id);
 
     if (
       intent.status === 'requires_action' &&
-      intent.next_action.type === 'use_stripe_sdk'
+      intent.next_action?.type === 'use_stripe_sdk'
     ) {
       response = {
         requires_action: true,

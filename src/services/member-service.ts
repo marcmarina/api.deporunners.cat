@@ -10,9 +10,12 @@ import { ITShirtSize } from '../models/TShirtSize';
 import Context from '../utils/Context';
 import { stripeClient } from '../stripe/stripe-client';
 import dayjs from 'dayjs';
+import { StripeAdapter } from '../stripe/stripe-adapter';
+
+const stripeAdapter = new StripeAdapter();
 
 export class MemberService {
-  async getAllMembers() {
+  async getAllMembers(): Promise<IMember[]> {
     return Member.find().sort({ numMember: 'asc' });
   }
 
@@ -46,19 +49,16 @@ export class MemberService {
     return await newMember.save();
   }
 
-  async createSignupIntent(stripeId: string, payment_method_id: string = null) {
-    const product = await stripeClient.products.retrieve('prod_JNZ8IP1iZtIbp4');
+  async createSignupIntent(stripeId: string, payment_method_id: string) {
+    const product = await stripeAdapter.fetchProduct('prod_JNZ8IP1iZtIbp4');
 
-    const prices = await stripeClient.prices.list({
-      product: product.id,
-      currency: 'eur',
-    });
+    const prices = await stripeAdapter.fetchPrices(product);
 
     const price = prices.data[0];
 
     const paymentIntent = await stripeClient.paymentIntents.create({
       amount: price.unit_amount,
-      description: product.description,
+      description: product.description ?? 'Description',
       currency: price.currency,
       payment_method_types: ['card'],
       customer: stripeId,

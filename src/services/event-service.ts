@@ -54,7 +54,7 @@ export class EventService {
 
   async sendNotification(event: IEvent) {
     try {
-      const messages = [];
+      const messages: any[] = [];
       const members = await memberService.getAllMembers();
 
       const expo = new Expo();

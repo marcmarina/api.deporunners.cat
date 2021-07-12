@@ -14,13 +14,10 @@ export const generateNewJWT = async (
   refreshToken: string,
   modelName: ModelName
 ): Promise<string> => {
-  let model: IMember | IUser;
-
-  if (modelName === 'Member') {
-    model = await memberService.findById(id);
-  } else if (modelName === 'User') {
-    model = await findUserById(id);
-  }
+  const model: IMember | IUser =
+    modelName === 'Member'
+      ? await memberService.findById(id)
+      : await findUserById(id);
 
   if (!model) {
     throw {

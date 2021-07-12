@@ -50,7 +50,7 @@ export class MemberService {
   }
 
   async createSignupIntent(stripeId: string, payment_method_id: string) {
-    const product = await stripeAdapter.fetchProduct('prod_JNZ8IP1iZtIbp4');
+    const product = await stripeAdapter.fetchProduct('prod_JUgaec1BPtXTL8');
 
     const prices = await stripeAdapter.fetchPrices(product);
 

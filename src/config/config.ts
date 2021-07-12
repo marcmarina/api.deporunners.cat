@@ -30,7 +30,7 @@ const emailFrom = () => {
 const stripeKey = () => {
   const key = process.env.STRIPE_SECRET_KEY;
 
-  if (!key) throw new Error('No Stripe secret key set');
+  if (!isTest && !key) throw new Error('No Stripe secret key set');
 
   return key;
 };

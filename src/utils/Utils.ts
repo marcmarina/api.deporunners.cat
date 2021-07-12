@@ -21,7 +21,7 @@ export const paginateArray = (arr: any[], page: number, pageSize: number) =>
   arr.slice((page - 1) * pageSize, page * pageSize);
 
 export const getModelName = (model: Document) =>
-  (model.constructor as unknown as Document).modelName;
+  ((model.constructor as unknown) as Document).modelName;
 
 export const getPugTemplate = async (path: string, data?: any) => {
   const html = pug.renderFile(
@@ -43,10 +43,19 @@ export const deleteFile = (filePath: string) => {
   });
 };
 
-export async function promiseHandling<T>(promise: Promise<T>): Promise<{
-  data: T | null;
-  error: Error | null;
-}> {
+type PromiseHandlingResult<T> =
+  | {
+      data: T;
+      error: null;
+    }
+  | {
+      data: null;
+      error: Error;
+    };
+
+export async function promiseHandling<T>(
+  promise: Promise<T>
+): Promise<PromiseHandlingResult<T>> {
   try {
     const data = await promise;
 

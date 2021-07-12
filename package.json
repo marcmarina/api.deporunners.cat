@@ -12,6 +12,7 @@
     "mongo:start": "docker run --rm -d -p 27017:27017 mongo:latest"
   },
   "author": "Marc Marina",
+  "license": "ISC",
   "repository": "https://github.com/marcmarina/api.deporunners.cat",
   "devDependencies": {
     "@types/bcrypt": "^3.0.0",

@@ -3,12 +3,12 @@ import faker from 'faker';
 import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 
-import Member from './src/models/Member';
-import User from './src/models/User';
+import Member, { IMember } from './src/models/Member';
+import User, { IUser } from './src/models/User';
 import Role from './src/models/Role';
 import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
-import Event from './src/models/Event';
+import Event, { IEvent } from './src/models/Event';
 
 import db from './src/utils/db';
 import { randomInt } from './src/utils/Utils';
@@ -121,7 +121,7 @@ async function seed() {
   await TShirtSize.insertMany(tShirtSizes);
   await Role.insertMany(roles);
 
-  const members = [];
+  const members: IMember[] = [];
   for (let i = 0; i < memberCount; i++) {
     const member = new Member({
       ...memberTemplate,
@@ -143,7 +143,7 @@ async function seed() {
 
   await Member.insertMany(members);
 
-  const users = [];
+  const users: IUser[] = [];
   for (let i = 0; i < userCount; i++) {
     const { _id: roleId } = await Role.findOne();
     const user = new User({
@@ -155,7 +155,7 @@ async function seed() {
   }
   await User.insertMany(users);
 
-  const events = [];
+  const events: IEvent[] = [];
   for (let i = 0; i < eventCount; i++) {
     events.push(
       new Event({

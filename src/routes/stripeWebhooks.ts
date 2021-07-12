@@ -16,14 +16,11 @@ router.post('/webhooks', async (req, res) => {
       const customer = paymentIntent.customer as string;
 
       if (customer) {
-        await memberService.sendStripeSignupEmail(customer);
+        await memberService.sendSignupEmail(customer);
+        await memberService.sendSignupEmailInternal(customer);
       }
 
       break;
-    }
-
-    default: {
-      console.log({ data: event.data.object });
     }
   }
 

@@ -19,7 +19,13 @@ const apiToken = () => {
 
 const jwtExpiration = () => process.env.JWT_EXPIRATION_TIME ?? '900';
 
-const emailFrom = () => process.env.EMAIL_FROM;
+const emailFrom = () => {
+  const key = process.env.EMAIL_FROM;
+
+  if (!key) throw new Error('No Email From set');
+
+  return key;
+};
 
 const stripeKey = () => {
   const key = process.env.STRIPE_SECRET_KEY;

@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
-import { Schema } from 'mongoose';
 import xl from 'excel4node';
+import dayjs from 'dayjs';
 
 import mailService from '../mail/mailService';
 import Member, { IMember } from '../models/Member';
@@ -9,8 +9,8 @@ import { generateToken, getPugTemplate } from '../utils/Utils';
 import { ITShirtSize } from '../models/TShirtSize';
 import Context from '../utils/Context';
 import { stripeClient } from '../stripe/stripe-client';
-import dayjs from 'dayjs';
 import { StripeAdapter } from '../stripe/stripe-adapter';
+import config from '../config/config';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -71,44 +71,7 @@ export class MemberService {
     return paymentIntent;
   }
 
-  async sendSignupEmail(id: Schema.Types.ObjectId) {
-    const member = await Member.findById(id);
-    if (!member)
-      throw {
-        status: 404,
-        msg: 'Invalid member id',
-      };
-
-    return mailService.sendMail({
-      to: member.email,
-      subject: 'Benvingut/da a Deporunners!',
-      html: await getPugTemplate('emails/member/newMember.pug', {
-        member: {
-          dni: member.dni,
-        },
-      }),
-    });
-  }
-
-  async sendSignupEmailInternal(id: Schema.Types.ObjectId) {
-    const member = await Member.findById(id);
-    if (!member)
-      throw {
-        status: 404,
-        message: 'Invalid member id',
-      };
-
-    return mailService.sendMail({
-      to: member.email,
-      subject: "S'ha registrat un nou soci",
-      html: await getPugTemplate('emails/member/newMemberInternal.pug', {
-        member,
-        dateString: dayjs().format('DD-MM-YYYY'),
-      }),
-    });
-  }
-
-  async sendStripeSignupEmail(stripeId: string) {
+  async sendSignupEmail(stripeId: string) {
     const member = await Member.findOne({
       stripeId,
     });
@@ -122,6 +85,23 @@ export class MemberService {
         member: {
           dni: member.dni,
         },
+      }),
+    });
+  }
+
+  async sendSignupEmailInternal(stripeId: string) {
+    const member = await Member.findOne({
+      stripeId,
+    });
+
+    if (!member) return null;
+
+    return mailService.sendMail({
+      to: config.emailFrom(),
+      subject: "S'ha registrat un nou soci",
+      html: await getPugTemplate('emails/member/newMemberInternal.pug', {
+        member,
+        dateString: dayjs().format('DD-MM-YYYY'),
       }),
     });
   }

@@ -1,11 +1,11 @@
-import { Schema, Document, model } from 'mongoose';
+import { Schema, Types, Document, model } from 'mongoose';
 
 export interface IEvent extends Document {
   name: string;
   description: string;
   dateTime: Date;
   coordinates: string;
-  members: Schema.Types.ObjectId[];
+  members: Types.ObjectId[];
 }
 
 const eventSchema = new Schema(
@@ -27,7 +27,7 @@ const eventSchema = new Schema(
     },
     members: [
       {
-        type: Schema.Types.ObjectId,
+        type: Types.ObjectId,
         ref: 'Member',
       },
     ],

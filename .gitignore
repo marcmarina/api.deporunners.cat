@@ -117,6 +117,5 @@ dist
 
 build
 .env
-*.swp
-
 public/images
+*.swp

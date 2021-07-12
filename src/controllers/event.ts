@@ -1,24 +1,21 @@
 import eventEmitter from '../events/EventEmitter';
 import { IEvent } from '../models/Event';
-import {
-  createEvent,
-  getAllEvents,
-  updateEvent,
-  attendEvent,
-  getById,
-  getPagedEvents,
-  deleteById,
-} from '../services/event';
+import { EventService } from '../services/event-service';
 
 import checkForErrors from '../utils/ErrorThrowing';
+
+const service = new EventService();
 
 export const index = async (req, res, next) => {
   try {
     let events: IEvent[];
     if (req.query.page) {
-      events = await getPagedEvents(req.query.page, parseInt(req.query.limit));
+      events = await service.getPagedEvents(
+        req.query.page,
+        parseInt(req.query.limit)
+      );
     } else {
-      events = await getAllEvents();
+      events = await service.getAllEvents();
     }
     res.status(200).json(events);
   } catch (ex) {
@@ -28,7 +25,7 @@ export const index = async (req, res, next) => {
 
 export const show = async (req, res, next) => {
   try {
-    res.status(200).json(await getById(req.params.id));
+    res.status(200).json(await service.getById(req.params.id));
   } catch (ex) {
     next(ex);
   }
@@ -37,7 +34,7 @@ export const show = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    const event = await createEvent({ ...req.body });
+    const event = await service.createEvent({ ...req.body });
 
     eventEmitter.emit('newEvent', event);
 
@@ -50,7 +47,7 @@ export const create = async (req, res, next) => {
 export const update = async (req, res, next) => {
   try {
     checkForErrors(req);
-    res.status(201).json(await updateEvent({ ...req.body }));
+    res.status(201).json(await service.updateEvent({ ...req.body }));
   } catch (ex) {
     next(ex);
   }
@@ -58,10 +55,9 @@ export const update = async (req, res, next) => {
 
 export const attend = async (req, res, next) => {
   try {
-    const userId = req.userId;
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
-    res.status(201).json(await attendEvent(eventId, userId, attending));
+    res.status(201).json(await service.attendEvent(eventId, attending));
   } catch (ex) {
     next(ex);
   }
@@ -70,7 +66,7 @@ export const attend = async (req, res, next) => {
 export const destroy = async (req, res, next) => {
   try {
     const eventId = req.params.id;
-    res.status(200).json(await deleteById(eventId));
+    res.status(200).json(await service.deleteById(eventId));
   } catch (ex) {
     next(ex);
   }

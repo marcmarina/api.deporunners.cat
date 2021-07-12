@@ -1,18 +1,12 @@
 import crypto from 'crypto';
-import { Document } from 'mongoose';
-import pathNode from 'path';
-import fs from 'fs';
-import CSSInliner from 'css-inliner';
 import pug from 'pug';
+import pathNode from 'path';
+import CSSInliner from 'css-inliner';
+import fs from 'fs';
+import { Document } from 'mongoose';
 
-export const generateToken = (size: number): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    crypto.randomBytes(size, (err, buffer) => {
-      if (err) reject(err);
-      const token = buffer.toString('hex');
-      resolve(token);
-    });
-  });
+export const generateToken = (size: number) => {
+  return crypto.randomBytes(size).toString('hex');
 };
 
 export const mapToJSON = (map: Map<any, any>) => {
@@ -30,9 +24,12 @@ export const getModelName = (model: Document) =>
   (model.constructor as unknown as Document).modelName;
 
 export const getPugTemplate = async (path: string, data?: any) => {
-  const html = pug.renderFile(pathNode.resolve(process.cwd(), 'public', path), {
-    ...data,
-  });
+  const html = pug.renderFile(
+    pathNode.resolve(`${process.cwd()}\\public\\${path}`),
+    {
+      ...data,
+    }
+  );
   const inliner = new CSSInliner();
   return await inliner.inlineCSSAsync(html);
 };

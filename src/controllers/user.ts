@@ -8,6 +8,7 @@ import {
 } from '../services/user';
 import Role from '../models/Role';
 import checkForErrors from '../utils/ErrorThrowing';
+import Context from '../utils/Context';
 
 export const index = async (req, res, next) => {
   try {
@@ -66,8 +67,7 @@ export const changePassword = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    const { userId } = req;
-    res.status(200).json(await findUserById(userId));
+    res.status(200).json(await findUserById(Context.getUserId()));
   } catch (ex) {
     next(ex);
   }

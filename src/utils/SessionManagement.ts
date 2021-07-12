@@ -1,8 +1,13 @@
 import jwt from 'jsonwebtoken';
-import Member, { IMember } from '../models/Member';
-import User, { IUser } from '../models/User';
+import { IMember } from '../models/Member';
+import { IUser } from '../models/User';
+import { MemberService } from '../services/member-service';
+import { findUserById } from '../services/user';
+import config from '../config/config';
 
 type ModelName = 'User' | 'Member';
+
+const memberService = new MemberService();
 
 export const generateNewJWT = async (
   id: string,
@@ -12,24 +17,24 @@ export const generateNewJWT = async (
   let model: IMember | IUser;
 
   if (modelName === 'Member') {
-    model = await Member.findById(id);
+    model = await memberService.findById(id);
   } else if (modelName === 'User') {
-    model = await User.findById(id);
+    model = await findUserById(id);
   }
 
   if (!model) {
     throw {
       status: 401,
-      message: 'Model id invalid',
+      msg: 'Model id not valid',
     };
   }
 
-  if (model.refreshToken === refreshToken) {
+  if (refreshToken && model.refreshToken === refreshToken) {
     return signJWT({ _id: model._id }, modelName);
   } else {
     throw {
       status: 401,
-      message: 'Refresh token not valid',
+      msg: 'Refresh token not valid',
     };
   }
 };
@@ -40,9 +45,9 @@ export const signJWT = (data: any, modelName: ModelName) => {
       ...data,
       model: modelName,
     },
-    process.env.APP_SECRET_KEY,
+    config.appSecretKey(),
     {
-      expiresIn: parseInt(process.env.JWT_EXPIRATION_TIME),
+      expiresIn: parseInt(config.jwtExpiration()),
     }
   );
 };

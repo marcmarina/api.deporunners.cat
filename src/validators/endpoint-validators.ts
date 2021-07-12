@@ -1,25 +1,26 @@
 import dayjs from 'dayjs';
-
 import { check } from 'express-validator';
-import { existingMemberEmail, validTown } from './DatabaseValidators';
+
+import { existingMemberEmail, validateModelId } from './database-validators';
+import Town from '../models/Town';
 
 export const createMember = [
-  check('firstName')
+  check('member.firstName')
     .isLength({ min: 2 })
     .withMessage('The firstName has to be at least 2 characters long')
     .trim(),
-  check('lastName')
+  check('member.lastName')
     .isLength({ min: 2 })
     .withMessage('The lastName has to be at least 2 characters long')
     .trim(),
-  check('email').trim().isEmail(),
-  existingMemberEmail('email'),
-  check('dni').isString(),
-  check('address').notEmpty(),
-  check('address.streetAddress').isString(),
-  check('address.postCode').isString(),
-  check('address.town').notEmpty(),
-  validTown('address.town'),
+  check('member.email').trim().isEmail(),
+  existingMemberEmail('member.email'),
+  check('member.dni').isString(),
+  check('member.address').notEmpty(),
+  check('member.address.streetAddress').isString(),
+  check('member.address.postCode').isString(),
+  check('member.address.town').notEmpty(),
+  validateModelId(Town, 'member.address.town'),
 ];
 
 export const updateMember = [
@@ -37,7 +38,7 @@ export const updateMember = [
   check('address.streetAddress').isString(),
   check('address.postCode').isString(),
   check('address.town').notEmpty(),
-  validTown('address.town'),
+  validateModelId(Town, 'address.town'),
 ];
 
 export const memberLogin = [

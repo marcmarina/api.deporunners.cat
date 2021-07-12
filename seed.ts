@@ -1,4 +1,3 @@
-import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import faker from 'faker';
 import bcrypt from 'bcrypt';
@@ -11,7 +10,9 @@ import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
 import Event from './src/models/Event';
 
-import randomInt from './src/utils/RandomInt';
+import db from './src/utils/db';
+import { randomInt } from './src/utils/Utils';
+import config from './src/config/config';
 
 dotenv.config();
 
@@ -100,16 +101,14 @@ const userTemplate = {
   password: bcrypt.hashSync('123456', 12),
 };
 
-const memberCount = parseInt(process.env.SEED_MEMBER_COUNT) || 150;
-const userCount = parseInt(process.env.SEED_USER_COUNT) || 2;
-const eventCount = parseInt(process.env.SEED_EVENT_COUNT) || 20;
+const {
+  members: memberCount,
+  users: userCount,
+  events: eventCount,
+} = config.seedNumbers();
 
 async function seed() {
-  await mongoose.connect(process.env.MONGODB_URI, {
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useNewUrlParser: true,
-  });
+  await db.connect(config.mongoURI());
 
   await Member.deleteMany({});
   await User.deleteMany({});
@@ -172,7 +171,7 @@ async function seed() {
   }
   await Event.insertMany(events);
 
-  mongoose.disconnect();
+  db.disconnect();
 }
 
 seed();

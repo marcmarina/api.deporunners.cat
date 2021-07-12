@@ -1,3 +1,7 @@
 import app from './app';
+import config from './config/config';
 
-app.listen(process.env.PORT || 8080);
+app.listen(config.port(), () => {
+  console.debug(`
+🚀 App listening on http://localhost:${config.port()}`);
+});

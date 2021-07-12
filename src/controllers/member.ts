@@ -1,25 +1,60 @@
-import Stripe from 'stripe';
 import eventEmitter from '../events/EventEmitter';
-
-import {
-  createMember,
-  getAllMembers,
-  findMemberById,
-  deleteById,
-  update,
-  loginCredentials,
-  updatePassword,
-  registerToken,
-} from '../services/member';
+import { MemberService } from '../services/member-service';
+import Context from '../utils/Context';
 import checkForErrors from '../utils/ErrorThrowing';
+import { stripeClient } from '../stripe/stripe-client';
+import Stripe from 'stripe';
+
+const service = new MemberService();
 
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
 
-    const result = await createMember({ ...req.body });
+    const { member } = req.body;
 
-    res.status(201).json(result);
+    const createdMember = await service.createMember(member);
+
+    res.status(201).json({ member: createdMember });
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const signupPayment = async (req, res, next) => {
+  try {
+    let response;
+
+    const { memberId } = req.body;
+
+    let intent: Stripe.PaymentIntent;
+
+    if (req.body.payment_method_id) {
+      intent = await service.createSignupIntent(
+        memberId,
+        req.body.payment_method_id
+      );
+    } else if (req.body.payment_intent_id) {
+      intent = await stripeClient.paymentIntents.confirm(
+        req.body.payment_intent_id
+      );
+    }
+
+    if (
+      intent.status === 'requires_action' &&
+      intent.next_action.type === 'use_stripe_sdk'
+    ) {
+      response = {
+        requires_action: true,
+        payment_client_secret: intent.client_secret,
+      };
+    } else if (intent.status === 'succeeded') {
+      response = {
+        success: true,
+      };
+    }
+
+    return res.send(response);
   } catch (ex) {
     next(ex);
   }
@@ -27,7 +62,7 @@ export const create = async (req, res, next) => {
 
 export const index = async (req, res, next) => {
   try {
-    res.status(200).json(await getAllMembers());
+    res.status(200).json(await service.getAllMembers());
   } catch (ex) {
     next(ex);
   }
@@ -36,7 +71,7 @@ export const index = async (req, res, next) => {
 export const find = async (req, res, next) => {
   try {
     const { id } = req.params;
-    res.status(200).json(await findMemberById(id));
+    res.status(200).json(await service.findById(id));
   } catch (ex) {
     next(ex);
   }
@@ -45,7 +80,7 @@ export const find = async (req, res, next) => {
 export const destroy = async (req, res, next) => {
   try {
     const { id } = req.params;
-    res.status(200).json(await deleteById(id));
+    res.status(200).json(await service.deleteById(id));
   } catch (ex) {
     next(ex);
   }
@@ -55,7 +90,7 @@ export const put = async (req, res, next) => {
   try {
     checkForErrors(req);
     const member = req.body;
-    res.status(200).json(await update(member));
+    res.status(200).json(await service.update(member));
   } catch (ex) {
     next(ex);
   }
@@ -65,7 +100,7 @@ export const login = async (req, res, next) => {
   try {
     checkForErrors(req);
     const { username, password } = req.body;
-    const { authToken, refreshToken } = await loginCredentials(
+    const { authToken, refreshToken } = await service.loginCredentials(
       username,
       password
     );
@@ -83,11 +118,10 @@ export const changePassword = async (req, res, next) => {
     checkForErrors(req);
 
     const { oldPassword, newPassword } = req.body;
-    const { userId } = req;
 
     res
       .status(200)
-      .json(await updatePassword(userId, oldPassword, newPassword));
+      .json(await service.updatePassword(oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }
@@ -95,11 +129,7 @@ export const changePassword = async (req, res, next) => {
 
 export const signupSecret = async (req, res, next) => {
   try {
-    const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: '2020-08-27',
-    });
-
-    const intent = await stripe.paymentIntents.create({
+    const intent = await stripeClient.paymentIntents.create({
       amount: 4000,
       currency: 'eur',
       description: 'Pagament quota Deporunners',
@@ -117,8 +147,7 @@ export const signupSecret = async (req, res, next) => {
 export const expoToken = async (req, res, next) => {
   try {
     const { token } = req.body;
-    const { userId } = req;
-    res.status(200).json(await registerToken(userId, token));
+    res.status(200).json(await service.registerToken(token));
   } catch (ex) {
     next(ex);
   }
@@ -126,8 +155,7 @@ export const expoToken = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    const { userId } = req;
-    res.status(200).json(await findMemberById(userId));
+    res.status(200).json(await service.findById(Context.getUserId()));
   } catch (ex) {
     next(ex);
   }
@@ -149,7 +177,7 @@ export const signupFailure = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    res.status(200).json(await deleteById(id));
+    res.status(200).json(await service.deleteById(id));
   } catch (ex) {
     next(ex);
   }

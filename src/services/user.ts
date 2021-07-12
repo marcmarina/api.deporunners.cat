@@ -1,5 +1,4 @@
 import bcrypt from 'bcrypt';
-import { Schema } from 'mongoose';
 
 import User, { IUser } from '../models/User';
 import { signJWT } from '../utils/SessionManagement';
@@ -9,8 +8,8 @@ export const getAllUsers = async (): Promise<IUser[]> => {
   return User.find();
 };
 
-export const findUserById = async (id: Schema.Types.ObjectId) => {
-  return User.findById(id);
+export const findUserById = async (id: string) => {
+  return await User.findById(id);
 };
 
 export const createUser = async (user: IUser): Promise<IUser> => {
@@ -26,7 +25,7 @@ export const loginWithEmail = async (email: string, password: string) => {
   if (!user) {
     const error = {
       status: 400,
-      message: 'These credentials are invalid.',
+      msg: 'These credentials are invalid.',
     };
     throw error;
   }
@@ -35,7 +34,7 @@ export const loginWithEmail = async (email: string, password: string) => {
   if (!match) {
     const error = {
       status: 400,
-      message: 'These credentials are invalid.',
+      msg: 'These credentials are invalid.',
     };
     throw error;
   }
@@ -61,22 +60,22 @@ export const updatePassword = async (
   if (!user)
     throw {
       status: 400,
-      message: 'The user id is not valid',
+      msg: 'The user id is not valid',
     };
 
   const validPassword = await bcrypt.compare(oldPassword, user.password);
   if (!validPassword)
     throw {
       status: 400,
-      message: 'The old password is not valid',
+      msg: 'The old password is not valid',
     };
 
   user.password = await bcrypt.hash(newPassword, 12);
   return user.save();
 };
 
-const createSessionToken = async (user: IUser) => {
-  const refreshToken = await generateToken(64);
+export const createSessionToken = async (user: IUser) => {
+  const refreshToken = generateToken(64);
   user.refreshToken = refreshToken;
-  return user.save();
+  return await user.save();
 };

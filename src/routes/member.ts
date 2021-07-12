@@ -6,11 +6,14 @@ import {
   createMember,
   memberLogin,
   updateMember,
-} from '../validators/EndpointValidators';
-import { generateExcel } from '../services/member';
+} from '../validators/endpoint-validators';
+import { MemberService } from '../services/member-service';
+
+const service = new MemberService();
 
 const router = Router();
 
+router.post('/signup/pay', MemberController.signupPayment);
 router.post('/signup/success/:id', MemberController.signupSuccess);
 router.post('/login', memberLogin, MemberController.login);
 router.post('', createMember, MemberController.create);
@@ -18,7 +21,7 @@ router.post('/expoPushToken', auth, MemberController.expoToken);
 
 router.get('/excel', async (req, res, next) => {
   try {
-    const buffer = await generateExcel();
+    const buffer = await service.generateExcel();
     res.attachment('Socis.xlsx');
     res.send(buffer);
   } catch (err) {

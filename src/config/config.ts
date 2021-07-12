@@ -12,7 +12,7 @@ const appSecretKey = () =>
 const apiToken = () => {
   const key = isTest ? 'apiToken' : process.env.API_TOKEN;
 
-  if (!key) throw new Error('No API Token  set');
+  if (!key) throw new Error('No API Token set');
 
   return key;
 };
@@ -22,7 +22,7 @@ const jwtExpiration = () => process.env.JWT_EXPIRATION_TIME ?? '900';
 const emailFrom = () => {
   const key = process.env.EMAIL_FROM;
 
-  if (!key) throw new Error('No Email From set');
+  if (!isTest && !key) throw new Error('No Email From set');
 
   return key;
 };

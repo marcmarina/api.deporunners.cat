@@ -3,58 +3,35 @@ import { generateToken } from '../utils/Utils';
 
 const isTest = process.env.NODE_ENV === 'test';
 
-const mongoURI = () =>
-  process.env.MONGODB_URI ?? 'mongodb://localhost/deporunners';
+function fetchNullableVariable(key: string): string | null {
+  return process.env[key] ?? null;
+}
 
-const appSecretKey = () =>
-  isTest ? 'secretKey' : process.env.APP_SECRET_KEY ?? generateToken(32);
+function fetchVariable(key: string): string {
+  const value = process.env[key];
+  if (!value) throw new Error(`Could not fetch environment variable ${key}`);
 
-const apiToken = () => {
-  const key = isTest ? 'apiToken' : process.env.API_TOKEN;
-
-  if (!key) throw new Error('No API Token set');
-
-  return key;
-};
-
-const jwtExpiration = () => process.env.JWT_EXPIRATION_TIME ?? '900';
-
-const emailFrom = () => {
-  const key = process.env.EMAIL_FROM;
-
-  if (!isTest && !key) throw new Error('No Email From set');
-
-  return key;
-};
-
-const stripeKey = () => {
-  const key = process.env.STRIPE_SECRET_KEY;
-
-  if (!isTest && !key) throw new Error('No Stripe secret key set');
-
-  return key;
-};
-
-const sendgridKey = () => process.env.SENDGRID_API_KEY;
-
-const port = () => process.env.PORT ?? 8080;
-
-const seedNumbers = () => {
-  return {
-    members: parseInt(process.env.SEED_MEMBER_COUNT ?? '150'),
-    users: parseInt(process.env.SEED_USER_COUNT ?? '2'),
-    events: parseInt(process.env.SEED_EVENT_COUNT ?? '20'),
-  };
-};
+  return value;
+}
 
 export default {
-  apiToken,
-  appSecretKey,
-  mongoURI,
-  jwtExpiration,
-  emailFrom,
-  stripeKey,
-  sendgridKey,
-  port,
-  seedNumbers,
+  mongoURI: () => fetchVariable('MONGODB_URI'),
+  appSecretKey: () =>
+    isTest
+      ? 'secretKey'
+      : fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
+  apiToken: () => fetchVariable('API_TOKEN'),
+  jwtExpiration: () => fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
+  emailFrom: () => fetchVariable('EMAIL_FROM'),
+  stripeKey: () => (!isTest ? fetchVariable('STRIPE_SECRET_KEY') : ''),
+  sendgridKey: () => fetchVariable('SENDGRID_API_KEY'),
+  port: () => fetchNullableVariable('PORT') ?? 8080,
+  seedNumbers: () => {
+    return {
+      members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '150'),
+      users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
+      events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '20'),
+    };
+  },
+  stripeFeeProductId: () => fetchVariable('STRIPE_FEE_PRODUCT_ID'),
 };

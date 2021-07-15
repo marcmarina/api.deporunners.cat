@@ -6,25 +6,29 @@ const router = Router();
 
 const memberService = new MemberService();
 
-router.post('/webhooks', async (req, res) => {
-  const event = req.body;
+router.post('/webhooks', async (req, res, next) => {
+  try {
+    const event = req.body;
 
-  switch (event.type) {
-    case 'payment_intent.succeeded': {
-      const paymentIntent = event.data.object as Stripe.PaymentIntent;
+    switch (event.type) {
+      case 'payment_intent.succeeded': {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
 
-      const customer = paymentIntent.customer as string;
+        const customer = paymentIntent.customer as string;
 
-      if (customer) {
-        await memberService.sendSignupEmail(customer);
-        await memberService.sendSignupEmailInternal(customer);
+        if (customer) {
+          await memberService.sendSignupEmail(customer);
+          await memberService.sendSignupEmailInternal(customer);
+        }
+
+        break;
       }
-
-      break;
     }
-  }
 
-  res.json({ received: true });
+    res.json({ received: true });
+  } catch (err) {
+    next(err);
+  }
 });
 
 export default router;

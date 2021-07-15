@@ -25,7 +25,7 @@ export const getModelName = (model: Document) =>
 
 export const getPugTemplate = async (path: string, data?: any) => {
   const html = pug.renderFile(
-    pathNode.resolve(`${process.cwd()}\\public\\${path}`),
+    pathNode.normalize(`${process.cwd()}\\public\\emails\\${path}`),
     {
       ...data,
     }

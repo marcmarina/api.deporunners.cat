@@ -81,7 +81,7 @@ export class MemberService {
     return mailService.sendMail({
       to: member.email,
       subject: 'Benvingut/da a Deporunners!',
-      html: await getPugTemplate('emails/member/newMember.pug', {
+      html: await getPugTemplate('member/newMember.pug', {
         member: {
           dni: member.dni,
         },
@@ -99,7 +99,7 @@ export class MemberService {
     return mailService.sendMail({
       to: config.emailFrom(),
       subject: "S'ha registrat un nou soci",
-      html: await getPugTemplate('emails/member/newMemberInternal.pug', {
+      html: await getPugTemplate('member/newMemberInternal.pug', {
         member,
         dateString: dayjs().format('DD-MM-YYYY'),
       }),

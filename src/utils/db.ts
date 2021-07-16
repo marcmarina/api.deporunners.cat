@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import logger from './logger';
 
 const connect = async (connectionString: string) => {
   try {
@@ -8,7 +9,7 @@ const connect = async (connectionString: string) => {
       useCreateIndex: true,
     });
   } catch (ex) {
-    console.log(ex);
+    logger.error(ex);
   }
 };
 
@@ -16,7 +17,7 @@ const disconnect = async () => {
   try {
     await mongoose.disconnect();
   } catch (ex) {
-    console.log(ex);
+    logger.error(ex);
   }
 };
 

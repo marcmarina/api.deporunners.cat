@@ -1,8 +1,6 @@
 import 'dotenv/config';
 import { generateToken } from '../utils/Utils';
 
-const isTest = process.env.NODE_ENV === 'test';
-
 function fetchNullableVariable(key: string): string | null {
   return process.env[key] ?? null;
 }
@@ -14,7 +12,7 @@ function fetchVariable(key: string): string {
   return value;
 }
 
-export default {
+const config = {
   mongoURI: () => fetchVariable('MONGODB_URI'),
   appSecretKey: () =>
     isTest
@@ -34,4 +32,12 @@ export default {
     };
   },
   stripeFeeProductId: () => fetchVariable('STRIPE_FEE_PRODUCT_ID'),
+  sentryDSN: () => fetchVariable('SENTRY_DSN'),
+  environment: () => fetchNullableVariable('NODE_ENV') ?? 'development',
 };
+
+export const isDev = () => config.environment() === 'development';
+
+const isTest = config.environment() === 'test';
+
+export default config;

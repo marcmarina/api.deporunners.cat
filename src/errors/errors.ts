@@ -9,6 +9,7 @@ export class BaseError extends Error {
 export class ServiceError extends BaseError {
   public service: string;
   public method: string;
+  public errorMessage: string;
 
   constructor({
     service,
@@ -22,6 +23,7 @@ export class ServiceError extends BaseError {
     super(`ServiceError in ${service} - ${method}. Error: ${message}`);
     this.service = service;
     this.method = method;
+    this.errorMessage = message;
   }
 }
 

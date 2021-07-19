@@ -11,6 +11,7 @@ import Context from '../utils/Context';
 import { stripeClient } from '../stripe/stripe-client';
 import { StripeAdapter } from '../stripe/stripe-adapter';
 import config from '../config/config';
+import { ServiceError } from '../errors/errors';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -74,38 +75,54 @@ export class MemberService {
   }
 
   async sendSignupEmail(stripeId: string) {
-    const member = await Member.findOne({
-      stripeId,
-    });
+    try {
+      const member = await Member.findOne({
+        stripeId,
+      });
 
-    if (!member) return null;
+      if (!member) return null;
 
-    return mailService.sendMail({
-      to: member.email,
-      subject: 'Benvingut/da a Deporunners!',
-      html: await getPugTemplate('member/newMember.pug', {
-        member: {
-          dni: member.dni,
-        },
-      }),
-    });
+      return mailService.sendMail({
+        to: member.email,
+        subject: 'Benvingut/da a Deporunners!',
+        html: await getPugTemplate('member/newMember.pug', {
+          member: {
+            dni: member.dni,
+          },
+        }),
+      });
+    } catch (err) {
+      throw new ServiceError({
+        message: err.message,
+        method: 'sendSignupEmail',
+        service: 'MemberService',
+      });
+    }
   }
 
   async sendSignupEmailInternal(stripeId: string) {
-    const member = await Member.findOne({
-      stripeId,
-    });
+    try {
+      const member = await Member.findOne({
+        stripeId,
+      });
 
-    if (!member) return null;
+      if (!member) return null;
 
-    return mailService.sendMail({
-      to: config.emailFrom(),
-      subject: "S'ha registrat un nou soci",
-      html: await getPugTemplate('member/newMemberInternal.pug', {
-        member,
-        dateString: dayjs().format('DD-MM-YYYY'),
-      }),
-    });
+      return mailService.sendMail({
+        to: config.emailFrom(),
+        subject: "S'ha registrat un nou soci",
+        html: await getPugTemplate('member/newMemberInternal.pug', {
+          member,
+          dateString: dayjs().format('DD-MM-YYYY'),
+        }),
+      });
+    } catch (err) {
+      throw new ServiceError({
+        message: err.message,
+        method: 'sendSignupEmailInternal',
+        service: 'MemberService',
+      });
+    }
   }
 
   async deleteById(id: string) {

@@ -69,8 +69,6 @@ app.use('/', (req, res, _next) => {
   res.status(404).send('Not Found');
 });
 
-app.use(Sentry.Handlers.errorHandler());
-
 app.use((error: BaseError, _req, res, _next) => {
   if (error instanceof InputError) {
     return res.status(error.status).json(error);

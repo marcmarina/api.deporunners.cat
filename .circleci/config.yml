@@ -18,7 +18,12 @@ jobs:
       - heroku/install
       - heroku/deploy-via-git:
           app-name: $HEROKU_STAGING_APP_NAME
-
+  deploy:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git
 
 workflows:
   testing:
@@ -36,7 +41,7 @@ workflows:
           filters:
             branches:
               only: develop
-      - heroku/deploy-via-git:
+      - deploy:
           requires:
             - test
           filters:

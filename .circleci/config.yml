@@ -1,11 +1,12 @@
 version: 2.1
 orbs:
   node: circleci/node@3.0.0
+  heroku: circleci/heroku@0.0.10
 
 jobs:
-  unit-testing: 
-    docker:       
-      - image: circleci/node      
+  test:
+    docker:
+      - image: circleci/node
     steps:
       - checkout
       - run: yarn
@@ -14,7 +15,15 @@ jobs:
 workflows:
   testing:
     jobs:
-      - unit-testing:
-        filters: 
+      - test:
+        filters:
           branches:
             only: /*/
+  deploy:
+    jobs:
+      - heroku/deploy-via-git:
+          requires:
+            - testing
+          filters:
+            branches:
+              only: develop

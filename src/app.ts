@@ -21,8 +21,6 @@ import logger from './utils/logger';
 
 const app = express();
 
-console.log('This is a test');
-
 Sentry.init({
   dsn: config.sentryDSN(),
   integrations: [

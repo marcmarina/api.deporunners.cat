@@ -11,6 +11,14 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test
+  stage:
+    executor: heroku/default
+    steps:
+      - checkout
+      - heroku/install
+      - heroku/deploy-via-git:
+          app-name: $HEROKU_STAGING_APP_NAME
+
 
 workflows:
   testing:
@@ -22,6 +30,12 @@ workflows:
   deploy:
     jobs:
       - test
+      - stage:
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
       - heroku/deploy-via-git:
           requires:
             - test

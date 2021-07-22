@@ -21,9 +21,10 @@ workflows:
             only: /*/
   deploy:
     jobs:
+      - test
       - heroku/deploy-via-git:
           requires:
-            - testing
+            - test
           filters:
             branches:
               only: develop

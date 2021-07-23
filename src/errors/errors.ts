@@ -1,8 +1,11 @@
 import { Result, ValidationError } from 'express-validator';
 
 export class BaseError extends Error {
-  constructor(message: string) {
+  public status: number;
+
+  constructor(message: string, status?: number) {
     super(message);
+    this.status = status ?? 500;
   }
 }
 
@@ -29,12 +32,16 @@ export class ServiceError extends BaseError {
 
 export class InputError extends BaseError {
   public errors: ValidationError[];
-  public status: number;
 
   constructor(errors: Result<ValidationError>) {
-    super('Validation errors');
-    this.status = 400;
+    super('Validation errors', 400);
 
     this.errors = errors.array();
+  }
+}
+
+export class AuthError extends BaseError {
+  constructor(message: string) {
+    super(message, 401);
   }
 }

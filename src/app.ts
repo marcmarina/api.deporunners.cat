@@ -16,7 +16,7 @@ import StripeWebhooks from './routes/stripeWebhooks';
 import apiToken from './middleware/apiToken';
 import db from './utils/db';
 import config from './config/config';
-import { BaseError, InputError } from './errors/errors';
+import { AuthError, BaseError, InputError } from './errors/errors';
 import logger from './utils/logger';
 
 const app = express();
@@ -70,14 +70,13 @@ app.use('/', (req, res, _next) => {
 });
 
 app.use((error: BaseError, _req, res, _next) => {
-  if (error instanceof InputError) {
-    return res.status(error.status).json(error);
+  if (error instanceof InputError || error instanceof AuthError) {
+    return res.status(error.status).json({ ...error, message: error.message });
   }
 
   logger.error(error);
 
-  const status = error['status'] || 500;
-  res.status(status).json(error);
+  res.status(error.status).json({ ...error, message: error.message });
 });
 
 db.connect(config.mongoURI());

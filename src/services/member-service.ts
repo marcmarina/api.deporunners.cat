@@ -11,7 +11,7 @@ import Context from '../utils/Context';
 import { stripeClient } from '../stripe/stripe-client';
 import { StripeAdapter } from '../stripe/stripe-adapter';
 import config from '../config/config';
-import { ServiceError } from '../errors/errors';
+import { AuthError, ServiceError } from '../errors/errors';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -139,33 +139,17 @@ export class MemberService {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (re.test(username)) {
       member = await Member.findOne({ email: username });
-      if (!member) {
-        const error = {
-          status: 400,
-          msg: 'These credentials are invalid.',
-        };
-        throw error;
-      }
+
+      if (!member) throw new AuthError('These credentials are invalid');
     } else {
       member = await Member.findOne({ dni: username });
-      if (!member) {
-        const error = {
-          status: 400,
-          msg: 'These credentials are invalid.',
-        };
-        throw error;
-      }
+
+      if (!member) throw new AuthError('These credentials are invalid');
     }
 
-    const validPassword = await bcrypt.compare(password, member.password);
+    const validPassword = await bcrypt.compareSync(password, member.password);
 
-    if (!validPassword) {
-      const error = {
-        status: 400,
-        msg: 'These credentials are invalid.',
-      };
-      throw error;
-    }
+    if (!validPassword) throw new AuthError('These credentials are invalid');
 
     if (!member.refreshToken) {
       member = await this.createSessionToken(member);
@@ -213,7 +197,7 @@ export class MemberService {
   }
 
   createSessionToken(member: IMember) {
-    const refreshToken = generateToken(64);
+    const refreshToken = generateToken(32);
     member.refreshToken = refreshToken;
     return member.save();
   }

@@ -29,9 +29,9 @@ workflows:
   testing:
     jobs:
       - test:
-        filters:
-          branches:
-            only: /*/
+          filters:
+            branches:
+              only: /.*/
   deploy:
     jobs:
       - test

@@ -1,8 +1,8 @@
 {
-    "hooks": {
-        "pre-commit": "yarn lint",
-        "pre-push": "yarn build && yarn test",
-        "post-merge": "yarn",
-        "post-checkout": "yarn"
-    }
+  "hooks": {
+    "pre-commit": "yarn lint",
+    "pre-push": "yarn build && yarn test",
+    "post-merge": "yarn",
+    "post-checkout": "yarn"
+  }
 }

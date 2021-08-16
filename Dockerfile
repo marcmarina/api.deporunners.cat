@@ -3,9 +3,11 @@ FROM node:14-alpine3.13 as build
 WORKDIR /usr/src/app
 
 COPY package.json ./
-COPY yarn.lock ./
+COPY pnpm-lock.yaml  ./
 
-RUN yarn
+RUN npm i -g pnpm
+
+RUN pnpm install
 
 COPY . .
 
@@ -13,7 +15,7 @@ RUN yarn build
 
 RUN rm -rf ./node_modules
 
-RUN yarn install --production
+RUN pnpm install -P
 
 FROM node:14-alpine3.13
 

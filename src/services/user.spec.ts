@@ -15,8 +15,8 @@ const sampleUser = {
     '9a1560c86f8bb8ee34d540574033bb9844331ca9af89be7f4f9f4271878656a92fce3936421037adaafd07d7a1f5d3f606b3bd6298327dbf11fc7695e616c4f9',
 };
 
-mockedUser.findOne.mockResolvedValue(sampleUser);
-mockedUser.findById.mockResolvedValue(sampleUser);
+mockedUser.findOne.mockResolvedValue(sampleUser as any);
+mockedUser.findById.mockResolvedValue(sampleUser as any);
 
 describe('findUserById', () => {
   it('returns a user for a specific id', async () => {

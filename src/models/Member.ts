@@ -82,12 +82,10 @@ const memberSchema = new Schema({
   expoPushToken: String,
 });
 
-const populateData = function (this: IMember, next: any) {
+memberSchema.pre(/^find/, function (next: any) {
   this.populate('address.town');
   this.populate('tshirtSize');
   next();
-};
-
-memberSchema.pre('find', populateData).pre('findOne', populateData);
+});
 
 export default model<IMember>('Member', memberSchema);

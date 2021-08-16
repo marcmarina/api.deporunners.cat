@@ -14,7 +14,7 @@ export const generateNewJWT = async (
   refreshToken: string,
   modelName: ModelName
 ): Promise<string> => {
-  const model: IMember | IUser =
+  const model: IMember | IUser | null =
     modelName === 'Member'
       ? await memberService.findById(id)
       : await findUserById(id);

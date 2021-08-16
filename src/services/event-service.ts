@@ -41,10 +41,18 @@ export class EventService {
   async attendEvent(eventId: string, attending: boolean) {
     const userId = Context.getUserId();
     const event = await Event.findById(eventId);
+
+    if (!event)
+      throw {
+        status: 404,
+        msg: 'Event not found',
+      };
+
     if (attending) {
-      if (!event.members.includes(userId)) event.members.push(userId);
+      if (!event.members.includes(Types.ObjectId(userId)))
+        event.members.push(Types.ObjectId(userId));
     } else {
-      const index = event.members.indexOf(userId);
+      const index = event.members.indexOf(Types.ObjectId(userId));
       if (index > -1) {
         event.members.splice(index, 1);
       }

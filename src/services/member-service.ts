@@ -134,20 +134,15 @@ export class MemberService {
   }
 
   async loginCredentials(username: string, password: string) {
-    let member: IMember;
-
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (re.test(username)) {
-      member = await Member.findOne({ email: username });
 
-      if (!member) throw new AuthError('These credentials are invalid');
-    } else {
-      member = await Member.findOne({ dni: username });
+    let member = re.test(username)
+      ? await Member.findOne({ email: username })
+      : await Member.findOne({ dni: username });
 
-      if (!member) throw new AuthError('These credentials are invalid');
-    }
+    if (!member) throw new AuthError('These credentials are invalid');
 
-    const validPassword = await bcrypt.compareSync(password, member.password);
+    const validPassword = bcrypt.compareSync(password, member.password);
 
     if (!validPassword) throw new AuthError('These credentials are invalid');
 

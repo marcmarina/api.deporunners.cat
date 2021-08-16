@@ -129,14 +129,14 @@ async function seed() {
       lastName: faker.name.lastName(),
       address: {
         ...memberTemplate.address,
-        town: (await Town.findOne())._id,
+        town: (await Town.findOne())?._id,
         streetAddress: faker.address.streetAddress(),
         postCode: faker.address.zipCode(),
       },
       email: faker.internet.email().toLowerCase(),
       numMember: i + 1,
       iban: faker.finance.iban(),
-      tshirtSize: (await TShirtSize.findOne())._id,
+      tshirtSize: (await TShirtSize.findOne())?._id,
     });
     members.push(member);
   }
@@ -145,11 +145,11 @@ async function seed() {
 
   const users: IUser[] = [];
   for (let i = 0; i < userCount; i++) {
-    const { _id: roleId } = await Role.findOne();
+    const role = await Role.findOne();
     const user = new User({
       ...userTemplate,
       email: `john${i > 0 ? i + 1 : ''}@doe.com`,
-      role: roleId,
+      role: role?._id,
     });
     users.push(user);
   }

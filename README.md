@@ -11,16 +11,16 @@ This is the API that powers the other two parts of this project: [website][web] 
 Requirements:
 
 - MongoDB
-- `yarn`
+- `pnpm`
 - Node
 
-To set up the project, install dependencies using `yarn` and then create a `.env` file using the provided example. If you need help, go to [this section](#env-help).
+To set up the project, install dependencies using `pnpm` and then create a `.env` file using the provided example. If you need help, go to [this section](#env-help).
 
 To populate the database and start the development server (defaults to port 8080):
 
 ```
-yarn seed
-yarn dev
+npm run seed
+npm run dev
 ```
 
 ### `.env` help

@@ -1,4 +1,4 @@
-FROM node:14-alpine3.13 as build
+FROM node:16-alpine3.14 as build
 
 WORKDIR /usr/src/app
 
@@ -17,7 +17,7 @@ RUN rm -rf ./node_modules
 
 RUN pnpm install -P
 
-FROM node:14-alpine3.13
+FROM node:16-alpine3.14
 
 WORKDIR /usr/src/app
 

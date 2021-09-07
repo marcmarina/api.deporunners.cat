@@ -1,6 +1,6 @@
 FROM node:16-alpine3.14 as build
 
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
 COPY package.json ./
 COPY pnpm-lock.yaml  ./
@@ -19,12 +19,12 @@ RUN pnpm install -P
 
 FROM node:16-alpine3.14
 
-WORKDIR /usr/src/app
+WORKDIR /usr/app
 
-COPY --from=build /usr/src/app/package.json ./
-COPY --from=build /usr/src/app/build ./build
-COPY --from=build /usr/src/app/public ./public
-COPY --from=build /usr/src/app/node_modules ./node_modules
+COPY --from=build /usr/app/package.json ./
+COPY --from=build /usr/app/build ./build
+COPY --from=build /usr/app/public ./public
+COPY --from=build /usr/app/node_modules ./node_modules
 
 EXPOSE 8080
 

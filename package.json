@@ -11,6 +11,9 @@
     "lint": "eslint . --ext .ts",
     "mongo:start": "docker run --rm -d -p 27017:27017 --name deporunners_mongo mongo:latest"
   },
+  "engines": {
+    "node": "16.x"
+  },
   "author": "Marc Marina",
   "license": "ISC",
   "repository": "https://github.com/marcmarina/api.deporunners.cat",

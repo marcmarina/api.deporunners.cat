@@ -3,7 +3,7 @@ FROM node:16-alpine3.14 as build
 WORKDIR /usr/app
 
 COPY package.json ./
-COPY pnpm-lock.yaml  ./
+COPY yarn.lock  ./
 
 RUN yarn install
 

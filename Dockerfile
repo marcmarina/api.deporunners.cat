@@ -5,9 +5,7 @@ WORKDIR /usr/app
 COPY package.json ./
 COPY pnpm-lock.yaml  ./
 
-RUN npm i -g pnpm
-
-RUN pnpm install
+RUN yarn install
 
 COPY . .
 
@@ -15,7 +13,7 @@ RUN yarn build
 
 RUN rm -rf ./node_modules
 
-RUN pnpm install -P
+RUN yarn install --prod
 
 FROM node:16-alpine3.14
 

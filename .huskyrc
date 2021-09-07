@@ -1,8 +1,0 @@
-{
-  "hooks": {
-    "pre-commit": "yarn lint",
-    "pre-push": "yarn build && yarn test",
-    "post-merge": "pnpm install",
-    "post-checkout": "pnpm install"
-  }
-}

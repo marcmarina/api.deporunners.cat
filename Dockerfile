@@ -2,13 +2,13 @@ FROM node:16-alpine3.14 as build
 
 WORKDIR /usr/app
 
-COPY package.json ./
-COPY yarn.lock  ./
+COPY package.json yarn.lock ./
 
 RUN yarn install
 
 COPY . .
 
+RUN yarn test
 RUN yarn build
 
 RUN rm -rf ./node_modules

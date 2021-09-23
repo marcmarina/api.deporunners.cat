@@ -41,8 +41,6 @@ All the `SEED_` variables are not needed, as they have default values inside the
 
 `SENDGRID_API_KEY` is necessary for sending emails. `EMAIL_FROM` is your preferred address to send emails from (must be set up on your Sendgrid account).
 
-> Soon I will make it so the API detects if Sendgrid is set up, and choose whether or not to attempt to send emails. (If the API key is not correct it will not detect it, just if one is set or not).
-
 ## Deployment
 
 This API is currently deployed twice: one for production and one for live staging.

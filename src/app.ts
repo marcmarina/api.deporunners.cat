@@ -33,6 +33,8 @@ Sentry.init({
   environment: config.environment(),
 });
 
+app.use(express.static('public'));
+
 app.use(Sentry.Handlers.requestHandler());
 app.use(Sentry.Handlers.tracingHandler());
 

@@ -5,13 +5,15 @@ import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import 'dotenv/config';
 
-import UserRoutes from './routes/user';
-import RoleRoutes from './routes/role';
-import MemberRoutes from './routes/member';
-import TownRoutes from './routes/town';
-import TShirtSizeRoutes from './routes/tshirtSize';
-import EventRoutes from './routes/event';
-import StripeWebhooks from './routes/stripeWebhooks';
+import {
+  UserRoutes,
+  RoleRoutes,
+  MemberRoutes,
+  TownRoutes,
+  TShirtSizeRoutes,
+  EventRoutes,
+  StripeWebhooks,
+} from './routes';
 
 import apiToken from './middleware/apiToken';
 import db from './utils/db';

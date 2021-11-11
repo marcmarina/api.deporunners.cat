@@ -13,7 +13,7 @@ jobs:
       - run: yarn test
       - run: mkdir test_results
       - store_test_results:
-          path: test_results 
+          path: test_results
   stage:
     executor: heroku/default
     steps:

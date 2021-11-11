@@ -32,6 +32,8 @@ type Config = {
   environment: () => string;
 };
 
+const isProd = () => config.environment() === 'production';
+
 const defaultConfig: Config = {
   mongoURI: () => fetchVariable('MONGODB_URI'),
   appSecretKey: () =>
@@ -51,7 +53,8 @@ const defaultConfig: Config = {
       events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
     };
   },
-  stripeFeeProductId: () => fetchVariable('STRIPE_FEE_PRODUCT_ID'),
+  stripeFeeProductId: () =>
+    isProd() ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
   sentryDSN: () => fetchVariable('SENTRY_DSN'),
   environment: () => fetchNullableVariable('NODE_ENV') ?? 'development',
 };

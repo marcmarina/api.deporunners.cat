@@ -32,13 +32,13 @@ workflows:
   deploy:
     jobs:
       - test
-      - staging:
+      - stage:
           requires:
             - test
           filters:
             branches:
               only: develop
-      - production:
+      - deploy:
           requires:
             - test
           filters:

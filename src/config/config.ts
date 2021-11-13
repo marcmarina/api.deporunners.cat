@@ -32,8 +32,6 @@ type Config = {
   environment: () => string;
 };
 
-const isProd = () => config.environment() === 'production';
-
 const defaultConfig: Config = {
   mongoURI: () => fetchVariable('MONGODB_URI'),
   appSecretKey: () =>
@@ -83,7 +81,7 @@ const testConfig: Config = {
 export const isDev = () => defaultConfig.environment() === 'development';
 
 const isTest = () => defaultConfig.environment() === 'test';
-
+const isProd = () => config.environment() === 'production';
 const config = isTest() ? testConfig : defaultConfig;
 
 export default config;

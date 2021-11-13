@@ -37,6 +37,7 @@ workflows:
               only: /.*/
   deploy:
     jobs:
+      - test
       - stage:
           requires:
             - test

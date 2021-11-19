@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import httpContext from 'express-http-context';
 import * as Sentry from '@sentry/node';
@@ -52,7 +52,7 @@ app.use(
   })
 );
 
-app.get('/', (req, res) => {
+app.get('/', (_req: Request, res) => {
   const response = require('../package.json');
   delete response['repository'];
   return res.status(200).json(response);
@@ -69,19 +69,23 @@ app.use('/town', TownRoutes);
 app.use('/tshirtsize', TShirtSizeRoutes);
 app.use('/event', EventRoutes);
 
-app.use('/', (req, res, _next) => {
+app.use('/', (_req: Request, res: Response, _next) => {
   res.status(404).send('Not Found');
 });
 
-app.use((error: BaseError, _req, res, _next) => {
-  if (error instanceof InputError || error instanceof AuthError) {
-    return res.status(error.status).json({ ...error, message: error.message });
+app.use(
+  (error: BaseError, _req: Request, res: Response, _next: NextFunction) => {
+    if (error instanceof InputError || error instanceof AuthError) {
+      return res
+        .status(error.status)
+        .json({ ...error, message: error.message });
+    }
+
+    logger.error(error);
+
+    res.status(error.status).json({ ...error, message: error.message });
   }
-
-  logger.error(error);
-
-  res.status(error.status).json({ ...error, message: error.message });
-});
+);
 
 db.connect(config.mongoURI());
 

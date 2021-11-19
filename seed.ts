@@ -91,8 +91,8 @@ const memberTemplate = {
   dni: '12345678A',
   telephone: '654654654',
   address: {
-    postCode: '08810',
-    streetAddress: 'C/ Lluis Companys, 17 4-2',
+    postCode: '12345',
+    streetAddress: 'Sample Street, 12',
   },
 };
 

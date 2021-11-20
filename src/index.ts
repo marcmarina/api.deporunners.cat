@@ -1,6 +1,13 @@
 import app from './app';
 import config from './config/config';
+import db from './utils/db';
 
-app.listen(config.port(), () => {
+const server = app.listen(config.port(), () => {
   console.debug(`🚀 App listening on http://localhost:${config.port()}`);
+});
+
+process.on('SIGTERM', () => {
+  server.close();
+  db.disconnect();
+  process.exit(0);
 });

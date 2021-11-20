@@ -8,7 +8,6 @@ RUN yarn install
 
 COPY . .
 
-RUN yarn test
 RUN yarn build
 
 RUN rm -rf ./node_modules
@@ -20,10 +19,10 @@ FROM node:16-alpine3.14
 WORKDIR /usr/app
 
 COPY --from=build /usr/app/package.json ./
-COPY --from=build /usr/app/build ./build
+COPY --from=build /usr/app/dist ./dist
 COPY --from=build /usr/app/public ./public
 COPY --from=build /usr/app/node_modules ./node_modules
 
 EXPOSE 8080
 
-CMD ["yarn", "start"]
+CMD ["node", "dist/index.js"]

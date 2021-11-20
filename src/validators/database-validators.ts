@@ -2,11 +2,15 @@ import { check } from 'express-validator';
 import { Model } from 'mongoose';
 import Member from '../models/Member';
 
+export async function isModelIdValid(model: Model<any>, id: string) {
+  const result = await model.findOne({ id });
+  if (!result) throw new Error(`The ${model.modelName} id is not valid`);
+  return true;
+}
+
 export const validateModelId = (model: Model<any>, path: string) =>
   check(path).custom(async value => {
-    const result = await model.findOne({ _id: value._id || value });
-    if (!result) throw new Error(`The ${model.modelName} id is not valid`);
-    return true;
+    return await isModelIdValid(model, value._id || value);
   });
 
 export const existingMemberEmail = (path: string) =>

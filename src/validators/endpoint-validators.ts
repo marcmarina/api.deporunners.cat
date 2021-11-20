@@ -3,6 +3,7 @@ import { check } from 'express-validator';
 
 import { existingMemberEmail, validateModelId } from './database-validators';
 import Town from '../models/Town';
+import Role from '../models/Role';
 
 export const createMember = [
   check('member.firstName')
@@ -56,4 +57,10 @@ export const fullEvent = [
     return false;
   }),
   check('coordinates').isString().isLatLong(),
+];
+
+export const createUser = [
+  check('email').trim().isEmail().withMessage('Please provide a valid email.'),
+  check('password').trim().notEmpty().withMessage('The password is required'),
+  validateModelId(Role, 'role'),
 ];

@@ -2,12 +2,15 @@ import app from './app';
 import config from './config/config';
 import db from './utils/db';
 
-const server = app.listen(config.port(), () => {
-  console.debug(`🚀 App listening on http://localhost:${config.port()}`);
+const server = app.listen(config.port(), async () => {
+  await db.connect(config.mongoURI());
+
+  console.log(`🚀 App listening on http://localhost:${config.port()}`);
 });
 
-process.on('SIGTERM', () => {
+process.on('SIGINT', async () => {
   server.close();
-  db.disconnect();
+  await db.disconnect();
+
   process.exit(0);
 });

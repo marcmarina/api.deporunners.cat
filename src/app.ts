@@ -16,7 +16,6 @@ import {
 } from './routes';
 
 import apiToken from './middleware/apiToken';
-import db from './utils/db';
 import config from './config/config';
 import { AuthError, BaseError, InputError } from './errors/errors';
 import logger from './utils/logger';
@@ -86,7 +85,5 @@ app.use(
     res.status(error.status).json({ ...error, message: error.message });
   }
 );
-
-db.connect(config.mongoURI());
 
 export default app;

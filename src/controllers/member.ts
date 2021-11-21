@@ -1,4 +1,3 @@
-import eventEmitter from '../events/EventEmitter';
 import { MemberService } from '../services/member-service';
 import Context from '../utils/Context';
 import checkForErrors from '../utils/ErrorThrowing';
@@ -147,16 +146,6 @@ export const expoToken = async (req, res, next) => {
 export const self = async (req, res, next) => {
   try {
     res.status(200).json(await service.findById(Context.getUserId()));
-  } catch (ex) {
-    next(ex);
-  }
-};
-
-export const signupSuccess = async (req, res, next) => {
-  try {
-    const { id } = req.params;
-
-    res.status(200).json();
   } catch (ex) {
     next(ex);
   }

@@ -14,7 +14,6 @@ const service = new MemberService();
 const router = Router();
 
 router.post('/signup/pay', MemberController.signupPayment);
-router.post('/signup/success/:id', MemberController.signupSuccess);
 router.post('/login', memberLogin, MemberController.login);
 router.post('', createMember, MemberController.create);
 router.post('/expoPushToken', auth, MemberController.expoToken);

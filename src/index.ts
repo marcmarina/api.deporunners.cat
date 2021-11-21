@@ -1,6 +1,6 @@
 import app from './app';
 import config from './config/config';
-import db from './utils/db';
+import db from './config/db';
 
 const server = app.listen(config.port(), async () => {
   await db.connect(config.mongoURI());

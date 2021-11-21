@@ -10,7 +10,7 @@ import Town from './src/models/Town';
 import TShirtSize from './src/models/TShirtSize';
 import Event, { IEvent } from './src/models/Event';
 
-import db from './src/utils/db';
+import db from './src/config/db';
 import { randomInt } from './src/utils/Utils';
 import config from './src/config/config';
 

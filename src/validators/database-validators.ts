@@ -3,7 +3,7 @@ import { Model } from 'mongoose';
 import Member from '../models/Member';
 
 export async function isModelIdValid(model: Model<any>, id: string) {
-  const result = await model.findOne({ id });
+  const result = await model.findOne({ _id: id });
   if (!result) throw new Error(`The ${model.modelName} id is not valid`);
   return true;
 }

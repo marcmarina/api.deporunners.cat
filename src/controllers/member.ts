@@ -6,6 +6,15 @@ import Stripe from 'stripe';
 
 const service = new MemberService();
 
+type PaymentResponse =
+  | {
+      success: boolean;
+    }
+  | {
+      payment_client_secret: string | null;
+      requires_action: boolean;
+    };
+
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
@@ -22,7 +31,7 @@ export const create = async (req, res, next) => {
 
 export const signupPayment = async (req, res, next) => {
   try {
-    let response;
+    let response: PaymentResponse;
 
     const { memberId } = req.body;
 
@@ -41,6 +50,10 @@ export const signupPayment = async (req, res, next) => {
     } else if (intent.status === 'succeeded') {
       response = {
         success: true,
+      };
+    } else {
+      response = {
+        success: false,
       };
     }
 

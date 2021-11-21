@@ -156,8 +156,6 @@ export const signupSuccess = async (req, res, next) => {
   try {
     const { id } = req.params;
 
-    eventEmitter.emit('memberSignup', id);
-
     res.status(200).json();
   } catch (ex) {
     next(ex);

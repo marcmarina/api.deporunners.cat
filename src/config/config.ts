@@ -44,13 +44,11 @@ const defaultConfig: Config = {
   stripeKey: () => (!isTest() ? fetchVariable('STRIPE_SECRET_KEY') : ''),
   sendgridKey: () => fetchVariable('SENDGRID_API_KEY'),
   port: () => parseInt(fetchNullableVariable('PORT') ?? '8080'),
-  seedNumbers: () => {
-    return {
-      members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '15'),
-      users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
-      events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
-    };
-  },
+  seedNumbers: () => ({
+    members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '15'),
+    users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
+    events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
+  }),
   stripeFeeProductId: () =>
     isProd() ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
   sentryDSN: () => fetchVariable('SENTRY_DSN'),
@@ -66,13 +64,11 @@ const testConfig: Config = {
   stripeKey: () => '',
   sendgridKey: () => '',
   port: () => 8080,
-  seedNumbers: () => {
-    return {
-      members: 1,
-      users: 1,
-      events: 1,
-    };
-  },
+  seedNumbers: () => ({
+    members: 1,
+    users: 1,
+    events: 1,
+  }),
   stripeFeeProductId: () => '',
   sentryDSN: () => '',
   environment: () => '',

@@ -1,6 +1,7 @@
 import app from './app';
 import config from './config/config';
 import db from './config/db';
+import logger from './utils/logger';
 
 const server = app.listen(config.port(), async () => {
   await db.connect(config.mongoURI());
@@ -9,8 +10,11 @@ const server = app.listen(config.port(), async () => {
 });
 
 process.on('SIGINT', async () => {
-  server.close();
-  await db.disconnect();
+  server.close(async (err) => {
+    if (err) logger.error(err);
 
-  process.exit(0);
+    await db.disconnect();
+
+    process.exit(0);
+  });
 });

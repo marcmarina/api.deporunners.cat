@@ -9,7 +9,7 @@ export default (req, res, next) => {
   }
 };
 
-export const checkToken = req => {
+export const checkToken = (req) => {
   const apiToken = req.headers['x-api-token'];
   if (!apiToken) {
     throw {

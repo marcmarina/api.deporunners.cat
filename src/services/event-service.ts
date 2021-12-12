@@ -67,7 +67,7 @@ export class EventService {
 
       const expo = new Expo();
 
-      members.forEach(member => {
+      members.forEach((member) => {
         if (member.expoPushToken) {
           messages.push({
             to: member.expoPushToken,

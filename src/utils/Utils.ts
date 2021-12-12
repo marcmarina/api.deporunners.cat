@@ -21,7 +21,7 @@ export const paginateArray = (arr: any[], page: number, pageSize: number) =>
   arr.slice((page - 1) * pageSize, page * pageSize);
 
 export const getModelName = (model: Document) =>
-  ((model.constructor as unknown) as Document).modelName;
+  (model.constructor as unknown as Document).modelName;
 
 export const getPugTemplate = async (path: string, data?: any) => {
   const html = pug.renderFile(
@@ -38,7 +38,7 @@ export const randomInt = (min: number, max: number) =>
   Math.random() * (max - min + 1) + min;
 
 export const deleteFile = (filePath: string) => {
-  fs.unlink(filePath, err => {
+  fs.unlink(filePath, (err) => {
     if (err) throw err;
   });
 };

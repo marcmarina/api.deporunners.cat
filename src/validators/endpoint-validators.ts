@@ -52,7 +52,7 @@ export const fullEvent = [
     .isLength({ min: 4 })
     .withMessage('The name has to be at least 4 characters long')
     .trim(),
-  check('dateTime').custom(value => {
+  check('dateTime').custom((value) => {
     if (dayjs(value).isValid()) return true;
     return false;
   }),

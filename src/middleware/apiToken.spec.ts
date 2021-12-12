@@ -8,7 +8,7 @@ it('middleware calls next without an exception when the token is present and val
       'x-api-token': config.apiToken(),
     },
   };
-  const next = jest.fn(ex => {
+  const next = jest.fn((ex) => {
     expect(ex).not.toBeDefined();
   });
 
@@ -21,7 +21,7 @@ it('middleware calls next with an exception when the token is invalid', () => {
       'x-api-token': 'invalidtoken',
     },
   };
-  const next = jest.fn(ex => {
+  const next = jest.fn((ex) => {
     expect(ex).toEqual({ msg: 'API Token is not valid', status: 401 });
   });
 
@@ -32,7 +32,7 @@ it('middleware calls next with an exception when the token is not provided', () 
   const req = {
     headers: {},
   };
-  const next = jest.fn(ex => {
+  const next = jest.fn((ex) => {
     expect(ex).toEqual({ msg: 'No API Token provided', status: 401 });
   });
 

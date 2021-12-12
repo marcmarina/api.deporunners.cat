@@ -9,12 +9,12 @@ export async function isModelIdValid(model: Model<any>, id: string) {
 }
 
 export const validateModelId = (model: Model<any>, path: string) =>
-  check(path).custom(async value => {
+  check(path).custom(async (value) => {
     return await isModelIdValid(model, value._id || value);
   });
 
 export const existingMemberEmail = (path: string) =>
-  check(path).custom(async value => {
+  check(path).custom(async (value) => {
     const existingEmail = await Member.findOne({
       email: value,
     });

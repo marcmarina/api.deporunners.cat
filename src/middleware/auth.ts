@@ -40,7 +40,7 @@ export default async (req, res, next) => {
   }
 };
 
-export const getTokens = req => {
+export const getTokens = (req) => {
   const token = req.headers['x-auth-token'];
   const refreshToken = req.headers['x-refresh-token'];
 

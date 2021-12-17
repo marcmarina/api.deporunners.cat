@@ -1,0 +1,7 @@
+{
+  "ignore": ["*.spec.ts"],
+  "ext": "ts",
+  "env": {
+    "NODE_ENV": "development"
+  }
+}

@@ -4,7 +4,7 @@ import pino from 'pino';
 import { isDev } from '../config/config';
 
 const logger = pino({
-  transport: { target: 'pino-pretty' },
+  ...(isDev() ? { transport: { target: 'pino-pretty' } } : {}),
   level: isDev() ? 'trace' : 'info',
 });
 

@@ -19,4 +19,7 @@ export default {
   debug: (msg: string) => {
     logger.debug(msg);
   },
+  info: (msg: string) => {
+    logger.info(msg);
+  },
 };

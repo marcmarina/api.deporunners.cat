@@ -9,11 +9,15 @@ const server = app.listen(config.port(), async () => {
   logger.debug(`🚀 App listening on http://localhost:${config.port()}`);
 });
 
-process.on('SIGINT', async () => {
+process.on('SIGTERM', async () => {
+  logger.info('Tearing down application');
+
   server.close(async (err) => {
     if (err) logger.error(err);
 
     await db.disconnect();
+
+    logger.info('Teardown complete');
 
     process.exit(0);
   });

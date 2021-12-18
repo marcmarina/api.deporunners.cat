@@ -3,8 +3,6 @@ import config from './config/config';
 import db from './config/db';
 import logger from './utils/logger';
 
-console.log(config.environment());
-
 const server = app.listen(config.port(), async () => {
   await db.connect(config.mongoURI());
 

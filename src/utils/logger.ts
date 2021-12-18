@@ -1,12 +1,22 @@
 import * as Sentry from '@sentry/node';
+import pino from 'pino';
+
 import { isDev } from '../config/config';
+
+const logger = pino({
+  transport: { target: 'pino-pretty' },
+  level: isDev() ? 'trace' : 'info',
+});
 
 export default {
   error: (error: Error) => {
-    if (isDev()) {
-      console.log(error);
-    } else {
+    logger.error(error);
+
+    if (!isDev()) {
       Sentry.captureException(error);
     }
+  },
+  debug: (msg: string) => {
+    logger.debug(msg);
   },
 };

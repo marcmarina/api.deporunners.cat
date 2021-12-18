@@ -6,7 +6,7 @@ import logger from './utils/logger';
 const server = app.listen(config.port(), async () => {
   await db.connect(config.mongoURI());
 
-  console.log(`🚀 App listening on http://localhost:${config.port()}`);
+  logger.debug(`🚀 App listening on http://localhost:${config.port()}`);
 });
 
 process.on('SIGINT', async () => {

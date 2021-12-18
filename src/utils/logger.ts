@@ -1,11 +1,21 @@
 import * as Sentry from '@sentry/node';
 import pino from 'pino';
 
-import { isDev } from '../config/config';
+import { isDev, isTest } from '../config/config';
+
+function getLogLevel() {
+  if (isDev()) {
+    return 'trace';
+  } else if (isTest()) {
+    return 'silent';
+  } else {
+    return 'info';
+  }
+}
 
 const logger = pino({
   ...(isDev() ? { transport: { target: 'pino-pretty' } } : {}),
-  level: isDev() ? 'trace' : 'info',
+  level: getLogLevel(),
 });
 
 export default {

@@ -26,10 +26,10 @@ export default {
       Sentry.captureException(error);
     }
   },
-  debug: (msg: string) => {
-    logger.debug(msg);
+  debug: (msg: string, args?: Record<string, unknown>) => {
+    logger.debug({ ...args }, msg);
   },
-  info: (msg: string) => {
-    logger.info(msg);
+  info: (msg: string, args?: Record<string, unknown>) => {
+    logger.info({ ...args }, msg);
   },
 };

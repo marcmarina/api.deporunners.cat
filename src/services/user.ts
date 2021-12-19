@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+import { AuthError } from '../errors/errors';
 
 import User, { IUser } from '../models/User';
 import { signJWT } from '../utils/SessionManagement';
@@ -23,20 +24,12 @@ export const loginWithEmail = async (email: string, password: string) => {
   let user = await User.findOne({ email });
 
   if (!user) {
-    const error = {
-      status: 400,
-      msg: 'These credentials are invalid.',
-    };
-    throw error;
+    throw new AuthError('These credentials are invalid.');
   }
   const match = await bcrypt.compare(password, user.password);
 
   if (!match) {
-    const error = {
-      status: 400,
-      msg: 'These credentials are invalid.',
-    };
-    throw error;
+    throw new AuthError('These credentials are invalid.');
   }
 
   if (!user.refreshToken) {

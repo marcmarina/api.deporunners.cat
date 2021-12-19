@@ -23,10 +23,12 @@ export const login = async (req, res, next) => {
 
     const { email, password } = req.body;
     const { refreshToken, authToken } = await loginWithEmail(email, password);
+
     res.set({
       'x-refresh-token': refreshToken,
     });
-    res.status(200).json(authToken);
+
+    return res.status(200).json(authToken);
   } catch (ex) {
     next(ex);
   }

@@ -35,13 +35,13 @@ type Config = {
 const defaultConfig: Config = {
   mongoURI: () => fetchVariable('MONGODB_URI'),
   appSecretKey: () =>
-    isTest()
+    envIsTest()
       ? 'secretKey'
       : fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
   apiToken: () => fetchVariable('API_TOKEN'),
   jwtExpiration: () => fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
   emailFrom: () => fetchVariable('EMAIL_FROM'),
-  stripeKey: () => (!isTest() ? fetchVariable('STRIPE_SECRET_KEY') : ''),
+  stripeKey: () => (!envIsTest() ? fetchVariable('STRIPE_SECRET_KEY') : ''),
   sendgridKey: () => fetchVariable('SENDGRID_API_KEY'),
   port: () => parseInt(fetchNullableVariable('PORT') ?? '8080'),
   seedNumbers: () => ({
@@ -50,7 +50,7 @@ const defaultConfig: Config = {
     events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
   }),
   stripeFeeProductId: () =>
-    isProd() ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
+    envIsProd() ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
   sentryDSN: () => fetchVariable('SENTRY_DSN'),
   environment: () => fetchNullableVariable('NODE_ENV') ?? 'development',
 };
@@ -74,10 +74,10 @@ const testConfig: Config = {
   environment: () => '',
 };
 
-export const isDev = () => defaultConfig.environment() === 'development';
-export const isTest = () => defaultConfig.environment() === 'test';
-const isProd = () => defaultConfig.environment() === 'production';
+export const envIsDev = () => defaultConfig.environment() === 'development';
+export const envIsTest = () => defaultConfig.environment() === 'test';
+const envIsProd = () => defaultConfig.environment() === 'production';
 
-const config = isTest() ? testConfig : defaultConfig;
+const config = envIsTest() ? testConfig : defaultConfig;
 
 export default config;

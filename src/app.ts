@@ -16,6 +16,7 @@ import {
 } from './routes';
 
 import apiToken from './middleware/apiToken';
+import requestLogging from './middleware/request-logging';
 import config from './config/config';
 import { AuthError, BaseError, InputError } from './errors/errors';
 import logger from './utils/logger';
@@ -31,6 +32,8 @@ Sentry.init({
   tracesSampleRate: 1.0,
   environment: config.environment(),
 });
+
+app.use(requestLogging);
 
 app.use(express.static('public'));
 

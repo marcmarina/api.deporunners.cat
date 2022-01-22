@@ -32,4 +32,7 @@ export default {
   info: (msg: string, args?: Record<string, unknown>) => {
     logger.info({ ...args }, msg);
   },
+  request: (args?: Record<string, unknown>) => {
+    logger.info({ ...args });
+  },
 };

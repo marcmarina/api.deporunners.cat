@@ -35,6 +35,13 @@ Sentry.init({
 
 app.use(requestLogging);
 
+app.get('/health', (_req, res) => {
+  res.status(200).json({
+    status: 'OK',
+    timestamp: Date.now(),
+  });
+});
+
 app.use(express.static('public'));
 
 app.use(Sentry.Handlers.requestHandler());

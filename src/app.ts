@@ -86,13 +86,9 @@ app.use('/', (_req: Request, res: Response, _next) => {
 
 app.use(
   (error: BaseError, _req: Request, res: Response, _next: NextFunction) => {
-    if (error instanceof InputError || error instanceof AuthError) {
-      return res
-        .status(error.status)
-        .json({ ...error, message: error.message });
+    if (!(error instanceof InputError || error instanceof AuthError)) {
+      logger.error(error);
     }
-
-    logger.error(error);
 
     res.status(error.status).json({ ...error, message: error.message });
   }

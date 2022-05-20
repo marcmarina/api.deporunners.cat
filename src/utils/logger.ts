@@ -14,7 +14,7 @@ function getLogLevel() {
 }
 
 const logger = pino({
-  ...(envIsDev() ? { transport: { target: 'pino-pretty' } } : {}),
+  ...(envIsDev() && { transport: { target: 'pino-pretty' } }),
   level: getLogLevel(),
 });
 

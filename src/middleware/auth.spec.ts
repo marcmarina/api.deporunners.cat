@@ -1,54 +1,56 @@
 import { signJWT } from '../utils/SessionManagement';
 import auth, { getTokens } from './auth';
 
-it('throws an error when tokens are missing', () => {
-  const req = {
-    headers: {},
-  };
+describe('auth middleware', () => {
+  it('throws an error when tokens are missing', () => {
+    const req = {
+      headers: {},
+    };
 
-  expect(() => {
-    getTokens(req);
-  }).toThrow();
-});
-
-it('extracts the correct tokens', () => {
-  const req = {
-    headers: {
-      'x-refresh-token': 'refreshtoken',
-      'x-auth-token': 'authtoken',
-    },
-  };
-
-  expect(getTokens(req)).toStrictEqual({
-    token: 'authtoken',
-    refreshToken: 'refreshtoken',
+    expect(() => {
+      getTokens(req);
+    }).toThrow();
   });
-});
 
-it('inserts right info in request', async () => {
-  const user = {
-    refreshToken: 'refreshToken',
-    _id: '123123123',
-  };
+  it('extracts the correct tokens', () => {
+    const req = {
+      headers: {
+        'x-refresh-token': 'refreshtoken',
+        'x-auth-token': 'authtoken',
+      },
+    };
 
-  const req = {
-    headers: {
-      'x-refresh-token': user.refreshToken,
-      'x-auth-token': signJWT({ _id: user._id }, 'User'),
-    },
-  };
+    expect(getTokens(req)).toStrictEqual({
+      token: 'authtoken',
+      refreshToken: 'refreshtoken',
+    });
+  });
 
-  const res = {
-    headers: {},
-    set(headers) {
-      this.headers = {
-        ...this.headers,
-        ...headers,
-      };
-    },
-  };
-  const next = jest.fn();
-  auth(req, res, next);
+  it('inserts right info in request', async () => {
+    const user = {
+      refreshToken: 'refreshToken',
+      _id: '123123123',
+    };
 
-  expect(res.headers).toHaveProperty('x-auth-token');
+    const req = {
+      headers: {
+        'x-refresh-token': user.refreshToken,
+        'x-auth-token': signJWT({ _id: user._id }, 'User'),
+      },
+    };
+
+    const res = {
+      headers: {},
+      set(headers) {
+        this.headers = {
+          ...this.headers,
+          ...headers,
+        };
+      },
+    };
+    const next = jest.fn();
+    auth(req, res, next);
+
+    expect(res.headers).toHaveProperty('x-auth-token');
+  });
 });

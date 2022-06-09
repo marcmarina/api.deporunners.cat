@@ -1,4 +1,4 @@
-FROM node:16-alpine3.14 as build
+FROM node:18-alpine3.14 as build
 
 WORKDIR /usr/app
 
@@ -14,7 +14,7 @@ RUN rm -rf ./node_modules
 
 RUN yarn install --prod
 
-FROM node:16-alpine3.14
+FROM node:18-alpine3.14
 
 WORKDIR /usr/app
 

@@ -3,10 +3,12 @@ import config from './config/config';
 import db from './config/db';
 import logger from './utils/logger';
 
-const server = app.listen(config.port(), async () => {
+const PORT = config.port();
+
+const server = app.listen(PORT, async () => {
   await db.connect(config.mongoURI());
 
-  logger.debug(`🚀 App listening on http://localhost:${config.port()}`);
+  logger.debug(`🚀 App listening on http://localhost:${PORT}`);
 });
 
 process.on('SIGTERM', async () => {

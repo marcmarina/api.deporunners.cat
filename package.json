@@ -54,7 +54,7 @@
     "cors": "^2.8.5",
     "css-inliner": "^2.0.0",
     "dayjs": "^1.10.7",
-    "dotenv": "^10.0.0",
+    "dotenv": "^16.0.0",
     "excel4node": "^1.7.2",
     "expo-server-sdk": "^3.6.0",
     "express": "^4.17.1",

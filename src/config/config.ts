@@ -1,11 +1,11 @@
 import 'dotenv/config';
 import { generateToken } from '../utils/Utils';
 
-function fetchNullableVariable(key: string): string | null {
+export function fetchNullableVariable(key: string): string | null {
   return process.env[key] ?? null;
 }
 
-function fetchVariable(key: string): string {
+export function fetchVariable(key: string): string {
   const value = process.env[key];
 
   if (!value) throw new Error(`Could not fetch environment variable ${key}`);

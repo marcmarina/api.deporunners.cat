@@ -10,6 +10,7 @@
     "seed": "ts-node seed.ts",
     "lint": "eslint . --ext .ts",
     "mongo:start": "docker run --rm -d -p 27017:27017 --name deporunners_mongo mongo:latest",
+    "verify": "yarn build --noEmit && yarn lint && yarn test",
     "prepare": "husky install",
     "docker:build": "docker build . -t marcmarina/deporunners-api",
     "docker:push": "docker push marcmarina/deporunners-api"

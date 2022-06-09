@@ -32,7 +32,7 @@ workflows:
       - test:
           filters:
             branches:
-              only: /.*/
+              ignore: /renovate\/.*/
   deploy:
     jobs:
       - test

@@ -42,31 +42,3 @@ export const deleteFile = (filePath: string) => {
     if (err) throw err;
   });
 };
-
-type PromiseHandlingResult<T> =
-  | {
-      data: T;
-      error: null;
-    }
-  | {
-      data: null;
-      error: Error;
-    };
-
-export async function promiseHandling<T>(
-  promise: Promise<T>
-): Promise<PromiseHandlingResult<T>> {
-  try {
-    const data = await promise;
-
-    return {
-      data,
-      error: null,
-    };
-  } catch (error) {
-    return {
-      data: null,
-      error,
-    };
-  }
-}

@@ -27,15 +27,12 @@ jobs:
       - heroku/deploy-via-git
 
 workflows:
-  testing:
+  pipeline:
     jobs:
       - test:
           filters:
             branches:
               ignore: /renovate\/.*/
-  deploy:
-    jobs:
-      - test
       - stage:
           requires:
             - test

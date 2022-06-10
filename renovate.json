@@ -1,4 +1,10 @@
 {
   "extends": ["config:base"],
-  "ignoreDeps": ["faker"]
+  "ignoreDeps": ["faker"],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["pin"],
+      "automerge": true
+    }
+  ]
 }

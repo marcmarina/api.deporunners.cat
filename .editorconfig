@@ -2,6 +2,6 @@
 indent_style = tab
 indent_size = 2
 
-[yaml]
-intent_style = space
-indent_sise = tab
+[*.{yml,yaml}]
+indent_style = space
+indent_size = 2

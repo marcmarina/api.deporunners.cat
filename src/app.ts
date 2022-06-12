@@ -3,7 +3,6 @@ import cors from 'cors';
 import httpContext from 'express-http-context';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
-import 'dotenv/config';
 
 import {
   UserRoutes,

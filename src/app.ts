@@ -1,4 +1,9 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, {
+  NextFunction,
+  Request,
+  RequestHandler,
+  Response,
+} from 'express';
 import cors from 'cors';
 import httpContext from 'express-http-context';
 import * as Sentry from '@sentry/node';
@@ -43,10 +48,10 @@ app.get('/health', (_req, res) => {
 
 app.use(express.static('public'));
 
-app.use(Sentry.Handlers.requestHandler());
-app.use(Sentry.Handlers.tracingHandler());
+app.use(Sentry.Handlers.requestHandler() as RequestHandler);
+app.use(Sentry.Handlers.tracingHandler() as RequestHandler);
 
-app.use(express.json());
+app.use(express.json() as RequestHandler);
 app.use(httpContext.middleware);
 app.use(
   cors({

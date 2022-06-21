@@ -5,7 +5,7 @@
   "reviewers": ["marcmarina"],
   "packageRules": [
     {
-      "matchUpdateTypes": ["pin"],
+      "matchUpdateTypes": ["pin", "patch"],
       "automerge": true
     }
   ]

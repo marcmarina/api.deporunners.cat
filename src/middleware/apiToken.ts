@@ -22,7 +22,7 @@ export const validateToken = (headers: IncomingHttpHeaders) => {
       status: 401,
       msg: 'No API Token provided',
     };
-  } else if (apiToken !== config.apiToken()) {
+  } else if (apiToken !== config.apiToken) {
     return {
       status: 401,
       msg: 'API Token is not valid',

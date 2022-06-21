@@ -5,7 +5,7 @@ import { validateToken } from './apiToken';
 describe('apiToken middleware', () => {
   it('returns undefined when the token is valid', () => {
     const headers = {
-      'x-api-token': config.apiToken(),
+      'x-api-token': config.apiToken,
     };
 
     expect(validateToken(headers)).toEqual(undefined);

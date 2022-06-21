@@ -10,7 +10,7 @@ export default async (req, res, next) => {
     const decodedToken = decodedTokenSchema.parse(jwt.decode(token));
 
     try {
-      jwt.verify(token, config.appSecretKey());
+      jwt.verify(token, config.appSecretKey);
 
       res.set({ 'x-auth-token': token });
     } catch (ex) {

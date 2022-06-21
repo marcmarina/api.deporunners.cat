@@ -28,13 +28,13 @@ import logger from './utils/logger';
 const app = express();
 
 Sentry.init({
-  dsn: config.sentryDSN(),
+  dsn: config.sentryDSN,
   integrations: [
     new Sentry.Integrations.Http({ tracing: true }),
     new Tracing.Integrations.Express({ app }),
   ],
   tracesSampleRate: 1.0,
-  environment: config.environment(),
+  environment: config.environment,
 });
 
 app.use(requestLogging);

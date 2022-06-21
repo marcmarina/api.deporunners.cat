@@ -51,9 +51,7 @@ export class MemberService {
   }
 
   async createSignupIntent(stripeId: string, payment_method_id: string) {
-    const product = await stripeAdapter.fetchProduct(
-      config.stripeFeeProductId()
-    );
+    const product = await stripeAdapter.fetchProduct(config.stripeFeeProductId);
 
     const prices = await stripeAdapter.fetchPrices(product);
 
@@ -109,7 +107,7 @@ export class MemberService {
       if (!member) return null;
 
       return mailService.sendMail({
-        to: config.emailFrom(),
+        to: config.emailFrom,
         subject: "S'ha registrat un nou soci",
         html: await getPugTemplate('member/newMemberInternal.pug', {
           member,

@@ -42,9 +42,9 @@ export const signJWT = (data: any, modelName: ModelName) => {
       ...data,
       model: modelName,
     },
-    config.appSecretKey(),
+    config.appSecretKey,
     {
-      expiresIn: parseInt(config.jwtExpiration()),
+      expiresIn: parseInt(config.jwtExpiration),
     }
   );
 };

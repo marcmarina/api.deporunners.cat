@@ -1,5 +1,8 @@
 import 'dotenv/config';
+import { merge } from 'lodash';
+
 import { generateToken } from '../utils/Utils';
+import { assertNever } from '../utils/assert-never';
 
 export function fetchNullableVariable(key: string): string | null {
   return process.env[key] ?? null;
@@ -11,6 +14,13 @@ export function fetchVariable(key: string): string {
   if (!value) throw new Error(`Could not fetch environment variable ${key}`);
 
   return value;
+}
+
+enum Environment {
+  Production = 'production',
+  Staging = 'staging',
+  Dev = 'development',
+  Test = 'test',
 }
 
 type Config = {
@@ -29,59 +39,58 @@ type Config = {
   };
   stripeFeeProductId: string;
   sentryDSN: string;
-  environment: string;
+  environment: Environment;
 };
 
-const environment = fetchNullableVariable('NODE_ENV') ?? 'development';
+const environment: Environment = (fetchNullableVariable('NODE_ENV') ??
+  'development') as Environment;
 
-export const envIsDev = environment === 'development';
-export const envIsTest = environment === 'test';
-const envIsProd = environment === 'production';
+export const envIsDev = environment === Environment.Dev;
+export const envIsTest = environment === Environment.Test;
+const envIsProd = environment === Environment.Production;
 
-const getConfig = (): Config => {
+const baseConfig = {
+  appSecretKey: fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
+  jwtExpiration: fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
+  port: parseInt(fetchNullableVariable('PORT') ?? '8080'),
+  seedNumbers: {
+    members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '15'),
+    users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
+    events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
+  },
+  stripeFeeProductId: envIsProd ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
+  environment,
+};
+
+const getConfigForEnvironment = (environment: Environment) => {
   switch (environment) {
-    case 'test':
-      return {
-        mongoURI: '',
-        appSecretKey: 'secretkey',
-        apiToken: 'apitoken',
-        jwtExpiration: '900',
-        emailFrom: '',
-        stripeKey: '',
-        sendgridKey: '',
-        port: 8080,
-        seedNumbers: {
-          members: 1,
-          users: 1,
-          events: 1,
-        },
-        stripeFeeProductId: '',
-        sentryDSN: '',
-        environment,
-      };
-    default:
+    case Environment.Production:
+    case Environment.Staging:
+    case Environment.Dev:
       return {
         mongoURI: fetchVariable('MONGODB_URI'),
-        appSecretKey:
-          fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
         apiToken: fetchVariable('API_TOKEN'),
-        jwtExpiration: fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
         emailFrom: fetchVariable('EMAIL_FROM'),
         stripeKey: fetchVariable('STRIPE_SECRET_KEY'),
         sendgridKey: fetchVariable('SENDGRID_API_KEY'),
-        port: parseInt(fetchNullableVariable('PORT') ?? '8080'),
-        seedNumbers: {
-          members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '15'),
-          users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
-          events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
-        },
-        stripeFeeProductId: envIsProd
-          ? 'prod_JrHBBMKU67z4gu'
-          : 'prod_JrHTTZhO6jaGdK',
         sentryDSN: fetchVariable('SENTRY_DSN'),
-        environment,
       };
+    case Environment.Test:
+      return {
+        mongoURI: '',
+        apiToken: 'apitoken',
+        emailFrom: '',
+        stripeKey: '',
+        sendgridKey: '',
+        sentryDSN: '',
+      };
+    default:
+      assertNever(environment);
   }
+};
+
+const getConfig = (): Config => {
+  return merge(baseConfig, getConfigForEnvironment(environment));
 };
 
 const config = getConfig();

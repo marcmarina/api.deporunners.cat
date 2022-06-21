@@ -105,10 +105,10 @@ const {
   members: memberCount,
   users: userCount,
   events: eventCount,
-} = config.seedNumbers();
+} = config.seedNumbers;
 
 async function seed() {
-  await db.connect(config.mongoURI());
+  await db.connect(config.mongoURI);
 
   await Member.deleteMany({});
   await User.deleteMany({});

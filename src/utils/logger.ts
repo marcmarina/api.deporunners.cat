@@ -4,9 +4,9 @@ import pino from 'pino';
 import { envIsDev, envIsTest } from '../config/config';
 
 function getLogLevel() {
-  if (envIsDev()) {
+  if (envIsDev) {
     return 'trace';
-  } else if (envIsTest()) {
+  } else if (envIsTest) {
     return 'silent';
   } else {
     return 'info';
@@ -14,7 +14,7 @@ function getLogLevel() {
 }
 
 const logger = pino({
-  ...(envIsDev() && { transport: { target: 'pino-pretty' } }),
+  ...(envIsDev && { transport: { target: 'pino-pretty' } }),
   level: getLogLevel(),
 });
 
@@ -22,7 +22,7 @@ export default {
   error: (error: Error) => {
     logger.error(error);
 
-    if (!envIsDev()) {
+    if (!envIsDev) {
       Sentry.captureException(error);
     }
   },

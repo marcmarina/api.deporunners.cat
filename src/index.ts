@@ -3,10 +3,10 @@ import config from './config/config';
 import db from './config/db';
 import logger from './utils/logger';
 
-const PORT = config.port();
+const PORT = config.port;
 
 const server = app.listen(PORT, async () => {
-  await db.connect(config.mongoURI());
+  await db.connect(config.mongoURI);
 
   logger.debug(`🚀 App listening on http://localhost:${PORT}`);
 });

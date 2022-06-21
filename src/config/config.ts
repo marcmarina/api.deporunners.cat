@@ -14,70 +14,76 @@ export function fetchVariable(key: string): string {
 }
 
 type Config = {
-  mongoURI: () => string;
-  appSecretKey: () => string;
-  apiToken: () => string;
-  jwtExpiration: () => string;
-  emailFrom: () => string;
-  stripeKey: () => string;
-  sendgridKey: () => string;
-  port: () => number;
-  seedNumbers: () => {
+  mongoURI: string;
+  appSecretKey: string;
+  apiToken: string;
+  jwtExpiration: string;
+  emailFrom: string;
+  stripeKey: string;
+  sendgridKey: string;
+  port: number;
+  seedNumbers: {
     members: number;
     users: number;
     events: number;
   };
-  stripeFeeProductId: () => string;
-  sentryDSN: () => string;
-  environment: () => string;
+  stripeFeeProductId: string;
+  sentryDSN: string;
+  environment: string;
 };
 
-const defaultConfig: Config = {
-  mongoURI: () => fetchVariable('MONGODB_URI'),
-  appSecretKey: () =>
-    envIsTest()
-      ? 'secretKey'
-      : fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
-  apiToken: () => fetchVariable('API_TOKEN'),
-  jwtExpiration: () => fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
-  emailFrom: () => fetchVariable('EMAIL_FROM'),
-  stripeKey: () => (!envIsTest() ? fetchVariable('STRIPE_SECRET_KEY') : ''),
-  sendgridKey: () => fetchVariable('SENDGRID_API_KEY'),
-  port: () => parseInt(fetchNullableVariable('PORT') ?? '8080'),
-  seedNumbers: () => ({
-    members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '15'),
-    users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
-    events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
-  }),
-  stripeFeeProductId: () =>
-    envIsProd() ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
-  sentryDSN: () => fetchVariable('SENTRY_DSN'),
-  environment: () => fetchNullableVariable('NODE_ENV') ?? 'development',
+const environment = fetchNullableVariable('NODE_ENV') ?? 'development';
+
+export const envIsDev = environment === 'development';
+export const envIsTest = environment === 'test';
+const envIsProd = environment === 'production';
+
+const getConfig = (): Config => {
+  switch (environment) {
+    case 'test':
+      return {
+        mongoURI: '',
+        appSecretKey: 'secretkey',
+        apiToken: 'apitoken',
+        jwtExpiration: '900',
+        emailFrom: '',
+        stripeKey: '',
+        sendgridKey: '',
+        port: 8080,
+        seedNumbers: {
+          members: 1,
+          users: 1,
+          events: 1,
+        },
+        stripeFeeProductId: '',
+        sentryDSN: '',
+        environment,
+      };
+    default:
+      return {
+        mongoURI: fetchVariable('MONGODB_URI'),
+        appSecretKey:
+          fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
+        apiToken: fetchVariable('API_TOKEN'),
+        jwtExpiration: fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
+        emailFrom: fetchVariable('EMAIL_FROM'),
+        stripeKey: fetchVariable('STRIPE_SECRET_KEY'),
+        sendgridKey: fetchVariable('SENDGRID_API_KEY'),
+        port: parseInt(fetchNullableVariable('PORT') ?? '8080'),
+        seedNumbers: {
+          members: parseInt(fetchNullableVariable('SEED_MEMBER_COUNT') ?? '15'),
+          users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
+          events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
+        },
+        stripeFeeProductId: envIsProd
+          ? 'prod_JrHBBMKU67z4gu'
+          : 'prod_JrHTTZhO6jaGdK',
+        sentryDSN: fetchVariable('SENTRY_DSN'),
+        environment,
+      };
+  }
 };
 
-const testConfig: Config = {
-  mongoURI: () => '',
-  appSecretKey: () => 'secretkey',
-  apiToken: () => 'apitoken',
-  jwtExpiration: () => '900',
-  emailFrom: () => '',
-  stripeKey: () => '',
-  sendgridKey: () => '',
-  port: () => 8080,
-  seedNumbers: () => ({
-    members: 1,
-    users: 1,
-    events: 1,
-  }),
-  stripeFeeProductId: () => '',
-  sentryDSN: () => '',
-  environment: () => '',
-};
-
-export const envIsDev = () => defaultConfig.environment() === 'development';
-export const envIsTest = () => defaultConfig.environment() === 'test';
-const envIsProd = () => defaultConfig.environment() === 'production';
-
-const config = envIsTest() ? testConfig : defaultConfig;
+const config = getConfig();
 
 export default config;

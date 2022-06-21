@@ -5,11 +5,11 @@ import config from '../config/config';
 const transporter = nodemailer.createTransport(
   sendgridTransport({
     auth: {
-      api_key: config.sendgridKey(),
+      api_key: config.sendgridKey,
     },
   }),
   {
-    from: config.emailFrom(),
+    from: config.emailFrom,
   }
 );
 

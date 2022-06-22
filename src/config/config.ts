@@ -93,7 +93,7 @@ const getConfigForEnvironment = (environment: Environment) => {
       throw new Error(
         `Environment "${environment}" is not valid, choose one from: ${Object.values(
           Environment
-        ).join(' ')}.`
+        ).join(', ')}.`
       );
     }
 

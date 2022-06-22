@@ -63,29 +63,41 @@ const baseConfig = {
 };
 
 const getConfigForEnvironment = (environment: Environment) => {
-  switch (environment) {
-    case Environment.Production:
-    case Environment.Staging:
-    case Environment.Dev:
-      return {
-        mongoURI: fetchVariable('MONGODB_URI'),
-        apiToken: fetchVariable('API_TOKEN'),
-        emailFrom: fetchVariable('EMAIL_FROM'),
-        stripeKey: fetchVariable('STRIPE_SECRET_KEY'),
-        sendgridKey: fetchVariable('SENDGRID_API_KEY'),
-        sentryDSN: fetchVariable('SENTRY_DSN'),
-      };
-    case Environment.Test:
-      return {
-        mongoURI: '',
-        apiToken: 'apitoken',
-        emailFrom: '',
-        stripeKey: '',
-        sendgridKey: '',
-        sentryDSN: '',
-      };
-    default:
-      assertNever(environment);
+  try {
+    switch (environment) {
+      case Environment.Production:
+      case Environment.Staging:
+      case Environment.Dev:
+        return {
+          mongoURI: fetchVariable('MONGODB_URI'),
+          apiToken: fetchVariable('API_TOKEN'),
+          emailFrom: fetchVariable('EMAIL_FROM'),
+          stripeKey: fetchVariable('STRIPE_SECRET_KEY'),
+          sendgridKey: fetchVariable('SENDGRID_API_KEY'),
+          sentryDSN: fetchVariable('SENTRY_DSN'),
+        };
+      case Environment.Test:
+        return {
+          mongoURI: '',
+          apiToken: 'apitoken',
+          emailFrom: '',
+          stripeKey: '',
+          sendgridKey: '',
+          sentryDSN: '',
+        };
+      default:
+        assertNever(environment);
+    }
+  } catch (err) {
+    if (err.message.includes('Unexpected object')) {
+      throw new Error(
+        `Environment "${environment}" is not valid, choose one from: ${Object.values(
+          Environment
+        ).join(' ')}.`
+      );
+    }
+
+    throw err;
   }
 };
 

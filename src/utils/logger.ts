@@ -22,7 +22,7 @@ export default {
   error: (error: Error) => {
     logger.error(error);
 
-    if (!envIsDev) {
+    if (!envIsDev || !envIsTest) {
       Sentry.captureException(error);
     }
   },

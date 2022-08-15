@@ -15,11 +15,6 @@
     "docker:build": "docker build . -t marcmarina/deporunners-api",
     "docker:push": "docker push marcmarina/deporunners-api"
   },
-  "lint-staged": {
-    "**/*.*(ts|js)": [
-      "prettier --write"
-    ]
-  },
   "author": "Marc Marina",
   "license": "ISC",
   "repository": "https://github.com/marcmarina/api.deporunners.cat",

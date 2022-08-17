@@ -17,11 +17,12 @@ import {
   TShirtSizeRoutes,
   EventRoutes,
   StripeWebhooks,
+  DevRoutes,
 } from './routes';
 
 import apiToken from './middleware/apiToken';
 import requestLogging from './middleware/request-logging';
-import config from './config/config';
+import config, { envIsDev } from './config/config';
 import { AuthError, BaseError, InputError } from './errors/errors';
 import logger from './utils/logger';
 
@@ -38,6 +39,10 @@ Sentry.init({
 });
 
 app.use(requestLogging);
+
+if (envIsDev) {
+  app.use('/dev', DevRoutes);
+}
 
 app.get('/health', (_req, res) => {
   res.status(200).json({

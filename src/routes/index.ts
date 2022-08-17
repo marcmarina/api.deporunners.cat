@@ -5,6 +5,7 @@ import TownRoutes from './town';
 import TShirtSizeRoutes from './tshirtSize';
 import EventRoutes from './event';
 import StripeWebhooks from './stripeWebhooks';
+import DevRoutes from './development';
 
 export {
   UserRoutes,
@@ -14,4 +15,5 @@ export {
   TShirtSizeRoutes,
   EventRoutes,
   StripeWebhooks,
+  DevRoutes,
 };

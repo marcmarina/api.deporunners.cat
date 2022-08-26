@@ -31,7 +31,7 @@
     "@types/pug": "2.0.6",
     "@typescript-eslint/eslint-plugin": "5.33.1",
     "@typescript-eslint/parser": "5.33.1",
-    "eslint": "8.22.0",
+    "eslint": "8.23.0",
     "eslint-plugin-import": "2.26.0",
     "faker": "5.5.3",
     "husky": "8.0.1",

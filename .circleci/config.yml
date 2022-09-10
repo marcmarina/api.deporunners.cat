@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test
-  deploy:
+  stage:
     docker:
       - image: circleci/node
     steps:
@@ -21,5 +21,10 @@ jobs:
 workflows:
   pipeline:
     jobs:
-      # - test
-      - deploy
+      - test
+      - stage:
+          requires:
+            - test
+          # filters:
+          #   branches:
+          #     only: develop

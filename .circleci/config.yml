@@ -10,12 +10,13 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test
-      - run: mkdir test_results
   deploy:
     docker:
       - image: circleci/node
     steps:
       - checkout
+      - run: cd scripts
+      - run: yarn
       - run: node scripts/deploy.js
 
 workflows:

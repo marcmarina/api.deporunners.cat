@@ -3,15 +3,19 @@ import 'dotenv/config';
 import axios from 'axios';
 
 async function deploy() {
-  const { RENDER_DEPLOY_URL } = process.env;
+  const [renderDeployUrl] = process.argv.slice(2);
 
-  if (!RENDER_DEPLOY_URL) {
+  if (!renderDeployUrl) {
     throw new Error('Missing Render deployment URL');
   }
 
-  const res = await axios.get(RENDER_DEPLOY_URL);
+  const res = await axios.get(renderDeployUrl);
 
-  console.log(res.data);
+  if (res.status === 200) {
+    console.log('Deployment webhook successfully sent');
+  } else {
+    throw new Error('Deployment webhook failed');
+  }
 }
 
 deploy();

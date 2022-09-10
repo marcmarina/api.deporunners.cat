@@ -15,14 +15,11 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      - run: cd scripts
-      - run: yarn
+      - run: cd scripts && yarn
       - run: node scripts/deploy.js
 
 workflows:
   pipeline:
     jobs:
-      - test
-      - deploy:
-          requires:
-            - test
+      # - test
+      - deploy

@@ -16,7 +16,7 @@ jobs:
     steps:
       - checkout
       - run: cd scripts && yarn
-      - run: node scripts/deploy.js $RENDER_DEPLOY_URL_STAGING
+      - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL_STAGING
 
 workflows:
   pipeline:

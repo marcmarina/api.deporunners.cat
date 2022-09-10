@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.3
-  heroku: circleci/heroku@1.2.6
 
 jobs:
   test:
@@ -12,36 +11,8 @@ jobs:
       - run: yarn
       - run: yarn test
       - run: mkdir test_results
-  stage:
-    executor: heroku/default
-    steps:
-      - checkout
-      - heroku/install
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_STAGING_APP_NAME
-  deploy:
-    executor: heroku/default
-    steps:
-      - checkout
-      - heroku/install
-      - heroku/deploy-via-git
 
 workflows:
   pipeline:
     jobs:
-      - test:
-          filters:
-            branches:
-              ignore: /renovate\/.*/
-      - stage:
-          requires:
-            - test
-          filters:
-            branches:
-              only: develop
-      - deploy:
-          requires:
-            - test
-          filters:
-            branches:
-              only: develop
+      - test

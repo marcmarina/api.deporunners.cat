@@ -11,8 +11,17 @@ jobs:
       - run: yarn
       - run: yarn test
       - run: mkdir test_results
+  deploy:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run: node scripts/deploy.js
 
 workflows:
   pipeline:
     jobs:
       - test
+      - deploy:
+          requires:
+            - test

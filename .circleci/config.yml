@@ -25,6 +25,6 @@ workflows:
       - stage:
           requires:
             - test
-          # filters:
-          #   branches:
-          #     only: develop
+          filters:
+            branches:
+              only: develop

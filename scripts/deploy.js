@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
-import 'dotenv/config';
-import axios from 'axios';
+import { fireWebhook } from './fire-webhook.js';
 
 async function deploy() {
   const [deploymentWebhookUrl] = process.argv.slice(2);
@@ -9,12 +8,16 @@ async function deploy() {
     throw new Error('Missing deployment webhook URL');
   }
 
-  const res = await axios.get(deploymentWebhookUrl);
+  const res = await fireWebhook('GET', deploymentWebhookUrl);
 
-  if (res.status === 200) {
+  if (res.success) {
     console.log('Deployment webhook successfully sent');
+  } else if (res.error) {
+    throw res.error;
   } else {
-    throw new Error('Deployment webhook failed');
+    throw new Error(
+      `Deployment webhook failed with status ${res.status} and response ${res.response}`
+    );
   }
 }
 

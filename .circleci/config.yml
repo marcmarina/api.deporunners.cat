@@ -17,12 +17,25 @@ jobs:
       - checkout
       - run: cd scripts && yarn
       - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL_STAGING
+  deploy:
+    docker:
+      - image: circleci/node
+    steps:
+      - checkout
+      - run: cd scripts && yarn
+      - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL
 
 workflows:
   pipeline:
     jobs:
       - test
       - stage:
+          requires:
+            - test
+          filters:
+            branches:
+              only: develop
+      - deploy:
           requires:
             - test
           filters:

@@ -4,7 +4,7 @@ import xl from 'excel4node';
 
 import config from '../config/config';
 import { AuthError, ServiceError } from '../errors/errors';
-import { getPugTemplate } from '../mail/get-template';
+import { getEmailTemplate } from '../mail/get-template';
 import mailService from '../mail/mailService';
 import Member, { IMember } from '../models/Member';
 import { ITShirtSize } from '../models/TShirtSize';
@@ -84,7 +84,7 @@ export class MemberService {
       return mailService.sendMail({
         to: member.email,
         subject: 'Benvingut/da a Deporunners!',
-        html: await getPugTemplate('member/newMember.pug', {
+        html: await getEmailTemplate('member/newMember.pug', {
           member: {
             dni: member.dni,
           },
@@ -110,7 +110,7 @@ export class MemberService {
       return mailService.sendMail({
         to: config.emailFrom,
         subject: "S'ha registrat un nou soci",
-        html: await getPugTemplate('member/newMemberInternal.pug', {
+        html: await getEmailTemplate('member/newMemberInternal.pug', {
           member,
           dateString: dayjs().format('DD-MM-YYYY'),
         }),

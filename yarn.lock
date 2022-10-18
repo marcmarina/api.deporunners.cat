@@ -972,7 +972,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/consolidate@^0.14.1":
+"@types/consolidate@0.14.1":
   version "0.14.1"
   resolved "https://registry.yarnpkg.com/@types/consolidate/-/consolidate-0.14.1.tgz#78f01b1ed747d945dea9969581fcc1d0cb59bad8"
   integrity sha512-p0QTiPgjYssVJEo8zJ1WPfvfCpSvIU9oLZ7WPKl4Nx5dvaRAGb7Mk0a14T6UOVhI5PXYL7CkM4+lS7VRrUePUQ==

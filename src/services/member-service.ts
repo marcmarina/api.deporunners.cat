@@ -1,17 +1,18 @@
 import bcrypt from 'bcrypt';
-import xl from 'excel4node';
 import dayjs from 'dayjs';
+import xl from 'excel4node';
 
-import mailService from '../mail/mailService';
-import Member, { IMember } from '../models/Member';
-import { signJWT } from '../utils/SessionManagement';
-import { generateToken, getPugTemplate } from '../utils/Utils';
-import { ITShirtSize } from '../models/TShirtSize';
-import Context from '../utils/Context';
-import { stripeClient } from '../stripe/stripe-client';
-import { StripeAdapter } from '../stripe/stripe-adapter';
 import config from '../config/config';
 import { AuthError, ServiceError } from '../errors/errors';
+import { getPugTemplate } from '../mail/get-template';
+import mailService from '../mail/mailService';
+import Member, { IMember } from '../models/Member';
+import { ITShirtSize } from '../models/TShirtSize';
+import { StripeAdapter } from '../stripe/stripe-adapter';
+import { stripeClient } from '../stripe/stripe-client';
+import Context from '../utils/Context';
+import { signJWT } from '../utils/SessionManagement';
+import { generateToken } from '../utils/Utils';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -83,7 +84,7 @@ export class MemberService {
       return mailService.sendMail({
         to: member.email,
         subject: 'Benvingut/da a Deporunners!',
-        html: getPugTemplate('member/newMember.pug', {
+        html: await getPugTemplate('member/newMember.pug', {
           member: {
             dni: member.dni,
           },
@@ -109,7 +110,7 @@ export class MemberService {
       return mailService.sendMail({
         to: config.emailFrom,
         subject: "S'ha registrat un nou soci",
-        html: getPugTemplate('member/newMemberInternal.pug', {
+        html: await getPugTemplate('member/newMemberInternal.pug', {
           member,
           dateString: dayjs().format('DD-MM-YYYY'),
         }),

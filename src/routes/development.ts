@@ -1,6 +1,6 @@
 import { Router } from 'express';
+import { getPugTemplate } from '../mail/get-template';
 import logger from '../utils/logger';
-import { getPugTemplate } from '../utils/Utils';
 
 const router = Router();
 
@@ -13,7 +13,7 @@ router.get('/test-sentry-error', (_req, res) => {
 });
 
 router.get('/email', async (_req, res) => {
-  const email = getPugTemplate('member/newMember.pug', {
+  const email = await getPugTemplate('member/newMember.pug', {
     member: {
       dni: '12345678A',
     },

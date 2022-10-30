@@ -10,7 +10,6 @@ const memberService = new MemberService();
 
 export class EventService extends BaseService {
   async getAllEvents() {
-    throw new Error('Method not implemented.');
     return Event.find().sort({ createdAt: 'desc', name: 'asc' });
   }
 

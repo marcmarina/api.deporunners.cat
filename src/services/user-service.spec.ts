@@ -1,4 +1,4 @@
-import * as UserService from './user';
+import { UserService } from './user-service';
 import { User } from '../models';
 import { AuthError } from '../errors';
 
@@ -19,9 +19,11 @@ const sampleUser = {
 mockedUser.findOne.mockResolvedValue(sampleUser as any);
 mockedUser.findById.mockResolvedValue(sampleUser as any);
 
+const userService = new UserService();
+
 describe('findUserById', () => {
   it('returns a user for a specific id', async () => {
-    const result = await UserService.findById('123123123');
+    const result = await userService.findById('123123123');
 
     expect(result).toMatchObject(sampleUser);
   });
@@ -29,7 +31,7 @@ describe('findUserById', () => {
   it('returns null if a user is not found', async () => {
     mockedUser.findById.mockResolvedValueOnce(null);
 
-    const result = await UserService.findById('123123123');
+    const result = await userService.findById('123123123');
 
     expect(result).toBeNull();
   });
@@ -38,19 +40,19 @@ describe('findUserById', () => {
 describe('loginWithEmail', () => {
   it('gives a JWT if valid credentials are provided', async () => {
     await expect(
-      UserService.loginWithEmail('john@doe.com', '123456'),
+      userService.loginWithEmail('john@doe.com', '123456'),
     ).resolves.toBeDefined();
   });
 
   it('throws an error when a non valid password is provided', async () => {
     await expect(
-      UserService.loginWithEmail('john@doe.com', 'wrongpassword'),
+      userService.loginWithEmail('john@doe.com', 'wrongpassword'),
     ).rejects.toEqual(new AuthError('These credentials are invalid.'));
   });
 
   it('throws an error when non email is provided', async () => {
     await expect(
-      UserService.loginWithEmail('wrong@email.com', 'wrongpassword'),
+      userService.loginWithEmail('wrong@email.com', 'wrongpassword'),
     ).rejects.toEqual(new AuthError('These credentials are invalid.'));
   });
 });

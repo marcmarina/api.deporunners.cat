@@ -1,6 +1,6 @@
-import { ServiceError } from '../errors/errors';
+import { AuthError, ServiceError } from '../errors/errors';
 
-export class BaseService {
+export abstract class BaseService {
   constructor() {
     return new Proxy(this, {
       get: (target, prop) => {
@@ -11,6 +11,10 @@ export class BaseService {
           try {
             return await method.apply(target, args);
           } catch (err) {
+            if (err instanceof AuthError || err instanceof ServiceError) {
+              throw err;
+            }
+
             throw new ServiceError({
               message: err.message,
               method: prop as string,

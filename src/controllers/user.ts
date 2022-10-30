@@ -1,6 +1,8 @@
 import { User } from '../models';
-import { userService } from '../services';
 import { checkForErrors } from '../utils';
+import { UserService } from '../services';
+
+const userService = new UserService();
 
 export const index = async (req, res, next) => {
   try {

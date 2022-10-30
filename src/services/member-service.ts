@@ -218,10 +218,30 @@ export class MemberService extends BaseService {
     return member.save();
   }
 
-  createSessionToken(member: IMember) {
+  private async createSessionToken(member: IMember) {
     const refreshToken = generateToken(32);
     member.refreshToken = refreshToken;
-    return member.save();
+    return await member.save();
+  }
+
+  async generateNewJWT(id, refreshToken) {
+    const member = await this.findById(id);
+
+    if (!member) {
+      throw {
+        status: 401,
+        msg: 'Model id not valid',
+      };
+    }
+
+    if (refreshToken && member.refreshToken === refreshToken) {
+      return signJWT({ _id: member._id });
+    } else {
+      throw {
+        status: 401,
+        msg: 'Refresh token not valid',
+      };
+    }
   }
 
   async generateExcel() {

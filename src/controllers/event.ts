@@ -1,7 +1,5 @@
-import eventEmitter from '../events/EventEmitter';
 import { IEvent } from '../models/Event';
 import { EventService } from '../services/event-service';
-
 import checkForErrors from '../utils/ErrorThrowing';
 
 const service = new EventService();
@@ -36,7 +34,7 @@ export const create = async (req, res, next) => {
     checkForErrors(req);
     const event = await service.createEvent({ ...req.body });
 
-    eventEmitter.emit('newEvent', event);
+    service.sendNotification(event);
 
     res.status(201).json(event);
   } catch (ex) {

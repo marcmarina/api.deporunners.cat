@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import xl from 'excel4node';
 
 import { config } from '../config';
-import { AuthError, ServiceError } from '../errors';
+import { AuthError } from '../errors';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { signJWT } from '../authentication';
@@ -14,10 +14,11 @@ type Session = {
   authToken: string;
   refreshToken: string;
 };
+import { BaseService } from './base-service';
 
 const stripeAdapter = new StripeAdapter();
 
-export class MemberService {
+export class MemberService extends BaseService {
   async getAllMembers(): Promise<IMember[]> {
     return Member.find().sort({ numMember: 'asc' });
   }
@@ -75,54 +76,38 @@ export class MemberService {
   }
 
   async sendSignupEmail(stripeId: string) {
-    try {
-      const member = await Member.findOne({
-        stripeId,
-      });
+    const member = await Member.findOne({
+      stripeId,
+    });
 
-      if (!member) return null;
+    if (!member) return null;
 
-      return mailService.sendMail({
-        to: member.email,
-        subject: 'Benvingut/da a Deporunners!',
-        html: await getEmailTemplate('member/newMember.pug', {
-          member: {
-            dni: member.dni,
-          },
-        }),
-      });
-    } catch (err) {
-      throw new ServiceError({
-        message: err.message,
-        method: 'sendSignupEmail',
-        service: 'MemberService',
-      });
-    }
+    return mailService.sendMail({
+      to: member.email,
+      subject: 'Benvingut/da a Deporunners!',
+      html: await getEmailTemplate('member/newMember.pug', {
+        member: {
+          dni: member.dni,
+        },
+      }),
+    });
   }
 
   async sendSignupEmailInternal(stripeId: string) {
-    try {
-      const member = await Member.findOne({
-        stripeId,
-      });
+    const member = await Member.findOne({
+      stripeId,
+    });
 
-      if (!member) return null;
+    if (!member) return null;
 
-      return mailService.sendMail({
-        to: config.emailFrom,
-        subject: "S'ha registrat un nou soci",
-        html: await getEmailTemplate('member/newMemberInternal.pug', {
-          member,
-          dateString: dayjs().format('DD-MM-YYYY'),
-        }),
-      });
-    } catch (err) {
-      throw new ServiceError({
-        message: err.message,
-        method: 'sendSignupEmailInternal',
-        service: 'MemberService',
-      });
-    }
+    return mailService.sendMail({
+      to: config.emailFrom,
+      subject: "S'ha registrat un nou soci",
+      html: await getEmailTemplate('member/newMemberInternal.pug', {
+        member,
+        dateString: dayjs().format('DD-MM-YYYY'),
+      }),
+    });
   }
 
   async deleteById(id: string) {

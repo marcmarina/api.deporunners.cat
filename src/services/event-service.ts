@@ -3,12 +3,14 @@ import { Types } from 'mongoose';
 
 import { Event, IEvent } from '../models';
 import { logger } from '../logger';
+import { BaseService } from './base-service';
 import { MemberService } from './member-service';
 
 const memberService = new MemberService();
 
-export class EventService {
+export class EventService extends BaseService {
   async getAllEvents() {
+    throw new Error('Method not implemented.');
     return Event.find().sort({ createdAt: 'desc', name: 'asc' });
   }
 

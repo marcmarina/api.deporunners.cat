@@ -10,7 +10,7 @@ export const index = async (req, res, next) => {
     if (req.query.page) {
       events = await service.getPagedEvents(
         req.query.page,
-        parseInt(req.query.limit)
+        parseInt(req.query.limit),
       );
     } else {
       events = await service.getAllEvents();

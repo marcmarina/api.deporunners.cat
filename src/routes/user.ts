@@ -19,7 +19,7 @@ router.post(
       .withMessage('Please provide a valid email.'),
     check('password').trim().notEmpty().withMessage('The password is required'),
   ],
-  UserController.login
+  UserController.login,
 );
 
 router.patch('/changePassword/:id', UserController.changePassword);

@@ -105,7 +105,7 @@ export const login = async (req, res, next) => {
     const { username, password } = req.body;
     const { authToken, refreshToken } = await service.loginCredentials(
       username,
-      password
+      password,
     );
     res.set({
       'x-refresh-token': refreshToken,

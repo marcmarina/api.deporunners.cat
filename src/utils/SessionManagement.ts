@@ -12,7 +12,7 @@ const memberService = new MemberService();
 export const generateNewJWT = async (
   id: string,
   refreshToken: string,
-  modelName: ModelName
+  modelName: ModelName,
 ): Promise<string> => {
   const model: IMember | IUser | null =
     modelName === 'Member'
@@ -45,6 +45,6 @@ export const signJWT = (data: any, modelName: ModelName) => {
     config.appSecretKey,
     {
       expiresIn: parseInt(config.jwtExpiration),
-    }
+    },
   );
 };

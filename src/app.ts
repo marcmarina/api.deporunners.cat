@@ -67,7 +67,7 @@ app.use(
       'x-api-token',
     ],
     exposedHeaders: ['x-auth-token', 'x-refresh-token'],
-  })
+  }),
 );
 
 app.get('/favicon.ico', (_req, res) => res.status(204).end());
@@ -100,7 +100,7 @@ app.use(
     }
 
     res.status(error.status).json({ ...error, message: error.message });
-  }
+  },
 );
 
 export default app;

@@ -21,7 +21,7 @@ describe('variable fetching', () => {
 
     it('should throw an error when fetching an undefined environment variable', () => {
       expect(() => fetchVariable(NOT_DEFINED)).toThrow(
-        `Could not fetch environment variable ${NOT_DEFINED}`
+        `Could not fetch environment variable ${NOT_DEFINED}`,
       );
     });
   });

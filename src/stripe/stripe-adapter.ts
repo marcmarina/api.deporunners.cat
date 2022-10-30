@@ -30,7 +30,7 @@ const pricesSchema = z.object({
     z.object({
       unit_amount: z.number(),
       currency: z.string(),
-    })
+    }),
   ),
 });
 type StripePrices = z.infer<typeof pricesSchema>;

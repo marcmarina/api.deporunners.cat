@@ -92,8 +92,8 @@ const getConfigForEnvironment = (environment: Environment) => {
     if (err.message.includes('Unexpected object')) {
       throw new Error(
         `Environment "${environment}" is not valid, choose one from: ${Object.values(
-          Environment
-        ).join(', ')}.`
+          Environment,
+        ).join(', ')}.`,
       );
     }
 

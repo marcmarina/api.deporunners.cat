@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport(
   }),
   {
     from: config.emailFrom,
-  }
+  },
 );
 
 export default transporter;

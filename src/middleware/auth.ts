@@ -18,7 +18,7 @@ export default async (req, res, next) => {
         const newToken = await generateNewJWT(
           decodedToken._id,
           refreshToken,
-          decodedToken.model
+          decodedToken.model,
         );
 
         res.set({

@@ -47,7 +47,7 @@ export const loginWithEmail = async (email: string, password: string) => {
 export const updatePassword = async (
   id: string,
   oldPassword: string,
-  newPassword: string
+  newPassword: string,
 ) => {
   const user = await User.findById(id);
   if (!user)

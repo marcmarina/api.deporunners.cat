@@ -33,13 +33,13 @@ describe('SessionManagement', () => {
 
   it('returns a new JWT when given valid information', async () => {
     await expect(
-      generateNewJWT(sampleUser._id, sampleUser.refreshToken, 'User')
+      generateNewJWT(sampleUser._id, sampleUser.refreshToken, 'User'),
     ).resolves.toBeDefined();
   });
 
   it('throws an error when wrong refresh token is given', async () => {
     await expect(
-      generateNewJWT(sampleUser._id, 'invalid token', 'User')
+      generateNewJWT(sampleUser._id, 'invalid token', 'User'),
     ).rejects.toEqual({
       status: 401,
       msg: 'Refresh token not valid',
@@ -48,7 +48,7 @@ describe('SessionManagement', () => {
 
   it('throws an error when wrong model name is given', async () => {
     await expect(
-      generateNewJWT(sampleUser._id, sampleUser.refreshToken, 'Member')
+      generateNewJWT(sampleUser._id, sampleUser.refreshToken, 'Member'),
     ).rejects.toEqual({
       status: 401,
       msg: 'Model id not valid',

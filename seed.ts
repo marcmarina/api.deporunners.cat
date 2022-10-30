@@ -166,7 +166,7 @@ async function seed() {
           .add(randomInt(1, 10), 'day')
           .add(randomInt(1, 12), 'hour'),
         members: [],
-      })
+      }),
     );
   }
   await Event.insertMany(events);

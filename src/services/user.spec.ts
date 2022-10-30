@@ -38,19 +38,19 @@ describe('findUserById', () => {
 describe('loginWithEmail', () => {
   it('gives a JWT if valid credentials are provided', async () => {
     await expect(
-      UserService.loginWithEmail('john@doe.com', '123456')
+      UserService.loginWithEmail('john@doe.com', '123456'),
     ).resolves.toBeDefined();
   });
 
   it('throws an error when a non valid password is provided', async () => {
     await expect(
-      UserService.loginWithEmail('john@doe.com', 'wrongpassword')
+      UserService.loginWithEmail('john@doe.com', 'wrongpassword'),
     ).rejects.toEqual(new AuthError('These credentials are invalid.'));
   });
 
   it('throws an error when non email is provided', async () => {
     await expect(
-      UserService.loginWithEmail('wrong@email.com', 'wrongpassword')
+      UserService.loginWithEmail('wrong@email.com', 'wrongpassword'),
     ).rejects.toEqual(new AuthError('These credentials are invalid.'));
   });
 });

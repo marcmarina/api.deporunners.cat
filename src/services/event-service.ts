@@ -1,9 +1,10 @@
-import { Types } from 'mongoose';
 import { Expo } from 'expo-server-sdk';
+import { Types } from 'mongoose';
 
 import Event, { IEvent } from '../models/Event';
-import { MemberService } from './member-service';
 import Context from '../utils/Context';
+import logger from '../utils/logger';
+import { MemberService } from './member-service';
 
 const memberService = new MemberService();
 
@@ -93,7 +94,7 @@ export class EventService {
         await expo.sendPushNotificationsAsync(chunk);
       }
     } catch (ex) {
-      console.log('Error sending notifications!', ex);
+      logger.error(ex);
     }
   }
 

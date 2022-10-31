@@ -5,7 +5,6 @@ export function withServiceErrors<T>(service, serviceName): T {
     get: (target, prop) => {
       const method = target[prop];
       if (typeof method !== 'function') return method;
-      console.dir(target, { depth: 6 });
 
       return async (...args) => {
         try {

@@ -10,6 +10,13 @@ jobs:
       - checkout
       - run: yarn install --frozen-lockfile
       - run: yarn test
+  build:
+    docker:
+      - image: cimg/node:16.10.0
+    steps:
+      - checkout
+      - run: yarn install --frozen-lockfile
+      - run: yarn build
   stage:
     docker:
       - image: cimg/node:16.10.0
@@ -32,6 +39,7 @@ workflows:
       - deploy:
           requires:
             - test
+            - build
           filters:
             branches:
               only: develop

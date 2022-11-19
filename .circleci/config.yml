@@ -1,7 +1,6 @@
 version: 2.1
 orbs:
   node: circleci/node@5.0.3
-  heroku: circleci/heroku@1.2.6
 
 jobs:
   test:
@@ -11,34 +10,25 @@ jobs:
       - checkout
       - run: yarn
       - run: yarn test
-      - run: mkdir test_results
   stage:
-    executor: heroku/default
+    docker:
+      - image: circleci/node
     steps:
       - checkout
-      - heroku/install
-      - heroku/deploy-via-git:
-          app-name: $HEROKU_STAGING_APP_NAME
+      - run: cd scripts && yarn
+      - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL_STAGING
   deploy:
-    executor: heroku/default
+    docker:
+      - image: circleci/node
     steps:
       - checkout
-      - heroku/install
-      - heroku/deploy-via-git
+      - run: cd scripts && yarn
+      - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL
 
 workflows:
   pipeline:
     jobs:
-      - test:
-          filters:
-            branches:
-              ignore: /renovate\/.*/
-      - stage:
-          requires:
-            - test
-          filters:
-            branches:
-              only: develop
+      - test
       - deploy:
           requires:
             - test

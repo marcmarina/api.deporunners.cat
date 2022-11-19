@@ -5,28 +5,28 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/node:16.10.0
+      - image: cimg/node:16.18.1
     steps:
       - checkout
       - run: yarn install --frozen-lockfile
       - run: yarn test
   build:
     docker:
-      - image: cimg/node:16.10.0
+      - image: cimg/node:16.18.1
     steps:
       - checkout
       - run: yarn install --frozen-lockfile
       - run: yarn build
   stage:
     docker:
-      - image: cimg/node:16.10.0
+      - image: cimg/node:16.18.1
     steps:
       - checkout
       - run: cd scripts && yarn install --frozen-lockfile
       - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL_STAGING
   deploy:
     docker:
-      - image: cimg/node:16.10.0
+      - image: cimg/node:16.18.1
     steps:
       - checkout
       - run: cd scripts && yarn install --frozen-lockfile

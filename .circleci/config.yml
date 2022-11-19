@@ -8,21 +8,21 @@ jobs:
       - image: circleci/node
     steps:
       - checkout
-      - run: yarn
+      - run: yarn install --frozen-lockfile
       - run: yarn test
   stage:
     docker:
       - image: circleci/node
     steps:
       - checkout
-      - run: cd scripts && yarn
+      - run: cd scripts && yarn install --frozen-lockfile
       - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL_STAGING
   deploy:
     docker:
       - image: circleci/node
     steps:
       - checkout
-      - run: cd scripts && yarn
+      - run: cd scripts && yarn install --frozen-lockfile
       - run: node scripts/deploy.js $DEPLOY_WEBHOOK_URL
 
 workflows:

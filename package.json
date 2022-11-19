@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "dist/index.js",
   "engines": {
-    "node": "16.10.0"
+    "node": ">=8.0.0"
   },
   "scripts": {
     "serve": "node dist/index.js",

@@ -29,12 +29,6 @@ workflows:
   pipeline:
     jobs:
       - test
-      - stage:
-          requires:
-            - test
-          filters:
-            branches:
-              only: develop
       - deploy:
           requires:
             - test

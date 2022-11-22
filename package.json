@@ -2,9 +2,6 @@
   "name": "api.deporunners.cat",
   "version": "0.1.0",
   "main": "dist/index.js",
-  "engines": {
-    "node": ">=8.0.0"
-  },
   "scripts": {
     "serve": "node dist/index.js",
     "start": "nodemon --exec ts-node --files src/index.ts",

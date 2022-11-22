@@ -8,6 +8,7 @@ const connect = async (connectionString: string) => {
       useUnifiedTopology: true,
       useCreateIndex: true,
     });
+    logger.info('Database connected');
   } catch (ex) {
     logger.error(ex);
   }

@@ -3,24 +3,39 @@ import config from './config/config';
 import db from './config/db';
 import logger from './utils/logger';
 
-const PORT = config.port;
+async function startServer() {
+  try {
+    const PORT = config.port;
 
-const server = app.listen(PORT, async () => {
-  await db.connect(config.mongoURI);
+    await db.connect(config.mongoURI);
 
-  logger.debug(`🚀 App listening on http://localhost:${PORT}`);
-});
+    const server = app.listen(PORT, async () => {
+      logger.info('Application started');
+      logger.debug(`🚀 App listening on http://localhost:${PORT}`);
+    });
 
-process.on('SIGTERM', async () => {
-  logger.info('Tearing down application');
+    const teardown = async () => {
+      try {
+        logger.info('Tearing down application');
 
-  server.close(async (err) => {
-    if (err) logger.error(err);
+        await db.disconnect();
 
-    await db.disconnect();
+        server.close(async (err) => {
+          if (err) logger.error(err);
 
-    logger.info('Teardown complete');
+          logger.info('Teardown complete');
 
-    process.exit(0);
-  });
-});
+          process.exit(0);
+        });
+      } catch (error) {
+        logger.error(new Error(`Error tearing down application: ${error}`));
+      }
+    };
+
+    process.on('SIGTERM', teardown);
+  } catch (error) {
+    logger.error(new Error(`Error starting server: ${error}`));
+  }
+}
+
+startServer();

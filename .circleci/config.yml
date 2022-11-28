@@ -44,3 +44,10 @@ workflows:
           filters:
             branches:
               only: develop
+      - stage:
+          requires:
+            - test
+            - build
+          filters:
+            branches:
+              only: develop

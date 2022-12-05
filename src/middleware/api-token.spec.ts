@@ -1,6 +1,6 @@
 import config from '../config/config';
 
-import { validateToken } from './apiToken';
+import { validateToken } from './api-token';
 
 describe('apiToken middleware', () => {
   it('returns undefined when the token is valid', () => {

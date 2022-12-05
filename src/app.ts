@@ -20,7 +20,7 @@ import {
   DevRoutes,
 } from './routes';
 
-import apiToken from './middleware/apiToken';
+import apiToken from './middleware/api-token';
 import requestLogging from './middleware/request-logging';
 import config, { envIsDev } from './config/config';
 import { AuthError, BaseError, InputError } from './errors/errors';

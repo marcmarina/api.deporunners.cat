@@ -45,10 +45,7 @@ if (envIsDev) {
 }
 
 app.get('/health', (_req, res) => {
-  res.status(200).json({
-    status: 'OK',
-    timestamp: Date.now(),
-  });
+  res.status(200).send('OK');
 });
 
 app.use(express.static('public'));

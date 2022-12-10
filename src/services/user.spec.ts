@@ -21,7 +21,7 @@ mockedUser.findById.mockResolvedValue(sampleUser as any);
 
 describe('findUserById', () => {
   it('returns a user for a specific id', async () => {
-    const result = await UserService.findUserById('123123123');
+    const result = await UserService.findById('123123123');
 
     expect(result).toMatchObject(sampleUser);
   });
@@ -29,7 +29,7 @@ describe('findUserById', () => {
   it('returns null if a user is not found', async () => {
     mockedUser.findById.mockResolvedValueOnce(null);
 
-    const result = await UserService.findUserById('123123123');
+    const result = await UserService.findById('123123123');
 
     expect(result).toBeNull();
   });

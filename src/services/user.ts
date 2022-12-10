@@ -9,7 +9,7 @@ export const getAllUsers = async (): Promise<IUser[]> => {
   return User.find();
 };
 
-export const findUserById = async (id: string) => {
+export const findById = async (id: string) => {
   return await User.findById(id);
 };
 

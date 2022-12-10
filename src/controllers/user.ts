@@ -1,6 +1,6 @@
 import { User } from '../models';
 import { userService } from '../services';
-import { checkForErrors, context } from '../utils';
+import { checkForErrors } from '../utils';
 
 export const index = async (req, res, next) => {
   try {
@@ -60,7 +60,9 @@ export const changePassword = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await userService.findUserById(context.getUserId()));
+    const userId = res.locals.user._id;
+
+    res.status(200).json(await userService.findById(userId));
   } catch (ex) {
     next(ex);
   }

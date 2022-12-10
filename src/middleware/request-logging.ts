@@ -4,7 +4,11 @@ import { NextFunction, Request, Response } from 'express';
 
 const blacklistedRoutes = ['/health'];
 
-const requestLogging = (req: Request, _res: Response, next: NextFunction) => {
+export const requestLogging = (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) => {
   if (!blacklistedRoutes.includes(req.path)) {
     logger.request({
       user: Context.getUserId(),
@@ -15,5 +19,3 @@ const requestLogging = (req: Request, _res: Response, next: NextFunction) => {
 
   next();
 };
-
-export default requestLogging;

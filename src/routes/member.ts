@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { memberController } from '../controllers';
-import auth from '../middleware/auth';
+import { auth } from '../middleware';
 import { MemberService } from '../services/member-service';
 import {
   createMember,

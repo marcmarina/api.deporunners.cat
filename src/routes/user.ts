@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { check } from 'express-validator';
 
 import { userController } from '../controllers';
-import auth from '../middleware/auth';
+import { auth } from '../middleware';
 import { createUser } from '../validators/endpoint-validators';
 
 const router = Router();

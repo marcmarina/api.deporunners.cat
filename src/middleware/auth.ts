@@ -4,7 +4,7 @@ import Context from '../utils/Context';
 import { config } from '../config';
 import * as z from 'zod';
 
-export default async (req, res, next) => {
+export const auth = async (req, res, next) => {
   try {
     const { token, refreshToken } = getTokens(req);
     const decodedToken = decodedTokenSchema.parse(jwt.decode(token));

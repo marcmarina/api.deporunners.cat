@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { eventController } from '../controllers';
-import auth from '../middleware/auth';
+import { auth } from '../middleware';
 import { fullEvent } from '../validators/endpoint-validators';
 
 const router = Router();

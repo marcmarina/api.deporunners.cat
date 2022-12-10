@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import logger from '../utils/logger';
-import requestLogging from './request-logging';
+import { requestLogging } from './request-logging';
 
 jest.mock('../utils/logger');
 

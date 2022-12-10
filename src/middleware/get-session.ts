@@ -13,6 +13,7 @@ export const getSession = async (
     const session = await generateSession(authToken, refreshToken);
 
     res.locals.user = session.user;
+
     res.set({ 'x-auth-token': session.authToken });
     res.set({ 'x-refresh-token': session.refreshToken });
 

@@ -1,7 +1,5 @@
-import jwt from 'jsonwebtoken';
-import { config } from '../config';
-import { Member, User } from '../models';
-import { signJWT } from './jwt-signing';
+import { getRefreshTokenOwner } from './get-refresh-token-owner';
+import { signJWT, validateJWT } from './jwt-utils';
 
 type Session = {
   authToken: string | null;
@@ -21,7 +19,7 @@ export const generateSession = async (
     };
   }
 
-  const verifiedToken = decodeAndVerifyToken(authToken);
+  const verifiedToken = validateJWT(authToken);
   if (verifiedToken) {
     return {
       authToken,
@@ -30,7 +28,7 @@ export const generateSession = async (
     };
   }
 
-  const refreshTokenOwner = await getEntityFromRefreshToken(refreshToken);
+  const refreshTokenOwner = await getRefreshTokenOwner(refreshToken);
   if (refreshTokenOwner) {
     return {
       authToken: signJWT(refreshTokenOwner),
@@ -44,23 +42,4 @@ export const generateSession = async (
     refreshToken: null,
     user: null,
   };
-};
-
-const decodeAndVerifyToken = (token: string) => {
-  try {
-    return jwt.verify(token, config.appSecretKey);
-  } catch (ex) {
-    return null;
-  }
-};
-
-const getEntityFromRefreshToken = async (refreshToken: string) => {
-  const results = await Promise.all([
-    User.findOne({ refreshToken }),
-    Member.findOne({ refreshToken }),
-  ]);
-
-  const model = results.find((result) => result);
-
-  return model;
 };

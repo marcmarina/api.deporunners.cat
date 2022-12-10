@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 import { getAllRoles } from '../services/role';
-import * as RoleController from '../controllers/role';
+import { roleController } from '../controllers';
 
 const router = Router();
 
@@ -10,6 +10,6 @@ router.get('', async (req, res) => {
   res.status(200).json(roles);
 });
 
-router.post('', RoleController.create);
+router.post('', roleController.create);
 
 export default router;

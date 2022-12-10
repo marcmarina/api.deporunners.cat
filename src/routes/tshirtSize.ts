@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import * as TShirtSizeController from '../controllers/tshirtSize';
+import { tShirtSizeController } from '../controllers';
 
 const router = Router();
 
-router.get('', TShirtSizeController.index);
+router.get('', tShirtSizeController.index);
 
 export default router;

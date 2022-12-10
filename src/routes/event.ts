@@ -1,21 +1,21 @@
 import { Router } from 'express';
 
-import * as EventController from '../controllers/event';
+import { eventController } from '../controllers';
 import auth from '../middleware/auth';
 import { fullEvent } from '../validators/endpoint-validators';
 
 const router = Router();
 
-router.get('', auth, EventController.index);
+router.get('', auth, eventController.index);
 
-router.get('/:id', EventController.show);
+router.get('/:id', eventController.show);
 
-router.post('', auth, fullEvent, EventController.create);
+router.post('', auth, fullEvent, eventController.create);
 
-router.put('', auth, fullEvent, EventController.update);
+router.put('', auth, fullEvent, eventController.update);
 
-router.patch('/:id/attend', auth, EventController.attend);
+router.patch('/:id/attend', auth, eventController.attend);
 
-router.delete('/:id', auth, EventController.destroy);
+router.delete('/:id', auth, eventController.destroy);
 
 export default router;

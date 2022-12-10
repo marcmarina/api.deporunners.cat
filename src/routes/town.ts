@@ -1,9 +1,9 @@
 import { Router } from 'express';
 
-import * as TownController from '../controllers/town';
+import { townController } from '../controllers';
 
 const router = Router();
 
-router.get('', TownController.index);
+router.get('', townController.index);
 
 export default router;

@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import { check } from 'express-validator';
 
-import * as UserController from '../controllers/user';
+import { userController } from '../controllers';
 import auth from '../middleware/auth';
 import { createUser } from '../validators/endpoint-validators';
 
 const router = Router();
 
-router.get('/self', auth, UserController.self);
-router.get('', UserController.index);
+router.get('/self', auth, userController.self);
+router.get('', userController.index);
 
 router.post(
   '/login',
@@ -19,11 +19,11 @@ router.post(
       .withMessage('Please provide a valid email.'),
     check('password').trim().notEmpty().withMessage('The password is required'),
   ],
-  UserController.login,
+  userController.login,
 );
 
-router.patch('/changePassword/:id', UserController.changePassword);
+router.patch('/changePassword/:id', userController.changePassword);
 
-router.post('', auth, createUser, UserController.create);
+router.post('', auth, createUser, userController.create);
 
 export default router;

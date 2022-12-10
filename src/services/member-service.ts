@@ -8,7 +8,7 @@ import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';
 import Context from '../utils/Context';
-import { signJWT } from '../utils/SessionManagement';
+import { signJWT } from '../utils/jwt-signing';
 import { generateToken } from '../utils/Utils';
 
 const stripeAdapter = new StripeAdapter();

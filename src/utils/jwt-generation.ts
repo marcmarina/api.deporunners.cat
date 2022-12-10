@@ -1,7 +1,6 @@
-import jwt from 'jsonwebtoken';
-import { IUser, IMember } from '../models';
+import { IMember, IUser } from '../models';
 import { MemberService, userService } from '../services';
-import { config } from '../config';
+import { signJWT } from './jwt-signing';
 
 type ModelName = 'User' | 'Member';
 
@@ -32,17 +31,4 @@ export const generateNewJWT = async (
       msg: 'Refresh token not valid',
     };
   }
-};
-
-export const signJWT = (data: any, modelName: ModelName) => {
-  return jwt.sign(
-    {
-      ...data,
-      model: modelName,
-    },
-    config.appSecretKey,
-    {
-      expiresIn: parseInt(config.jwtExpiration),
-    },
-  );
 };

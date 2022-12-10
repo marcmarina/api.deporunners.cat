@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { generateNewJWT } from '../utils/SessionManagement';
+import { generateNewJWT } from '../utils/jwt-generation';
 import Context from '../utils/Context';
 import { config } from '../config';
 import * as z from 'zod';

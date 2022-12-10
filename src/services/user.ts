@@ -36,7 +36,7 @@ export const loginWithEmail = async (email: string, password: string) => {
     user = await createSessionToken(user);
   }
 
-  const token = signJWT({ _id: user._id }, 'User');
+  const token = signJWT({ _id: user._id, modelName: 'User' });
 
   return {
     authToken: token,

@@ -24,7 +24,7 @@ export const generateNewJWT = async (
   }
 
   if (refreshToken && model.refreshToken === refreshToken) {
-    return signJWT({ _id: model._id }, modelName);
+    return signJWT({ _id: model._id, modelName });
   } else {
     throw {
       status: 401,

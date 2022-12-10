@@ -145,7 +145,7 @@ export class MemberService {
       member = await this.createSessionToken(member);
     }
 
-    const token = signJWT({ _id: member._id }, 'Member');
+    const token = signJWT({ _id: member._id, modelName: 'Member' });
 
     return {
       authToken: token,

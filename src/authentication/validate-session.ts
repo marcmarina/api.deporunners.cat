@@ -1,10 +1,17 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
 import { Member, User } from '../models';
+import { signJWT } from './jwt-signing';
 
 export const generateSession = async (token, refreshToken) => {
-  const verifiedToken = decodeAndVerifyToken(token);
+  if (!token && !refreshToken) {
+    return {
+      token: null,
+      user: null,
+    };
+  }
 
+  const verifiedToken = decodeAndVerifyToken(token);
   if (verifiedToken) {
     return {
       token,
@@ -12,9 +19,18 @@ export const generateSession = async (token, refreshToken) => {
     };
   }
 
-  const { user, newToken } = await generateNewSession(refreshToken);
+  const refreshTokenOwner = await getEntityFromRefreshToken(refreshToken);
+  if (refreshTokenOwner) {
+    return {
+      token: signJWT(refreshTokenOwner),
+      user: refreshTokenOwner,
+    };
+  }
 
-  return { user, token: newToken };
+  return {
+    token: null,
+    user: null,
+  };
 };
 
 const decodeAndVerifyToken = (token: string) => {
@@ -25,7 +41,7 @@ const decodeAndVerifyToken = (token: string) => {
   }
 };
 
-const generateNewSession = async (refreshToken: string) => {
+const getEntityFromRefreshToken = async (refreshToken: string) => {
   const results = await Promise.all([
     User.findOne({ refreshToken }),
     Member.findOne({ refreshToken }),
@@ -33,15 +49,5 @@ const generateNewSession = async (refreshToken: string) => {
 
   const model = results.find((result) => result);
 
-  if (model) {
-    return {
-      user: model,
-      newToken: jwt.sign({ ...model }, config.appSecretKey),
-    };
-  } else {
-    return {
-      user: null,
-      newToken: null,
-    };
-  }
+  return model;
 };

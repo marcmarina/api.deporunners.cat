@@ -23,7 +23,7 @@ import {
 import { config, envIsDev } from './config';
 import { AuthError, BaseError, InputError } from './errors';
 import { logger } from './logger';
-import { apiToken, requestLogging } from './middleware';
+import { apiToken, getSession, requestLogging } from './middleware';
 
 const app = express();
 
@@ -77,6 +77,7 @@ app.get('/', (_req: Request, res) => {
 app.use('/stripe', StripeWebhooks);
 
 app.use(apiToken);
+app.use(getSession);
 
 app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);

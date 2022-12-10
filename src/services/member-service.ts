@@ -4,8 +4,7 @@ import xl from 'excel4node';
 
 import { config } from '../config';
 import { AuthError, ServiceError } from '../errors';
-import { getEmailTemplate } from '../mail/get-template';
-import mailService from '../mail/mailService';
+import { getEmailTemplate, mailService } from '../mail';
 import Member, { IMember } from '../models/Member';
 import { ITShirtSize } from '../models/TShirtSize';
 import { StripeAdapter } from '../stripe/stripe-adapter';

@@ -2,17 +2,13 @@ import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
-import config from '../config/config';
-import { AuthError, ServiceError } from '../errors/errors';
-import { getEmailTemplate } from '../mail/get-template';
-import mailService from '../mail/mailService';
-import Member, { IMember } from '../models/Member';
-import { ITShirtSize } from '../models/TShirtSize';
-import { StripeAdapter } from '../stripe/stripe-adapter';
-import { stripeClient } from '../stripe/stripe-client';
-import Context from '../utils/Context';
-import { signJWT } from '../utils/SessionManagement';
-import { generateToken } from '../utils/Utils';
+import { config } from '../config';
+import { AuthError, ServiceError } from '../errors';
+import { getEmailTemplate, mailService } from '../mail';
+import { Member, IMember, ITShirtSize } from '../models';
+import { signJWT } from '../session-management';
+import { StripeAdapter, stripeClient } from '../stripe';
+import { context, generateToken } from '../utils';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -158,7 +154,7 @@ export class MemberService {
   }
 
   async updatePassword(oldPassword: string, newPassword: string) {
-    const member = await Member.findById(Context.getUserId());
+    const member = await Member.findById(context.getUserId());
     if (!member)
       throw {
         status: 400,
@@ -177,7 +173,7 @@ export class MemberService {
   }
 
   async registerToken(token: string) {
-    const member = await Member.findById(Context.getUserId());
+    const member = await Member.findById(context.getUserId());
 
     if (!member)
       throw {

@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import logger from '../utils/logger';
+import { logger } from '../logger';
 
 const connect = async (connectionString: string) => {
   await mongoose.connect(connectionString, {
@@ -15,7 +15,7 @@ const disconnect = async () => {
   logger.info('Database disconnected');
 };
 
-export default {
+export const database = {
   connect,
   disconnect,
 };

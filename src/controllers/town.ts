@@ -1,4 +1,4 @@
-import Town from '../models/Town';
+import { Town } from '../models';
 
 export const index = async (req, res, next) => {
   try {

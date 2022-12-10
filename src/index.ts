@@ -1,13 +1,13 @@
 import app from './app';
-import config from './config/config';
-import db from './config/db';
-import logger from './utils/logger';
+import { config } from './config';
+import { database } from './database';
+import { logger } from './logger';
 
 async function startServer() {
   try {
     const PORT = config.port;
 
-    await db.connect(config.mongoURI);
+    await database.connect(config.mongoURI);
 
     const server = app.listen(PORT, async () => {
       logger.info('Application started');
@@ -18,7 +18,7 @@ async function startServer() {
       try {
         logger.info('Tearing down application');
 
-        await db.disconnect();
+        await database.disconnect();
 
         server.close(async (err) => {
           if (err) logger.error(err);

@@ -1,8 +1,7 @@
 import 'dotenv/config';
 import { merge } from 'lodash';
 
-import { generateToken } from '../utils/Utils';
-import { assertNever } from '../utils/assert-never';
+import { assertNever, generateToken } from '../utils';
 
 export function fetchNullableVariable(key: string): string | null {
   return process.env[key] ?? null;
@@ -105,6 +104,4 @@ const getConfig = (): Config => {
   return merge(baseConfig, getConfigForEnvironment(environment));
 };
 
-const config = getConfig();
-
-export default config;
+export const config = getConfig();

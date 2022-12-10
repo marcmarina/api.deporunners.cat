@@ -1,17 +1,10 @@
-import User from '../models/User';
-import {
-  createUser,
-  getAllUsers,
-  findUserById,
-  loginWithEmail,
-  updatePassword,
-} from '../services/user';
-import checkForErrors from '../utils/ErrorThrowing';
-import Context from '../utils/Context';
+import { User } from '../models';
+import { userService } from '../services';
+import { checkForErrors, context } from '../utils';
 
 export const index = async (req, res, next) => {
   try {
-    res.status(200).json(await getAllUsers());
+    res.status(200).json(await userService.getAllUsers());
   } catch (ex) {
     next(ex);
   }
@@ -22,7 +15,10 @@ export const login = async (req, res, next) => {
     checkForErrors(req);
 
     const { email, password } = req.body;
-    const { refreshToken, authToken } = await loginWithEmail(email, password);
+    const { refreshToken, authToken } = await userService.loginWithEmail(
+      email,
+      password,
+    );
 
     res.set({
       'x-refresh-token': refreshToken,
@@ -40,7 +36,7 @@ export const create = async (req, res, next) => {
     const { name, email, password, role } = req.body;
 
     const user = new User({ name, email, password, role });
-    const result = await createUser(user);
+    const result = await userService.createUser(user);
     res.status(201).json(result);
   } catch (ex) {
     next(ex);
@@ -54,7 +50,9 @@ export const changePassword = async (req, res, next) => {
     const { oldPassword, newPassword } = req.body;
     const { id } = req.params;
 
-    res.status(200).json(await updatePassword(id, oldPassword, newPassword));
+    res
+      .status(200)
+      .json(await userService.updatePassword(id, oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }
@@ -62,7 +60,7 @@ export const changePassword = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await findUserById(Context.getUserId()));
+    res.status(200).json(await userService.findUserById(context.getUserId()));
   } catch (ex) {
     next(ex);
   }

@@ -1,5 +1,5 @@
-import { signJWT } from '../utils/SessionManagement';
-import auth, { getTokens } from './auth';
+import { signJWT } from '../session-management';
+import { auth, getTokens } from './auth';
 
 describe('auth middleware', () => {
   it('throws an error when tokens are missing', () => {

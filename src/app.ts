@@ -20,11 +20,10 @@ import {
   DevRoutes,
 } from './routes';
 
-import apiToken from './middleware/api-token';
-import requestLogging from './middleware/request-logging';
-import config, { envIsDev } from './config/config';
-import { AuthError, BaseError, InputError } from './errors/errors';
-import logger from './utils/logger';
+import { config, envIsDev } from './config';
+import { AuthError, BaseError, InputError } from './errors';
+import { logger } from './logger';
+import { apiToken, requestLogging } from './middleware';
 
 const app = express();
 

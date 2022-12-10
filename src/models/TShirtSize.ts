@@ -16,4 +16,4 @@ const tshirtSizeSchema = new Schema({
   },
 });
 
-export default model<ITShirtSize>('TShirtSize', tshirtSizeSchema);
+export const TShirtSize = model<ITShirtSize>('TShirtSize', tshirtSizeSchema);

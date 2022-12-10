@@ -1,13 +1,17 @@
-import logger from '../utils/logger';
-import Context from '../utils/Context';
+import { context } from '../utils';
+import { logger } from '../logger';
 import { NextFunction, Request, Response } from 'express';
 
 const blacklistedRoutes = ['/health'];
 
-const requestLogging = (req: Request, _res: Response, next: NextFunction) => {
+export const requestLogging = (
+  req: Request,
+  _res: Response,
+  next: NextFunction,
+) => {
   if (!blacklistedRoutes.includes(req.path)) {
     logger.request({
-      user: Context.getUserId(),
+      user: context.getUserId(),
       ip: req.ip,
       url: req.originalUrl,
     });
@@ -15,5 +19,3 @@ const requestLogging = (req: Request, _res: Response, next: NextFunction) => {
 
   next();
 };
-
-export default requestLogging;

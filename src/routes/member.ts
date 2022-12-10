@@ -1,22 +1,18 @@
 import { Router } from 'express';
 
-import * as MemberController from '../controllers/member';
-import auth from '../middleware/auth';
-import {
-  createMember,
-  memberLogin,
-  updateMember,
-} from '../validators/endpoint-validators';
-import { MemberService } from '../services/member-service';
+import { memberController } from '../controllers';
+import { auth } from '../middleware';
+import { MemberService } from '../services';
+import { createMember, memberLogin, updateMember } from '../validators';
 
 const service = new MemberService();
 
 const router = Router();
 
-router.post('/signup/pay', MemberController.signupPayment);
-router.post('/login', memberLogin, MemberController.login);
-router.post('', createMember, MemberController.create);
-router.post('/expoPushToken', auth, MemberController.expoToken);
+router.post('/signup/pay', memberController.signupPayment);
+router.post('/login', memberLogin, memberController.login);
+router.post('', createMember, memberController.create);
+router.post('/expoPushToken', auth, memberController.expoToken);
 
 router.get('/excel', async (req, res, next) => {
   try {
@@ -27,16 +23,16 @@ router.get('/excel', async (req, res, next) => {
     next(err);
   }
 });
-router.get('/signup/secret', MemberController.signupSecret);
-router.get('/self', auth, MemberController.self);
-router.get('', MemberController.index);
-router.get('/:id', MemberController.find);
+router.get('/signup/secret', memberController.signupSecret);
+router.get('/self', auth, memberController.self);
+router.get('', memberController.index);
+router.get('/:id', memberController.find);
 
-router.delete('/signup/failure/:id', MemberController.signupFailure);
-router.delete('/:id', auth, MemberController.destroy);
+router.delete('/signup/failure/:id', memberController.signupFailure);
+router.delete('/:id', auth, memberController.destroy);
 
-router.patch('/changepassword', auth, MemberController.changePassword);
+router.patch('/changepassword', auth, memberController.changePassword);
 
-router.put('', auth, updateMember, MemberController.put);
+router.put('', auth, updateMember, memberController.put);
 
 export default router;

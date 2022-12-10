@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
-import { AuthError } from '../errors/errors';
+import { AuthError } from '../errors';
 
-import User, { IUser } from '../models/User';
-import { signJWT } from '../utils/SessionManagement';
-import { generateToken } from '../utils/Utils';
+import { User, IUser } from '../models';
+import { generateToken } from '../utils';
+import { signJWT } from '../session-management';
 
 export const getAllUsers = async (): Promise<IUser[]> => {
   return User.find();

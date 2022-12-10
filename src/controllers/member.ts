@@ -1,7 +1,6 @@
-import { MemberService } from '../services/member-service';
-import Context from '../utils/Context';
-import checkForErrors from '../utils/ErrorThrowing';
-import { stripeClient } from '../stripe/stripe-client';
+import { MemberService } from '../services';
+import { checkForErrors, context } from '../utils';
+import { stripeClient } from '../stripe';
 import Stripe from 'stripe';
 
 const service = new MemberService();
@@ -158,7 +157,7 @@ export const expoToken = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await service.findById(Context.getUserId()));
+    res.status(200).json(await service.findById(context.getUserId()));
   } catch (ex) {
     next(ex);
   }

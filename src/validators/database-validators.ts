@@ -1,6 +1,6 @@
 import { check } from 'express-validator';
 import { Model } from 'mongoose';
-import Member from '../models/Member';
+import { Member } from '../models';
 
 export async function isModelIdValid(model: Model<any>, id: string) {
   const result = await model.findOne({ _id: id });

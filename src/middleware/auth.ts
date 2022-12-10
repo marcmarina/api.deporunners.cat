@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
-import { generateNewJWT } from '../utils/SessionManagement';
-import Context from '../utils/Context';
-import config from '../config/config';
+import { generateNewJWT } from '../session-management/jwt-generation';
+import { context } from '../utils';
+import { config } from '../config';
 import * as z from 'zod';
 
-export default async (req, res, next) => {
+export const auth = async (req, res, next) => {
   try {
     const { token, refreshToken } = getTokens(req);
     const decodedToken = decodedTokenSchema.parse(jwt.decode(token));
@@ -32,7 +32,7 @@ export default async (req, res, next) => {
       }
     }
 
-    Context.setUserId(decodedToken._id);
+    context.setUserId(decodedToken._id);
 
     next();
   } catch (ex) {

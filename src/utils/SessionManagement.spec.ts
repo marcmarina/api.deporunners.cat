@@ -1,4 +1,4 @@
-import * as UserService from '../services/user';
+import { userService } from '../services';
 import { generateNewJWT } from './SessionManagement';
 
 jest.mock('../services/user');
@@ -10,7 +10,7 @@ jest.mock('../services/member-service', () => {
   };
 });
 
-const mockedUserService = UserService as jest.Mocked<typeof UserService>;
+const mockedUserService = userService as jest.Mocked<typeof userService>;
 
 const sampleUser = {
   _id: '6085b02c6b4b295ab8ee9490',

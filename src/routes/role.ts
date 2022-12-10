@@ -1,12 +1,12 @@
 import { Router } from 'express';
 
-import { getAllRoles } from '../services/role';
+import { roleService } from '../services';
 import { roleController } from '../controllers';
 
 const router = Router();
 
 router.get('', async (req, res) => {
-  const roles = await getAllRoles();
+  const roles = await roleService.getAllRoles();
   res.status(200).json(roles);
 });
 

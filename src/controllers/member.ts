@@ -1,4 +1,4 @@
-import { MemberService } from '../services/member-service';
+import { MemberService } from '../services';
 import Context from '../utils/Context';
 import checkForErrors from '../utils/ErrorThrowing';
 import { stripeClient } from '../stripe/stripe-client';

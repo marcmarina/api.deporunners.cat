@@ -1,7 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { IUser, IMember } from '../models';
-import { MemberService } from '../services/member-service';
-import { findUserById } from '../services/user';
+import { MemberService, userService } from '../services';
 import { config } from '../config';
 
 type ModelName = 'User' | 'Member';
@@ -16,7 +15,7 @@ export const generateNewJWT = async (
   const model: IMember | IUser | null =
     modelName === 'Member'
       ? await memberService.findById(id)
-      : await findUserById(id);
+      : await userService.findUserById(id);
 
   if (!model) {
     throw {

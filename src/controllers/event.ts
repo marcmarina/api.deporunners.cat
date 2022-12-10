@@ -1,5 +1,5 @@
 import { IEvent } from '../models';
-import { EventService } from '../services/event-service';
+import { EventService } from '../services';
 import checkForErrors from '../utils/ErrorThrowing';
 
 const service = new EventService();

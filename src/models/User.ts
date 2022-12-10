@@ -1,5 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
-import Role from './Role';
+import { Role } from './Role';
 
 export interface IUser extends Document {
   name: string;
@@ -36,4 +36,4 @@ userSchema.pre(/^find/, function (next: any) {
   next();
 });
 
-export default model<IUser>('User', userSchema);
+export const User = model<IUser>('User', userSchema);

@@ -11,4 +11,4 @@ const townSchema = new Schema({
   },
 });
 
-export default model<ITown>('Town', townSchema);
+export const Town = model<ITown>('Town', townSchema);

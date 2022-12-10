@@ -1,8 +1,8 @@
 import * as UserService from './user';
-import User from '../models/User';
+import { User } from '../models';
 import { AuthError } from '../errors';
 
-jest.mock('../models/User');
+jest.mock('../models');
 
 const mockedUser = User as jest.Mocked<typeof User>;
 

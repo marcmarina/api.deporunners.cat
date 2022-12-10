@@ -1,5 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
-import Town from './Town';
+import { Town } from './Town';
 import { ITShirtSize } from './TShirtSize';
 
 export interface IMember extends Document {
@@ -88,4 +88,4 @@ memberSchema.pre(/^find/, function (next: any) {
   next();
 });
 
-export default model<IMember>('Member', memberSchema);
+export const Member = model<IMember>('Member', memberSchema);

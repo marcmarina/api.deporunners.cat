@@ -1,4 +1,4 @@
-import { IEvent } from '../models/Event';
+import { IEvent } from '../models';
 import { EventService } from '../services/event-service';
 import checkForErrors from '../utils/ErrorThrowing';
 

@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { AuthError } from '../errors';
 
-import User, { IUser } from '../models/User';
+import { User, IUser } from '../models';
 import { signJWT } from '../utils/SessionManagement';
 import { generateToken } from '../utils/Utils';
 

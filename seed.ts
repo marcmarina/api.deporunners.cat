@@ -3,13 +3,17 @@ import faker from 'faker';
 import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 
-import Member, { IMember } from './src/models/Member';
-import User, { IUser } from './src/models/User';
-import Role from './src/models/Role';
-import Town from './src/models/Town';
-import TShirtSize from './src/models/TShirtSize';
-import Event, { IEvent } from './src/models/Event';
-
+import {
+  Event,
+  IEvent,
+  IMember,
+  IUser,
+  Member,
+  Role,
+  Town,
+  TShirtSize,
+  User,
+} from './src/models';
 import { config, db } from './src/config';
 import { randomInt } from './src/utils/Utils';
 

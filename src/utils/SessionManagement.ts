@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { IMember } from '../models/Member';
-import { IUser } from '../models/User';
+import { IUser, IMember } from '../models';
 import { MemberService } from '../services/member-service';
 import { findUserById } from '../services/user';
 import { config } from '../config';

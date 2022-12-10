@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getEmailTemplate } from '../mail/get-template';
-import { logger } from '../utils';
+import { logger } from '../logger';
 
 const router = Router();
 

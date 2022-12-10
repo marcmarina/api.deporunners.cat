@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
-import { logger } from '../utils/logger';
+import { logger } from '../logger';
 import { requestLogging } from './request-logging';
 
-jest.mock('../utils/logger');
+jest.mock('../logger');
 
 describe('request-logging', () => {
   const next = jest.fn();

@@ -2,7 +2,8 @@ import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
 
 import { Event, IEvent } from '../models';
-import { context, logger } from '../utils';
+import { context } from '../utils';
+import { logger } from '../logger';
 import { MemberService } from './member-service';
 
 const memberService = new MemberService();

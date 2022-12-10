@@ -6,8 +6,9 @@ import { config } from '../config';
 import { AuthError, ServiceError } from '../errors';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
+import { signJWT } from '../session-management';
 import { StripeAdapter, stripeClient } from '../stripe';
-import { context, generateToken, signJWT } from '../utils';
+import { context, generateToken } from '../utils';
 
 const stripeAdapter = new StripeAdapter();
 

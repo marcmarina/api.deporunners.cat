@@ -1,4 +1,5 @@
-import { context, logger } from '../utils';
+import { context } from '../utils';
+import { logger } from '../logger';
 import { NextFunction, Request, Response } from 'express';
 
 const blacklistedRoutes = ['/health'];

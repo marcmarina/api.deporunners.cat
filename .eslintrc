@@ -19,6 +19,7 @@
       { "argsIgnorePattern": "_" }
     ],
     "no-return-await": "off",
-    "no-console": "error"
+    "no-console": "error",
+    "no-duplicate-imports": "error"
   }
 }

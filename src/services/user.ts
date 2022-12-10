@@ -3,7 +3,7 @@ import { AuthError } from '../errors';
 
 import { User, IUser } from '../models';
 import { generateToken } from '../utils';
-import { signJWT } from '../session-management';
+import { signJWT } from '../authentication';
 
 export const getAllUsers = async (): Promise<IUser[]> => {
   return User.find();

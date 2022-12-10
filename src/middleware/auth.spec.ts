@@ -1,4 +1,4 @@
-import { signJWT } from '../session-management';
+import { signJWT } from '../authentication';
 import { auth, getTokens } from './auth';
 
 describe('auth middleware', () => {

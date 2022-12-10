@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { AuthError } from '../errors/errors';
+import { AuthError } from '../errors';
 
 import User, { IUser } from '../models/User';
 import { signJWT } from '../utils/SessionManagement';

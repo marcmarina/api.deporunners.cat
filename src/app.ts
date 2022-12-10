@@ -23,7 +23,7 @@ import {
 import apiToken from './middleware/api-token';
 import requestLogging from './middleware/request-logging';
 import { config, envIsDev } from './config';
-import { AuthError, BaseError, InputError } from './errors/errors';
+import { AuthError, BaseError, InputError } from './errors';
 import logger from './utils/logger';
 
 const app = express();

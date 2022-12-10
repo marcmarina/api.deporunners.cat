@@ -1,6 +1,6 @@
 import * as UserService from './user';
 import User from '../models/User';
-import { AuthError } from '../errors/errors';
+import { AuthError } from '../errors';
 
 jest.mock('../models/User');
 

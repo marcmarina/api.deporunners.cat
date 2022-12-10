@@ -2,7 +2,6 @@ import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
 
 import { Event, IEvent } from '../models';
-import { context } from '../utils';
 import { logger } from '../logger';
 import { MemberService } from './member-service';
 
@@ -39,8 +38,7 @@ export class EventService {
     return Event.updateOne({ _id: event._id }, event);
   }
 
-  async attendEvent(eventId: string, attending: boolean) {
-    const userId = context.getUserId();
+  async attendEvent(userId: string, eventId: string, attending: boolean) {
     const event = await Event.findById(eventId);
 
     if (!event)

@@ -8,7 +8,7 @@ import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { signJWT } from '../authentication';
 import { StripeAdapter, stripeClient } from '../stripe';
-import { context, generateToken } from '../utils';
+import { generateToken } from '../utils';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -153,8 +153,8 @@ export class MemberService {
     };
   }
 
-  async updatePassword(oldPassword: string, newPassword: string) {
-    const member = await Member.findById(context.getUserId());
+  async updatePassword(id: string, oldPassword: string, newPassword: string) {
+    const member = await Member.findById(id);
     if (!member)
       throw {
         status: 400,
@@ -172,8 +172,8 @@ export class MemberService {
     return member.save();
   }
 
-  async registerToken(token: string) {
-    const member = await Member.findById(context.getUserId());
+  async registerToken(id: string, token: string) {
+    const member = await Member.findById(id);
 
     if (!member)
       throw {

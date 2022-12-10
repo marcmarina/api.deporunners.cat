@@ -5,7 +5,6 @@ import express, {
   Response,
 } from 'express';
 import cors from 'cors';
-import httpContext from 'express-http-context';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 
@@ -53,7 +52,6 @@ app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 app.use(Sentry.Handlers.tracingHandler() as RequestHandler);
 
 app.use(express.json() as RequestHandler);
-app.use(httpContext.middleware);
 app.use(
   cors({
     allowedHeaders: [

@@ -15,7 +15,7 @@ const disconnect = async () => {
   logger.info('Database disconnected');
 };
 
-export default {
+export const db = {
   connect,
   disconnect,
 };

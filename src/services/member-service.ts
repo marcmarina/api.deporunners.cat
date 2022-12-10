@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
-import config from '../config/config';
+import { config } from '../config';
 import { AuthError, ServiceError } from '../errors/errors';
 import { getEmailTemplate } from '../mail/get-template';
 import mailService from '../mail/mailService';

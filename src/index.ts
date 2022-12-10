@@ -1,6 +1,5 @@
 import app from './app';
-import config from './config/config';
-import db from './config/db';
+import { config, db } from './config';
 import logger from './utils/logger';
 
 async function startServer() {

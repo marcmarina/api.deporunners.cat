@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
 import { generateNewJWT } from '../utils/SessionManagement';
 import Context from '../utils/Context';
-import config from '../config/config';
+import { config } from '../config';
 import * as z from 'zod';
 
 export default async (req, res, next) => {

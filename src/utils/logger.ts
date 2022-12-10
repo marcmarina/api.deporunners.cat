@@ -1,7 +1,7 @@
 import * as Sentry from '@sentry/node';
 import pino from 'pino';
 
-import { envIsDev, envIsTest } from '../config/config';
+import { envIsDev, envIsTest } from '../config';
 
 function getLogLevel() {
   if (envIsDev) {

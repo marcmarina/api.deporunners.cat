@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
-import config from '../config/config';
+import { config } from '../config';
 
 export default (req: Request, res: Response, next: NextFunction) => {
   try {

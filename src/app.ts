@@ -22,7 +22,7 @@ import {
 
 import apiToken from './middleware/api-token';
 import requestLogging from './middleware/request-logging';
-import config, { envIsDev } from './config/config';
+import { config, envIsDev } from './config';
 import { AuthError, BaseError, InputError } from './errors/errors';
 import logger from './utils/logger';
 

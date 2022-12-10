@@ -105,6 +105,4 @@ const getConfig = (): Config => {
   return merge(baseConfig, getConfigForEnvironment(environment));
 };
 
-const config = getConfig();
-
-export default config;
+export const config = getConfig();

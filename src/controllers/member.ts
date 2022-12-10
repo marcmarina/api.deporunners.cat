@@ -1,7 +1,7 @@
 import { MemberService } from '../services';
 import Context from '../utils/Context';
 import checkForErrors from '../utils/ErrorThrowing';
-import { stripeClient } from '../stripe/stripe-client';
+import { stripeClient } from '../stripe';
 import Stripe from 'stripe';
 
 const service = new MemberService();

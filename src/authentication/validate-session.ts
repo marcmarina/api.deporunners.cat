@@ -3,18 +3,29 @@ import { config } from '../config';
 import { Member, User } from '../models';
 import { signJWT } from './jwt-signing';
 
-export const generateSession = async (token, refreshToken) => {
-  if (!token && !refreshToken) {
+type Session = {
+  authToken: string | null;
+  refreshToken: string | null;
+  user: any;
+};
+
+export const generateSession = async (
+  authToken,
+  refreshToken,
+): Promise<Session> => {
+  if (!authToken || !refreshToken) {
     return {
-      token: null,
+      authToken: null,
+      refreshToken: null,
       user: null,
     };
   }
 
-  const verifiedToken = decodeAndVerifyToken(token);
+  const verifiedToken = decodeAndVerifyToken(authToken);
   if (verifiedToken) {
     return {
-      token,
+      authToken,
+      refreshToken,
       user: verifiedToken,
     };
   }
@@ -22,13 +33,15 @@ export const generateSession = async (token, refreshToken) => {
   const refreshTokenOwner = await getEntityFromRefreshToken(refreshToken);
   if (refreshTokenOwner) {
     return {
-      token: signJWT(refreshTokenOwner),
+      authToken: signJWT(refreshTokenOwner),
+      refreshToken: refreshToken,
       user: refreshTokenOwner,
     };
   }
 
   return {
-    token: null,
+    authToken: null,
+    refreshToken: null,
     user: null,
   };
 };

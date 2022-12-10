@@ -10,10 +10,11 @@ export const getSession = async (
     const authToken = req.headers['x-auth-token'] as string;
     const refreshToken = req.headers['x-refresh-token'] as string;
 
-    const { token, user } = await generateSession(authToken, refreshToken);
+    const session = await generateSession(authToken, refreshToken);
 
-    res.locals.user = user;
-    res.set({ 'x-auth-token': token });
+    res.locals.user = session.user;
+    res.set({ 'x-auth-token': session.authToken });
+    res.set({ 'x-refresh-token': session.refreshToken });
 
     next();
   } catch (ex) {

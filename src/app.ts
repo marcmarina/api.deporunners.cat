@@ -22,7 +22,7 @@ import {
 
 import { config, envIsDev } from './config';
 import { AuthError, BaseError, InputError } from './errors';
-import logger from './utils/logger';
+import { logger } from './utils';
 import { apiToken, requestLogging } from './middleware';
 
 const app = express();

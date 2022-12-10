@@ -7,9 +7,7 @@ import { AuthError, ServiceError } from '../errors';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';
-import Context from '../utils/Context';
-import { signJWT } from '../utils/jwt-signing';
-import { generateToken } from '../utils/Utils';
+import { context, generateToken, signJWT } from '../utils';
 
 const stripeAdapter = new StripeAdapter();
 
@@ -155,7 +153,7 @@ export class MemberService {
   }
 
   async updatePassword(oldPassword: string, newPassword: string) {
-    const member = await Member.findById(Context.getUserId());
+    const member = await Member.findById(context.getUserId());
     if (!member)
       throw {
         status: 400,
@@ -174,7 +172,7 @@ export class MemberService {
   }
 
   async registerToken(token: string) {
-    const member = await Member.findById(Context.getUserId());
+    const member = await Member.findById(context.getUserId());
 
     if (!member)
       throw {

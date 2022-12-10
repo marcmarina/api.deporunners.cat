@@ -15,7 +15,7 @@ import {
   User,
 } from './src/models';
 import { config, db } from './src/config';
-import { randomInt } from './src/utils/Utils';
+import { randomInt } from './src/utils';
 
 dotenv.config();
 

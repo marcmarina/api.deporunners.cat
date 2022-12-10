@@ -2,8 +2,7 @@ import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
 
 import { Event, IEvent } from '../models';
-import Context from '../utils/Context';
-import logger from '../utils/logger';
+import { context, logger } from '../utils';
 import { MemberService } from './member-service';
 
 const memberService = new MemberService();
@@ -40,7 +39,7 @@ export class EventService {
   }
 
   async attendEvent(eventId: string, attending: boolean) {
-    const userId = Context.getUserId();
+    const userId = context.getUserId();
     const event = await Event.findById(eventId);
 
     if (!event)

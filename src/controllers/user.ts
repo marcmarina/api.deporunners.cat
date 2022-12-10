@@ -1,7 +1,6 @@
 import { User } from '../models';
 import { userService } from '../services';
-import checkForErrors from '../utils/ErrorThrowing';
-import Context from '../utils/Context';
+import { checkForErrors, context } from '../utils';
 
 export const index = async (req, res, next) => {
   try {
@@ -61,7 +60,7 @@ export const changePassword = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await userService.findUserById(Context.getUserId()));
+    res.status(200).json(await userService.findUserById(context.getUserId()));
   } catch (ex) {
     next(ex);
   }

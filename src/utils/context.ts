@@ -6,7 +6,7 @@ const setUserId = (id: string) => httpContext.set(USER_KEY, id);
 
 const getUserId = (): string => httpContext.get(USER_KEY);
 
-export default {
+export const context = {
   setUserId,
   getUserId,
 };

@@ -13,12 +13,12 @@ function getLogLevel() {
   }
 }
 
-const logger = pino({
+const pinoLogger = pino({
   ...(envIsDev && { transport: { target: 'pino-pretty' } }),
   level: getLogLevel(),
 });
 
-export default {
+export const logger = {
   /**
    * Log an error. If the environment is development or testing it only logs it to the console. Otherwise it also logs it to Sentry.
    *
@@ -28,19 +28,19 @@ export default {
    * @param {boolean} [logToSentry] - Flag to bypass environment and force logging to Sentry.
    */
   error: (error: Error, logToSentry?: boolean) => {
-    logger.error(error);
+    pinoLogger.error(error);
 
     if (logToSentry || !envIsDev || !envIsTest) {
       Sentry.captureException(error);
     }
   },
   debug: (msg: string, args?: Record<string, unknown>) => {
-    logger.debug({ ...args }, msg);
+    pinoLogger.debug({ ...args }, msg);
   },
   info: (msg: string, args?: Record<string, unknown>) => {
-    logger.info({ ...args }, msg);
+    pinoLogger.info({ ...args }, msg);
   },
   request: (args?: Record<string, unknown>) => {
-    logger.info({ ...args });
+    pinoLogger.info({ ...args });
   },
 };

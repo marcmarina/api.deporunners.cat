@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import { generateNewJWT } from '../utils/jwt-generation';
-import Context from '../utils/Context';
+import { context } from '../utils';
 import { config } from '../config';
 import * as z from 'zod';
 
@@ -32,7 +32,7 @@ export const auth = async (req, res, next) => {
       }
     }
 
-    Context.setUserId(decodedToken._id);
+    context.setUserId(decodedToken._id);
 
     next();
   } catch (ex) {

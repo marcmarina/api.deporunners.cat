@@ -1,4 +1,4 @@
-import { signJWT } from '../utils/jwt-signing';
+import { signJWT } from '../utils';
 import { auth, getTokens } from './auth';
 
 describe('auth middleware', () => {

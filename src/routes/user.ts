@@ -3,7 +3,7 @@ import { check } from 'express-validator';
 
 import { userController } from '../controllers';
 import { auth } from '../middleware';
-import { createUser } from '../validators/endpoint-validators';
+import { createUser } from '../validators';
 
 const router = Router();
 

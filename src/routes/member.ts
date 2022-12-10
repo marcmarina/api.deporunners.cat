@@ -3,11 +3,7 @@ import { Router } from 'express';
 import { memberController } from '../controllers';
 import { auth } from '../middleware';
 import { MemberService } from '../services';
-import {
-  createMember,
-  memberLogin,
-  updateMember,
-} from '../validators/endpoint-validators';
+import { createMember, memberLogin, updateMember } from '../validators';
 
 const service = new MemberService();
 

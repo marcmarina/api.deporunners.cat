@@ -1,4 +1,3 @@
-import { User } from '../models';
 import { userService } from '../services';
 import { checkForErrors } from '../utils';
 
@@ -35,10 +34,9 @@ export const login = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    const { name, email, password, role } = req.body;
 
-    const user = new User({ name, email, password, role });
-    const result = await userService.createUser(user);
+    const result = await userService.createUser(req.body);
+
     res.status(201).json(result);
   } catch (ex) {
     next(ex);

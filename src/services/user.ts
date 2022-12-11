@@ -1,8 +1,6 @@
-import bcrypt from 'bcrypt';
-
 import { signJWT } from '../authentication';
 import { User, IUser } from '../models';
-import { generateToken } from '../utils';
+import { compareHash, generateToken, hashString } from '../utils';
 
 type Session = {
   authToken: string;
@@ -17,11 +15,18 @@ export const findById = async (id: string) => {
   return await User.findById(id);
 };
 
-export const createUser = async (user: IUser): Promise<IUser> => {
-  const hashedPassword = await bcrypt.hash(user.password, 12);
-  user.password = hashedPassword;
+export const createUser = async (input: {
+  name: string;
+  email: string;
+  password: string;
+  role: string;
+}): Promise<IUser> => {
+  const hashedPassword = await hashString(input.password);
 
-  return user.save();
+  return await User.create({
+    ...input,
+    password: hashedPassword,
+  });
 };
 
 export const login = async (
@@ -31,7 +36,7 @@ export const login = async (
   const user = await User.findOne({ email });
   if (!user) return null;
 
-  const isPasswordValid = await validatePassword(password, user.password);
+  const isPasswordValid = await compareHash(password, user.password);
   if (!isPasswordValid) return null;
 
   const session = await createSession(user);
@@ -40,13 +45,6 @@ export const login = async (
   await user.save();
 
   return session;
-};
-
-const validatePassword = async (
-  password: string,
-  hash: string,
-): Promise<boolean> => {
-  return await bcrypt.compareSync(password, hash);
 };
 
 const createSession = async (user: IUser) => {
@@ -68,14 +66,14 @@ export const updatePassword = async (
       msg: 'The user id is not valid',
     };
 
-  const validPassword = await bcrypt.compare(oldPassword, user.password);
+  const validPassword = await compareHash(oldPassword, user.password);
   if (!validPassword)
     throw {
       status: 400,
       msg: 'The old password is not valid',
     };
 
-  user.password = await bcrypt.hash(newPassword, 12);
+  user.password = await hashString(newPassword);
   return user.save();
 };
 

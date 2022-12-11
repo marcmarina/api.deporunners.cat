@@ -76,9 +76,3 @@ export async function updatePassword(
   user.password = await hashString(newPassword);
   return user.save();
 }
-
-export async function createSessionToken(user: IUser) {
-  const refreshToken = generateToken(64);
-  user.refreshToken = refreshToken;
-  return await user.save();
-}

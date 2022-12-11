@@ -1,5 +1,5 @@
 import { User } from '../models';
-import { hashString } from '../utils';
+import { compareHash, hashString } from '../utils';
 
 import * as UserService from './user';
 
@@ -17,9 +17,12 @@ describe.only('user service', () => {
     role: '6085b02b6b4b295ab8ee93ef',
     refreshToken:
       '9a1560c86f8bb8ee34d540574033bb9844331ca9af89be7f4f9f4271878656a92fce3936421037adaafd07d7a1f5d3f606b3bd6298327dbf11fc7695e616c4f9',
+    toObject: jest.fn(),
+    save: jest.fn(),
   } as any;
 
   const mockedHashString = hashString as jest.Mock;
+  const mockedCompareHash = compareHash as jest.Mock;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -59,6 +62,37 @@ describe.only('user service', () => {
       await expect(UserService.createUser(sampleUser)).resolves.toEqual(
         sampleUser,
       );
+    });
+  });
+
+  describe('login', () => {
+    it("returns a session if the user's credentials are valid", async () => {
+      mockedUser.findOne.mockResolvedValueOnce(sampleUser);
+      mockedCompareHash.mockResolvedValueOnce(true);
+
+      await expect(
+        UserService.login(sampleUser.email, sampleUser.password),
+      ).resolves.toMatchObject({
+        authToken: expect.any(String),
+        refreshToken: expect.any(String),
+      });
+    });
+
+    it("returns null if the user's email is not valid", async () => {
+      mockedUser.findOne.mockResolvedValueOnce(null);
+
+      await expect(
+        UserService.login(sampleUser.email, sampleUser.password),
+      ).resolves.toBeNull();
+    });
+
+    it("returns null if the user's password is not valid", async () => {
+      mockedUser.findOne.mockResolvedValueOnce(sampleUser);
+      mockedCompareHash.mockResolvedValueOnce(false);
+
+      await expect(
+        UserService.login(sampleUser.email, sampleUser.password),
+      ).resolves.toBeNull();
     });
   });
 });

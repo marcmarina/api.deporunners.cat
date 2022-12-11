@@ -9,7 +9,7 @@ jobs:
     steps:
       - checkout
       - run: yarn install --frozen-lockfile
-      - run: yarn test
+      - run: yarn test --maxWorkers=2
   build:
     docker:
       - image: cimg/node:16.18.1

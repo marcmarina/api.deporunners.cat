@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
+
 import { logger } from '../logger';
+
 import { requestLogging } from './request-logging';
 
 jest.mock('../logger');

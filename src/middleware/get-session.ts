@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
+
 import { generateSession } from '../authentication';
 
 export const getSession = async (

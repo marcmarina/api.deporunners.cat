@@ -1,5 +1,7 @@
-import { NextFunction, Request, Response } from 'express';
 import { IncomingHttpHeaders } from 'http';
+
+import { NextFunction, Request, Response } from 'express';
+
 import { config } from '../config';
 
 export const apiToken = (req: Request, res: Response, next: NextFunction) => {

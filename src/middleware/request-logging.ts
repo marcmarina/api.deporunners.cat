@@ -1,5 +1,6 @@
-import { logger } from '../logger';
 import { NextFunction, Request, Response } from 'express';
+
+import { logger } from '../logger';
 
 const blacklistedRoutes = ['/health'];
 

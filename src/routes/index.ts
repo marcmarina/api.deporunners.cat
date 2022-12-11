@@ -1,11 +1,11 @@
-import UserRoutes from './user';
-import RoleRoutes from './role';
+import DevRoutes from './development';
+import EventRoutes from './event';
 import MemberRoutes from './member';
+import RoleRoutes from './role';
+import StripeWebhooks from './stripeWebhooks';
 import TownRoutes from './town';
 import TShirtSizeRoutes from './tshirtSize';
-import EventRoutes from './event';
-import StripeWebhooks from './stripeWebhooks';
-import DevRoutes from './development';
+import UserRoutes from './user';
 
 export {
   UserRoutes,

@@ -1,8 +1,9 @@
 import dayjs from 'dayjs';
 import { check } from 'express-validator';
 
-import { existingMemberEmail, validateModelId } from './database-validators';
 import { Town, Role } from '../models';
+
+import { existingMemberEmail, validateModelId } from './database-validators';
 
 export const createMember = [
   check('member.firstName')

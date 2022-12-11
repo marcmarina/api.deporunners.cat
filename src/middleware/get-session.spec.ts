@@ -1,5 +1,6 @@
-import { getSession } from './get-session';
 import { generateSession } from '../authentication';
+
+import { getSession } from './get-session';
 
 jest.mock('../authentication');
 

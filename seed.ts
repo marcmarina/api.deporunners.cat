@@ -1,8 +1,10 @@
-import dotenv from 'dotenv';
-import faker from 'faker';
 import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
+import dotenv from 'dotenv';
+import faker from 'faker';
 
+import { config } from './src/config';
+import { database } from './src/database';
 import {
   Event,
   IEvent,
@@ -14,8 +16,6 @@ import {
   TShirtSize,
   User,
 } from './src/models';
-import { config } from './src/config';
-import { database } from './src/database';
 import { randomInt } from './src/utils';
 
 dotenv.config();

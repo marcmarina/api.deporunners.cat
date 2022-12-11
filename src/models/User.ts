@@ -1,4 +1,5 @@
 import { Schema, Document, model } from 'mongoose';
+
 import { Role } from './Role';
 
 export interface IUser extends Document {

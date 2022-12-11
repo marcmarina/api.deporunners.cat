@@ -1,5 +1,6 @@
-import { getRefreshTokenOwner } from './get-refresh-token-owner';
 import { Member, User } from '../models';
+
+import { getRefreshTokenOwner } from './get-refresh-token-owner';
 
 jest.mock('../models');
 

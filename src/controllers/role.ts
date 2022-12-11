@@ -1,5 +1,5 @@
-import { roleService } from '../services';
 import { Role } from '../models';
+import { roleService } from '../services';
 
 export const create = async (req, res) => {
   const { name } = req.body;

@@ -1,4 +1,5 @@
 import { validationResult } from 'express-validator';
+
 import { InputError } from '../errors';
 
 export const checkForErrors = (req) => {

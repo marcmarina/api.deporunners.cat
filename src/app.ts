@@ -1,13 +1,17 @@
+import * as Sentry from '@sentry/node';
+import * as Tracing from '@sentry/tracing';
+import cors from 'cors';
 import express, {
   NextFunction,
   Request,
   RequestHandler,
   Response,
 } from 'express';
-import cors from 'cors';
-import * as Sentry from '@sentry/node';
-import * as Tracing from '@sentry/tracing';
 
+import { config, envIsDev } from './config';
+import { AuthError, BaseError, InputError } from './errors';
+import { logger } from './logger';
+import { apiToken, getSession, requestLogging } from './middleware';
 import {
   UserRoutes,
   RoleRoutes,
@@ -18,11 +22,6 @@ import {
   StripeWebhooks,
   DevRoutes,
 } from './routes';
-
-import { config, envIsDev } from './config';
-import { AuthError, BaseError, InputError } from './errors';
-import { logger } from './logger';
-import { apiToken, getSession, requestLogging } from './middleware';
 
 const app = express();
 

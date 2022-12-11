@@ -1,9 +1,9 @@
 import bcrypt from 'bcrypt';
-import { AuthError } from '../errors';
 
+import { signJWT } from '../authentication';
+import { AuthError } from '../errors';
 import { User, IUser } from '../models';
 import { generateToken } from '../utils';
-import { signJWT } from '../authentication';
 
 type Session = {
   authToken: string;

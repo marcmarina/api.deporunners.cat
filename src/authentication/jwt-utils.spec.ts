@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import { validateJWT } from './jwt-utils';
 
 jest.mock('jsonwebtoken');

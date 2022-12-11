@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
-import { roleService } from '../services';
 import { roleController } from '../controllers';
+import { roleService } from '../services';
 
 const router = Router();
 

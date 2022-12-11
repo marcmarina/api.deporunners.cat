@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import Stripe from 'stripe';
+
 import { MemberService } from '../services';
 
 const router = Router();

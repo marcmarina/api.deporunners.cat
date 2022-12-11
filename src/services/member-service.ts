@@ -195,7 +195,7 @@ export class MemberService {
     refreshToken: string;
   }> {
     return {
-      authToken: signJWT(member),
+      authToken: signJWT(member.toObject()),
       refreshToken: member.refreshToken ?? generateToken(32),
     };
   }

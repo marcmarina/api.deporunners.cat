@@ -76,7 +76,7 @@ const validatePassword = async (
 
 const createSession = async (user: IUser) => {
   return {
-    authToken: signJWT(user),
+    authToken: signJWT(user.toObject()),
     refreshToken: user.refreshToken ?? generateToken(32),
   };
 };

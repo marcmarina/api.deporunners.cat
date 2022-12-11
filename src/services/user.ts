@@ -7,32 +7,32 @@ type Session = {
   refreshToken: string;
 };
 
-export const getAllUsers = async (): Promise<IUser[]> => {
+export async function getAllUsers(): Promise<IUser[]> {
   return User.find();
-};
+}
 
-export const findById = async (id: string) => {
+export async function findById(id: string) {
   return await User.findById(id);
-};
+}
 
-export const createUser = async (input: {
+export async function createUser(input: {
   name: string;
   email: string;
   password: string;
   role: string;
-}): Promise<IUser> => {
+}): Promise<IUser> {
   const hashedPassword = await hashString(input.password);
 
   return await User.create({
     ...input,
     password: hashedPassword,
   });
-};
+}
 
-export const login = async (
+export async function login(
   email: string,
   password: string,
-): Promise<Session | null> => {
+): Promise<Session | null> {
   const user = await User.findOne({ email });
   if (!user) return null;
 
@@ -45,20 +45,20 @@ export const login = async (
   await user.save();
 
   return session;
-};
+}
 
-const createSession = async (user: IUser) => {
+async function createSession(user: IUser) {
   return {
     authToken: signJWT(user.toObject()),
     refreshToken: user.refreshToken ?? generateToken(32),
   };
-};
+}
 
-export const updatePassword = async (
+export async function updatePassword(
   id: string,
   oldPassword: string,
   newPassword: string,
-) => {
+) {
   const user = await User.findById(id);
   if (!user)
     throw {
@@ -75,10 +75,10 @@ export const updatePassword = async (
 
   user.password = await hashString(newPassword);
   return user.save();
-};
+}
 
-export const createSessionToken = async (user: IUser) => {
+export async function createSessionToken(user: IUser) {
   const refreshToken = generateToken(64);
   user.refreshToken = refreshToken;
   return await user.save();
-};
+}

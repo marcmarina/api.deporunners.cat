@@ -15,27 +15,7 @@ export const login = async (req, res, next) => {
     checkForErrors(req);
 
     const { email, password } = req.body;
-    const { refreshToken, authToken } = await userService.loginWithEmail(
-      email,
-      password,
-    );
-
-    res.set({
-      'x-refresh-token': refreshToken,
-    });
-
-    return res.status(200).json(authToken);
-  } catch (ex) {
-    next(ex);
-  }
-};
-
-export const loginV2 = async (req, res, next) => {
-  try {
-    checkForErrors(req);
-
-    const { email, password } = req.body;
-    const session = await userService.loginV2(email, password);
+    const session = await userService.login(email, password);
 
     if (!session) {
       return res.status(401).send('Invalid credentials');

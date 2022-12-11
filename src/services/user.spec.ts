@@ -1,4 +1,3 @@
-import { AuthError } from '../errors';
 import { User } from '../models';
 
 import * as UserService from './user';
@@ -15,6 +14,8 @@ const sampleUser = {
   role: '6085b02b6b4b295ab8ee93ef',
   refreshToken:
     '9a1560c86f8bb8ee34d540574033bb9844331ca9af89be7f4f9f4271878656a92fce3936421037adaafd07d7a1f5d3f606b3bd6298327dbf11fc7695e616c4f9',
+  toObject: jest.fn(),
+  save: jest.fn(),
 };
 
 mockedUser.findOne.mockResolvedValue(sampleUser as any);
@@ -39,19 +40,19 @@ describe('findUserById', () => {
 describe('loginWithEmail', () => {
   it('gives a JWT if valid credentials are provided', async () => {
     await expect(
-      UserService.loginWithEmail('john@doe.com', '123456'),
+      UserService.login('john@doe.com', '123456'),
     ).resolves.toBeDefined();
   });
 
-  it('throws an error when a non valid password is provided', async () => {
+  it('returns null when a non valid password is provided', async () => {
     await expect(
-      UserService.loginWithEmail('john@doe.com', 'wrongpassword'),
-    ).rejects.toEqual(new AuthError('These credentials are invalid.'));
+      UserService.login('john@doe.com', 'wrongpassword'),
+    ).resolves.toBeNull();
   });
 
-  it('throws an error when non email is provided', async () => {
+  it("returns null when the email doesn't match an existing user", async () => {
     await expect(
-      UserService.loginWithEmail('wrong@email.com', 'wrongpassword'),
-    ).rejects.toEqual(new AuthError('These credentials are invalid.'));
+      UserService.login('wrong@email.com', 'wrongpassword'),
+    ).resolves.toBeNull();
   });
 });

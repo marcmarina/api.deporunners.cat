@@ -1,7 +1,6 @@
 import bcrypt from 'bcrypt';
 
 import { signJWT } from '../authentication';
-import { AuthError } from '../errors';
 import { User, IUser } from '../models';
 import { generateToken } from '../utils';
 
@@ -25,31 +24,7 @@ export const createUser = async (user: IUser): Promise<IUser> => {
   return user.save();
 };
 
-export const loginWithEmail = async (email: string, password: string) => {
-  let user = await User.findOne({ email });
-
-  if (!user) {
-    throw new AuthError('These credentials are invalid.');
-  }
-  const match = await bcrypt.compare(password, user.password);
-
-  if (!match) {
-    throw new AuthError('These credentials are invalid.');
-  }
-
-  if (!user.refreshToken) {
-    user = await createSessionToken(user);
-  }
-
-  const token = signJWT({ _id: user._id, modelName: 'User' });
-
-  return {
-    authToken: token,
-    refreshToken: user.refreshToken,
-  };
-};
-
-export const loginV2 = async (
+export const login = async (
   email: string,
   password: string,
 ): Promise<Session | null> => {

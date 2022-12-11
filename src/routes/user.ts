@@ -21,17 +21,6 @@ router.post(
   ],
   userController.login,
 );
-router.post(
-  '/login/v2',
-  [
-    check('email')
-      .trim()
-      .isEmail()
-      .withMessage('Please provide a valid email.'),
-    check('password').trim().notEmpty().withMessage('The password is required'),
-  ],
-  userController.loginV2,
-);
 
 router.patch('/changePassword/:id', userController.changePassword);
 

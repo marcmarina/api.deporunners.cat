@@ -4,6 +4,7 @@ export const auth = async (_req, res, next) => {
   if (user) {
     next();
   } else {
-    res.status(401).send('Unauthorized');
+    res.status(401);
+    res.send('Unauthorized');
   }
 };

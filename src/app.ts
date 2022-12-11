@@ -37,7 +37,7 @@ Sentry.init({
 
 app.use(requestLogging);
 
-if (envIsDev) {
+if (envIsDev()) {
   app.use('/dev', DevRoutes);
 }
 

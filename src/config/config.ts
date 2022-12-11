@@ -44,8 +44,8 @@ type Config = {
 const environment: Environment = (fetchNullableVariable('NODE_ENV') ??
   'development') as Environment;
 
-export const envIsDev = environment === Environment.Dev;
-export const envIsTest = environment === Environment.Test;
+export const envIsDev = () => environment === Environment.Dev;
+export const envIsTest = () => environment === Environment.Test;
 const envIsProd = environment === Environment.Production;
 
 const baseConfig = {

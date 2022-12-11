@@ -1,33 +1,58 @@
 import { config } from '../config';
 
-import { validateToken } from './api-token';
+import { apiToken } from './api-token';
 
-describe('apiToken middleware', () => {
-  it('returns undefined when the token is valid', () => {
-    const headers = {
-      'x-api-token': config.apiToken,
+describe('apiToken', () => {
+  it('returns 401 if no token is provided', () => {
+    const req = {
+      headers: {},
     };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+    const next = jest.fn();
 
-    expect(validateToken(headers)).toEqual(undefined);
+    apiToken(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.send).toHaveBeenCalledWith('Invalid API token - undefined');
+    expect(next).not.toHaveBeenCalled();
   });
 
-  it('throws error when no token is present', () => {
-    const headers = {};
+  it('returns 401 if the token is not valid', () => {
+    const req = {
+      headers: {
+        'x-api-token': 'invalid-token',
+      },
+    };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+    const next = jest.fn();
 
-    expect(validateToken(headers)).toEqual({
-      msg: 'No API Token provided',
-      status: 401,
-    });
+    apiToken(req, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.send).toHaveBeenCalledWith('Invalid API token - invalid-token');
+    expect(next).not.toHaveBeenCalled();
   });
 
-  it('throws error when given token is not valid', () => {
-    const headers = {
-      'x-api-token': 'randomToken',
+  it('calls next if the token is valid', () => {
+    const req = {
+      headers: {
+        'x-api-token': config.apiToken,
+      },
     };
+    const res = {
+      status: jest.fn().mockReturnThis(),
+      send: jest.fn(),
+    };
+    const next = jest.fn();
 
-    expect(validateToken(headers)).toEqual({
-      msg: 'API Token is not valid',
-      status: 401,
-    });
+    apiToken(req, res, next);
+
+    expect(next).toHaveBeenCalled();
   });
 });

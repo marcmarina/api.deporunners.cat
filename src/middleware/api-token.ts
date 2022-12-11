@@ -1,35 +1,13 @@
-import { IncomingHttpHeaders } from 'http';
-
-import { NextFunction, Request, Response } from 'express';
-
 import { config } from '../config';
 
-export const apiToken = (req: Request, res: Response, next: NextFunction) => {
-  try {
-    const tokenResult = validateToken(req.headers);
-    if (tokenResult) {
-      res.status(tokenResult.status).send(tokenResult.msg);
-    } else {
-      return next();
-    }
-  } catch (ex) {
-    next(ex);
-  }
-};
+export const apiToken = (req, res, next) => {
+  const token = req.headers['x-api-token'] as string;
 
-export const validateToken = (headers: IncomingHttpHeaders) => {
-  const apiToken = headers['x-api-token'];
-  if (!apiToken) {
-    return {
-      status: 401,
-      msg: 'No API Token provided',
-    };
-  } else if (apiToken !== config.apiToken) {
-    return {
-      status: 401,
-      msg: 'API Token is not valid',
-    };
+  const isApiTokenValid = token === config.apiToken;
+
+  if (isApiTokenValid) {
+    next();
   } else {
-    return undefined;
+    res.status(401).send(`Invalid API token - ${token}`);
   }
 };

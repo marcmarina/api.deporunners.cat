@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken';
 
-import { validateJWT } from './jwt-utils';
+import { decodeJWT } from './jwt-utils';
 
 jest.mock('jsonwebtoken');
 
-describe('validateJWT', () => {
+describe('decodeJWT', () => {
   const mockedJwt = {
     verify: jwt.verify as jest.Mock,
   };
@@ -18,7 +18,7 @@ describe('validateJWT', () => {
 
     mockedJwt.verify.mockReturnValueOnce({ id: 1 });
 
-    const decodedToken = validateJWT(token);
+    const decodedToken = decodeJWT(token);
 
     expect(decodedToken).toEqual({ id: 1 });
   });
@@ -30,7 +30,7 @@ describe('validateJWT', () => {
       throw new Error();
     });
 
-    const decodedToken = validateJWT(token);
+    const decodedToken = decodeJWT(token);
 
     expect(decodedToken).toBeNull();
   });

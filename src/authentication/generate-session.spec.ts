@@ -1,12 +1,12 @@
 import { generateSession } from './generate-session';
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
-import { signJWT, validateJWT } from './jwt-utils';
+import { signJWT, decodeJWT } from './jwt-utils';
 
 jest.mock('./jwt-utils');
 jest.mock('./get-refresh-token-owner');
 
 describe('generateSession', () => {
-  const mockedValidateJWT = validateJWT as jest.Mock;
+  const mockedValidateJWT = decodeJWT as jest.Mock;
   const mockedSignJWT = signJWT as jest.Mock;
 
   const mockedGetRefreshTokenOwner = getRefreshTokenOwner as jest.Mock;

@@ -1,5 +1,5 @@
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
-import { signJWT, validateJWT } from './jwt-utils';
+import { signJWT, decodeJWT } from './jwt-utils';
 
 type Session = {
   authToken: string | null;
@@ -19,12 +19,12 @@ export async function generateSession(
     };
   }
 
-  const verifiedToken = validateJWT(authToken);
-  if (verifiedToken) {
+  const decodedToken = decodeJWT(authToken);
+  if (decodedToken) {
     return {
       authToken,
       refreshToken,
-      user: verifiedToken,
+      user: decodedToken,
     };
   }
 

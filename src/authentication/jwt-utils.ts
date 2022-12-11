@@ -14,7 +14,7 @@ export function signJWT(data: any) {
   );
 }
 
-export function validateJWT(token: string) {
+export function decodeJWT(token: string) {
   try {
     return jwt.verify(token, config.appSecretKey);
   } catch (ex) {

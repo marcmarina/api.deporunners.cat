@@ -7,10 +7,10 @@ type Session = {
   user: any;
 };
 
-export const generateSession = async (
+export async function generateSession(
   authToken,
   refreshToken,
-): Promise<Session> => {
+): Promise<Session> {
   if (!authToken || !refreshToken) {
     return {
       authToken: null,
@@ -42,4 +42,4 @@ export const generateSession = async (
     refreshToken: null,
     user: null,
   };
-};
+}

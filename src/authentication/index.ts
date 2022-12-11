@@ -1,2 +1,2 @@
 export * from './jwt-utils';
-export * from './validate-session';
+export * from './generate-session';

@@ -1,5 +1,5 @@
 import { MemberService } from '../services';
-import { checkForErrors, context } from '../utils';
+import { checkForErrors } from '../utils';
 import { stripeClient } from '../stripe';
 import Stripe from 'stripe';
 
@@ -115,15 +115,37 @@ export const login = async (req, res, next) => {
   }
 };
 
+export const loginV2 = async (req, res, next) => {
+  try {
+    checkForErrors(req);
+
+    const { username, password } = req.body;
+    const session = await service.loginV2(username, password);
+
+    if (!session) {
+      return res.status(401).send('Invalid credentials');
+    }
+
+    res.set({
+      'x-refresh-token': session.refreshToken,
+      'x-auth-token': session.authToken,
+    });
+    res.status(200).json(session);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
 export const changePassword = async (req, res, next) => {
   try {
     checkForErrors(req);
 
+    const userId = res.locals.user._id;
     const { oldPassword, newPassword } = req.body;
 
     res
       .status(200)
-      .json(await service.updatePassword(oldPassword, newPassword));
+      .json(await service.updatePassword(userId, oldPassword, newPassword));
   } catch (ex) {
     next(ex);
   }
@@ -149,7 +171,9 @@ export const signupSecret = async (req, res, next) => {
 export const expoToken = async (req, res, next) => {
   try {
     const { token } = req.body;
-    res.status(200).json(await service.registerToken(token));
+    const userId = res.locals.user._id;
+
+    res.status(200).json(await service.registerToken(userId, token));
   } catch (ex) {
     next(ex);
   }
@@ -157,7 +181,9 @@ export const expoToken = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await service.findById(context.getUserId()));
+    const userId = res.locals.user._id;
+
+    res.status(200).json(await service.findById(userId));
   } catch (ex) {
     next(ex);
   }

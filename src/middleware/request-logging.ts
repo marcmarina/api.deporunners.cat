@@ -1,4 +1,3 @@
-import { context } from '../utils';
 import { logger } from '../logger';
 import { NextFunction, Request, Response } from 'express';
 
@@ -11,7 +10,6 @@ export const requestLogging = (
 ) => {
   if (!blacklistedRoutes.includes(req.path)) {
     logger.request({
-      user: context.getUserId(),
       ip: req.ip,
       url: req.originalUrl,
     });

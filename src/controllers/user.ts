@@ -1,6 +1,6 @@
 import { User } from '../models';
 import { userService } from '../services';
-import { checkForErrors, context } from '../utils';
+import { checkForErrors } from '../utils';
 
 export const index = async (req, res, next) => {
   try {
@@ -25,6 +25,28 @@ export const login = async (req, res, next) => {
     });
 
     return res.status(200).json(authToken);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
+export const loginV2 = async (req, res, next) => {
+  try {
+    checkForErrors(req);
+
+    const { email, password } = req.body;
+    const session = await userService.loginV2(email, password);
+
+    if (!session) {
+      return res.status(401).send('Invalid credentials');
+    }
+
+    res.set({
+      'x-refresh-token': session.refreshToken,
+      'x-auth-token': session.authToken,
+    });
+
+    return res.status(200).json(session);
   } catch (ex) {
     next(ex);
   }
@@ -60,7 +82,9 @@ export const changePassword = async (req, res, next) => {
 
 export const self = async (req, res, next) => {
   try {
-    res.status(200).json(await userService.findUserById(context.getUserId()));
+    const userId = res.locals.user._id;
+
+    res.status(200).json(await userService.findById(userId));
   } catch (ex) {
     next(ex);
   }

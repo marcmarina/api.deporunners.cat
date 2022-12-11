@@ -53,9 +53,10 @@ export const update = async (req, res, next) => {
 
 export const attend = async (req, res, next) => {
   try {
+    const userId = res.locals.user._id;
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
-    res.status(201).json(await service.attendEvent(eventId, attending));
+    res.status(201).json(await service.attendEvent(userId, eventId, attending));
   } catch (ex) {
     next(ex);
   }

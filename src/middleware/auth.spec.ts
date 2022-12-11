@@ -1,56 +1,30 @@
-import { signJWT } from '../session-management';
-import { auth, getTokens } from './auth';
+import { auth } from './auth';
 
-describe('auth middleware', () => {
-  it('throws an error when tokens are missing', () => {
-    const req = {
-      headers: {},
-    };
-
-    expect(() => {
-      getTokens(req);
-    }).toThrow();
-  });
-
-  it('extracts the correct tokens', () => {
-    const req = {
-      headers: {
-        'x-refresh-token': 'refreshtoken',
-        'x-auth-token': 'authtoken',
-      },
-    };
-
-    expect(getTokens(req)).toStrictEqual({
-      token: 'authtoken',
-      refreshToken: 'refreshtoken',
-    });
-  });
-
-  it('inserts right info in request', async () => {
-    const user = {
-      refreshToken: 'refreshToken',
-      _id: '123123123',
-    };
-
-    const req = {
-      headers: {
-        'x-refresh-token': user.refreshToken,
-        'x-auth-token': signJWT({ _id: user._id }, 'User'),
-      },
-    };
-
-    const res = {
-      headers: {},
-      set(headers) {
-        this.headers = {
-          ...this.headers,
-          ...headers,
-        };
-      },
-    };
+describe('auth', () => {
+  it('should call next if the user is set', () => {
     const next = jest.fn();
-    auth(req, res, next);
+    const res = {
+      locals: {
+        user: {},
+      },
+    };
 
-    expect(res.headers).toHaveProperty('x-auth-token');
+    auth(null, res, next);
+
+    expect(next).toHaveBeenCalled();
+  });
+
+  it('should send a 401 if the user is not set', () => {
+    const next = jest.fn();
+    const res = {
+      locals: {},
+      status: jest.fn(),
+      send: jest.fn(),
+    };
+
+    auth(null, res, next);
+
+    expect(res.status).toHaveBeenCalledWith(401);
+    expect(res.send).toHaveBeenCalledWith('Unauthorized');
   });
 });

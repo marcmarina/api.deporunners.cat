@@ -1,17 +1,22 @@
 import jwt from 'jsonwebtoken';
 import { config } from '../config';
 
-type ModelName = 'User' | 'Member';
-
-export const signJWT = (data: any, modelName: ModelName) => {
+export function signJWT(data: any) {
   return jwt.sign(
     {
       ...data,
-      model: modelName,
     },
     config.appSecretKey,
     {
       expiresIn: parseInt(config.jwtExpiration),
     },
   );
-};
+}
+
+export function validateJWT(token: string) {
+  try {
+    return jwt.verify(token, config.appSecretKey);
+  } catch (ex) {
+    return null;
+  }
+}

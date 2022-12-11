@@ -6,9 +6,14 @@ import { config } from '../config';
 import { AuthError, ServiceError } from '../errors';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
-import { signJWT } from '../session-management';
+import { signJWT } from '../authentication';
 import { StripeAdapter, stripeClient } from '../stripe';
-import { context, generateToken } from '../utils';
+import { generateToken } from '../utils';
+
+type Session = {
+  authToken: string;
+  refreshToken: string;
+};
 
 const stripeAdapter = new StripeAdapter();
 
@@ -145,7 +150,7 @@ export class MemberService {
       member = await this.createSessionToken(member);
     }
 
-    const token = signJWT({ _id: member._id }, 'Member');
+    const token = signJWT({ _id: member._id, modelName: 'Member' });
 
     return {
       authToken: token,
@@ -153,8 +158,50 @@ export class MemberService {
     };
   }
 
-  async updatePassword(oldPassword: string, newPassword: string) {
-    const member = await Member.findById(context.getUserId());
+  async loginV2(username: string, password: string): Promise<Session | null> {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const filter = re.test(username) ? { email: username } : { dni: username };
+
+    const member = await Member.findOne(filter);
+
+    if (!member) return null;
+
+    const isPasswordValid = await this.validatePassword(
+      password,
+      member.password,
+    );
+
+    if (!isPasswordValid) return null;
+
+    const session = await this.createSession(member);
+
+    member.refreshToken = session.refreshToken;
+
+    await member.save();
+
+    return session;
+  }
+
+  private async validatePassword(
+    password: string,
+    hash: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(password, hash);
+  }
+
+  private async createSession(member: IMember): Promise<{
+    authToken: string;
+    refreshToken: string;
+  }> {
+    return {
+      authToken: signJWT(member),
+      refreshToken: member.refreshToken ?? generateToken(32),
+    };
+  }
+
+  async updatePassword(id: string, oldPassword: string, newPassword: string) {
+    const member = await Member.findById(id);
     if (!member)
       throw {
         status: 400,
@@ -172,8 +219,8 @@ export class MemberService {
     return member.save();
   }
 
-  async registerToken(token: string) {
-    const member = await Member.findById(context.getUserId());
+  async registerToken(id: string, token: string) {
+    const member = await Member.findById(id);
 
     if (!member)
       throw {

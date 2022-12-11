@@ -3,13 +3,18 @@ import { AuthError } from '../errors';
 
 import { User, IUser } from '../models';
 import { generateToken } from '../utils';
-import { signJWT } from '../session-management';
+import { signJWT } from '../authentication';
+
+type Session = {
+  authToken: string;
+  refreshToken: string;
+};
 
 export const getAllUsers = async (): Promise<IUser[]> => {
   return User.find();
 };
 
-export const findUserById = async (id: string) => {
+export const findById = async (id: string) => {
   return await User.findById(id);
 };
 
@@ -36,11 +41,43 @@ export const loginWithEmail = async (email: string, password: string) => {
     user = await createSessionToken(user);
   }
 
-  const token = signJWT({ _id: user._id }, 'User');
+  const token = signJWT({ _id: user._id, modelName: 'User' });
 
   return {
     authToken: token,
     refreshToken: user.refreshToken,
+  };
+};
+
+export const loginV2 = async (
+  email: string,
+  password: string,
+): Promise<Session | null> => {
+  const user = await User.findOne({ email });
+  if (!user) return null;
+
+  const isPasswordValid = await validatePassword(password, user.password);
+  if (!isPasswordValid) return null;
+
+  const session = await createSession(user);
+
+  user.refreshToken = session.refreshToken;
+  await user.save();
+
+  return session;
+};
+
+const validatePassword = async (
+  password: string,
+  hash: string,
+): Promise<boolean> => {
+  return await bcrypt.compareSync(password, hash);
+};
+
+const createSession = async (user: IUser) => {
+  return {
+    authToken: signJWT(user),
+    refreshToken: user.refreshToken ?? generateToken(32),
   };
 };
 

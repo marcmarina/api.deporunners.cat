@@ -5,7 +5,6 @@ import express, {
   Response,
 } from 'express';
 import cors from 'cors';
-import httpContext from 'express-http-context';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 
@@ -23,7 +22,7 @@ import {
 import { config, envIsDev } from './config';
 import { AuthError, BaseError, InputError } from './errors';
 import { logger } from './logger';
-import { apiToken, requestLogging } from './middleware';
+import { apiToken, getSession, requestLogging } from './middleware';
 
 const app = express();
 
@@ -53,7 +52,6 @@ app.use(Sentry.Handlers.requestHandler() as RequestHandler);
 app.use(Sentry.Handlers.tracingHandler() as RequestHandler);
 
 app.use(express.json() as RequestHandler);
-app.use(httpContext.middleware);
 app.use(
   cors({
     allowedHeaders: [
@@ -77,6 +75,7 @@ app.get('/', (_req: Request, res) => {
 app.use('/stripe', StripeWebhooks);
 
 app.use(apiToken);
+app.use(getSession);
 
 app.use('/user', UserRoutes);
 app.use('/role', RoleRoutes);

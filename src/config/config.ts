@@ -77,6 +77,7 @@ const getConfigForEnvironment = (environment: Environment) => {
         };
       case Environment.Test:
         return {
+          appSecretKey: 'test',
           mongoURI: '',
           apiToken: 'apitoken',
           emailFrom: '',

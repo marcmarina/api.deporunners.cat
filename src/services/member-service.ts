@@ -10,6 +10,11 @@ import { signJWT } from '../authentication';
 import { StripeAdapter, stripeClient } from '../stripe';
 import { generateToken } from '../utils';
 
+type Session = {
+  authToken: string;
+  refreshToken: string;
+};
+
 const stripeAdapter = new StripeAdapter();
 
 export class MemberService {
@@ -150,6 +155,48 @@ export class MemberService {
     return {
       authToken: token,
       refreshToken: member.refreshToken,
+    };
+  }
+
+  async loginV2(username: string, password: string): Promise<Session | null> {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    const filter = re.test(username) ? { email: username } : { dni: username };
+
+    const member = await Member.findOne(filter);
+
+    if (!member) return null;
+
+    const isPasswordValid = await this.validatePassword(
+      password,
+      member.password,
+    );
+
+    if (!isPasswordValid) return null;
+
+    const session = await this.createSession(member);
+
+    member.refreshToken = session.refreshToken;
+
+    await member.save();
+
+    return session;
+  }
+
+  private async validatePassword(
+    password: string,
+    hash: string,
+  ): Promise<boolean> {
+    return bcrypt.compare(password, hash);
+  }
+
+  private async createSession(member: IMember): Promise<{
+    authToken: string;
+    refreshToken: string;
+  }> {
+    return {
+      authToken: signJWT(member),
+      refreshToken: member.refreshToken ?? generateToken(32),
     };
   }
 

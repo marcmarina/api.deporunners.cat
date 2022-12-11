@@ -115,6 +115,27 @@ export const login = async (req, res, next) => {
   }
 };
 
+export const loginV2 = async (req, res, next) => {
+  try {
+    checkForErrors(req);
+
+    const { username, password } = req.body;
+    const session = await service.loginV2(username, password);
+
+    if (!session) {
+      return res.status(401).send('Invalid credentials');
+    }
+
+    res.set({
+      'x-refresh-token': session.refreshToken,
+      'x-auth-token': session.authToken,
+    });
+    res.status(200).json(session);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
 export const changePassword = async (req, res, next) => {
   try {
     checkForErrors(req);

@@ -30,6 +30,28 @@ export const login = async (req, res, next) => {
   }
 };
 
+export const loginV2 = async (req, res, next) => {
+  try {
+    checkForErrors(req);
+
+    const { email, password } = req.body;
+    const session = await userService.loginV2(email, password);
+
+    if (!session) {
+      return res.status(401).send('Invalid credentials');
+    }
+
+    res.set({
+      'x-refresh-token': session.refreshToken,
+      'x-auth-token': session.authToken,
+    });
+
+    return res.status(200).json(session);
+  } catch (ex) {
+    next(ex);
+  }
+};
+
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);

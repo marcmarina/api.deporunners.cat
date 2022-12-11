@@ -14,7 +14,8 @@ import {
   TShirtSize,
   User,
 } from './src/models';
-import { config, db } from './src/config';
+import { config } from './src/config';
+import { database } from './src/database';
 import { randomInt } from './src/utils';
 
 dotenv.config();
@@ -111,7 +112,7 @@ const {
 } = config.seedNumbers;
 
 async function seed() {
-  await db.connect(config.mongoURI);
+  await database.connect(config.mongoURI);
 
   await Member.deleteMany({});
   await User.deleteMany({});
@@ -174,7 +175,7 @@ async function seed() {
   }
   await Event.insertMany(events);
 
-  db.disconnect();
+  database.disconnect();
 }
 
 seed();

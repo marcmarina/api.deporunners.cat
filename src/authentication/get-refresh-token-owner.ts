@@ -1,6 +1,8 @@
-import { Member, User } from '../models';
+import { IMember, IUser, Member, User } from '../models';
 
-export async function getRefreshTokenOwner(refreshToken: string) {
+export async function getRefreshTokenOwner(
+  refreshToken: string,
+): Promise<IUser | IMember | null> {
   const results = await Promise.all([
     User.findOne({ refreshToken }),
     Member.findOne({ refreshToken }),
@@ -8,5 +10,5 @@ export async function getRefreshTokenOwner(refreshToken: string) {
 
   const model = results.find((result) => result);
 
-  return model;
+  return model ?? null;
 }

@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
@@ -8,7 +7,7 @@ import { AuthError, ServiceError } from '../errors';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';
-import { generateToken } from '../utils';
+import { compareHash, generateToken, hashString } from '../utils';
 
 type Session = {
   authToken: string;
@@ -33,7 +32,7 @@ export class MemberService {
   }
 
   async createMember(member: IMember): Promise<IMember> {
-    const hashedPassword = await bcrypt.hash(member.dni, 12);
+    const hashedPassword = await hashString(member.password);
     member.password = hashedPassword;
 
     const highestMemberNum = await Member.findOne({}).sort('-numMember');
@@ -142,7 +141,7 @@ export class MemberService {
 
     if (!member) throw new AuthError('These credentials are invalid');
 
-    const validPassword = bcrypt.compareSync(password, member.password);
+    const validPassword = compareHash(password, member.password);
 
     if (!validPassword) throw new AuthError('These credentials are invalid');
 
@@ -167,10 +166,7 @@ export class MemberService {
 
     if (!member) return null;
 
-    const isPasswordValid = await this.validatePassword(
-      password,
-      member.password,
-    );
+    const isPasswordValid = await compareHash(password, member.password);
 
     if (!isPasswordValid) return null;
 
@@ -181,13 +177,6 @@ export class MemberService {
     await member.save();
 
     return session;
-  }
-
-  private async validatePassword(
-    password: string,
-    hash: string,
-  ): Promise<boolean> {
-    return bcrypt.compare(password, hash);
   }
 
   private async createSession(member: IMember): Promise<{
@@ -208,14 +197,14 @@ export class MemberService {
         msg: 'The member id is not valid',
       };
 
-    const validPassword = await bcrypt.compare(oldPassword, member.password);
+    const validPassword = await compareHash(oldPassword, member.password);
     if (!validPassword)
       throw {
         status: 400,
         msg: 'The old password is not valid',
       };
 
-    member.password = await bcrypt.hash(newPassword, 12);
+    member.password = await hashString(newPassword);
     return member.save();
   }
 

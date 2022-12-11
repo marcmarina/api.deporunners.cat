@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import dayjs from 'dayjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
@@ -16,7 +15,7 @@ import {
   TShirtSize,
   User,
 } from './src/models';
-import { randomInt } from './src/utils';
+import { hashString, randomInt } from './src/utils';
 
 dotenv.config();
 
@@ -91,7 +90,7 @@ const roles = [{ name: 'Admin' }];
 const memberTemplate = {
   firstName: 'John',
   lastName: 'Doe',
-  password: bcrypt.hashSync('123456', 12),
+  password: hashString('123456'),
   dni: '12345678A',
   telephone: '654654654',
   address: {
@@ -102,7 +101,7 @@ const memberTemplate = {
 
 const userTemplate = {
   name: 'John Doe',
-  password: bcrypt.hashSync('123456', 12),
+  password: hashString('123456'),
 };
 
 const {

@@ -14,8 +14,10 @@ export const getSession = async (
 
     res.locals.user = session.user;
 
-    res.set({ 'x-auth-token': session.authToken });
-    res.set({ 'x-refresh-token': session.refreshToken });
+    res.set({
+      'x-auth-token': session.authToken,
+      'x-refresh-token': session.refreshToken,
+    });
 
     next();
   } catch (ex) {

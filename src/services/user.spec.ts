@@ -96,39 +96,3 @@ describe.only('user service', () => {
     });
   });
 });
-
-// describe('findUserById', () => {
-//   it('returns a user for a specific id', async () => {
-//     const result = await UserService.findById('123123123');
-
-//     expect(result).toMatchObject(sampleUser);
-//   });
-
-//   it('returns null if a user is not found', async () => {
-//     mockedUser.findById.mockResolvedValueOnce(null);
-
-//     const result = await UserService.findById('123123123');
-
-//     expect(result).toBeNull();
-//   });
-// });
-
-// describe('loginWithEmail', () => {
-//   it('gives a JWT if valid credentials are provided', async () => {
-//     await expect(
-//       UserService.login('john@doe.com', '123456'),
-//     ).resolves.toBeDefined();
-//   });
-
-//   it('returns null when a non valid password is provided', async () => {
-//     await expect(
-//       UserService.login('john@doe.com', 'wrongpassword'),
-//     ).resolves.toBeNull();
-//   });
-
-//   it("returns null when the email doesn't match an existing user", async () => {
-//     await expect(
-//       UserService.login('wrong@email.com', 'wrongpassword'),
-//     ).resolves.toBeNull();
-//   });
-// });

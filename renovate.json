@@ -3,6 +3,7 @@
   "extends": ["config:base"],
   "ignoreDeps": ["faker"],
   "reviewers": ["marcmarina"],
+  "labels": ["dependencies", "renovate"],
   "packageRules": [
     {
       "matchUpdateTypes": ["pin", "patch"],

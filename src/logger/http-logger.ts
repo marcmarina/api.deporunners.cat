@@ -5,6 +5,13 @@ import pinoHttp from 'pino-http';
 import { createLogger } from './create-logger';
 
 export const httpLogger = pinoHttp({
+  autoLogging: {
+    ignore: (req) => {
+      const blacklist = ['/healthh'];
+
+      return blacklist.includes(req.url ?? '');
+    },
+  },
   logger: createLogger(),
   redact: {
     paths: [

@@ -4,15 +4,13 @@ import pinoHttp from 'pino-http';
 
 import { createLogger } from './create-logger';
 
-export const httpLogger = pinoHttp({
-  autoLogging: {
-    ignore: (req) => {
-      const blacklist = ['/health'];
+const blacklistedRoutes = ['/health'];
 
-      return blacklist.includes(req.url ?? '');
-    },
-  },
+export const httpLogger = pinoHttp({
   logger: createLogger(),
+  autoLogging: {
+    ignore: (req) => blacklistedRoutes.includes(req.url ?? ''),
+  },
   redact: {
     paths: [
       'req.headers["x-api-token"]',

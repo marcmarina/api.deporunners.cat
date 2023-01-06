@@ -7,7 +7,7 @@ import { createLogger } from './create-logger';
 export const httpLogger = pinoHttp({
   autoLogging: {
     ignore: (req) => {
-      const blacklist = ['/healthh'];
+      const blacklist = ['/health'];
 
       return blacklist.includes(req.url ?? '');
     },
@@ -21,6 +21,7 @@ export const httpLogger = pinoHttp({
       'res.headers["x-auth-token"]',
       'req.headers["x-refresh-token"]',
       'res.headers["x-refresh-token"]',
+      'res.headers.authorization',
     ],
     remove: true,
   },

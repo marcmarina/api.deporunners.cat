@@ -1,22 +1,10 @@
 import * as Sentry from '@sentry/node';
-import pino from 'pino';
 
 import { envIsDev, envIsTest } from '../config';
 
-function getLogLevel() {
-  if (envIsDev()) {
-    return 'trace';
-  } else if (envIsTest()) {
-    return 'silent';
-  } else {
-    return 'info';
-  }
-}
+import { createLogger } from './create-logger';
 
-const pinoLogger = pino({
-  ...(envIsDev() && { transport: { target: 'pino-pretty' } }),
-  level: getLogLevel(),
-});
+const pinoLogger = createLogger();
 
 export const logger = {
   /**
@@ -39,8 +27,5 @@ export const logger = {
   },
   info: (msg: string, args?: Record<string, unknown>) => {
     pinoLogger.info({ ...args }, msg);
-  },
-  request: (args?: Record<string, unknown>) => {
-    pinoLogger.info({ ...args });
   },
 };

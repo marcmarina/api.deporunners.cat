@@ -10,8 +10,8 @@ import express, {
 
 import { config, envIsDev } from './config';
 import { AuthError, BaseError, InputError } from './errors';
-import { logger } from './logger';
-import { apiToken, getSession, requestLogging } from './middleware';
+import { httpLogger, logger } from './logger';
+import { apiToken, getSession } from './middleware';
 import {
   UserRoutes,
   RoleRoutes,
@@ -35,7 +35,7 @@ Sentry.init({
   environment: config.environment,
 });
 
-app.use(requestLogging);
+app.use(httpLogger);
 
 if (envIsDev()) {
   app.use('/dev', DevRoutes);

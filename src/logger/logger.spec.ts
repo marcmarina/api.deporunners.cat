@@ -5,16 +5,7 @@ import { envIsDev, envIsTest } from '../config';
 import { logger } from './logger';
 
 jest.mock('@sentry/node');
-jest.mock('pino', () => {
-  return {
-    __esModule: true,
-    default: () => ({
-      debug: jest.fn(),
-      error: jest.fn(),
-      info: jest.fn(),
-    }),
-  };
-});
+jest.mock('./create-logger');
 jest.mock('../config');
 
 describe('logger', () => {

@@ -16,6 +16,7 @@
   },
   "plugins": ["@typescript-eslint"],
   "rules": {
+    // Typescript
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "@typescript-eslint/no-var-requires": "off",
@@ -23,9 +24,13 @@
       "error",
       { "argsIgnorePattern": "_" }
     ],
+
     "no-return-await": "off",
     "no-console": "error",
-    "no-duplicate-imports": "error",
+
+    // Imports
+    "import/no-cycle": "error",
+    "import/no-duplicates": "error",
     "import/order": [
       "error",
       {

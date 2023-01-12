@@ -19,6 +19,7 @@ export const httpLogger = pinoHttp({
       'res.headers["x-auth-token"]',
       'req.headers["x-refresh-token"]',
       'res.headers["x-refresh-token"]',
+      'req.headers.authorization',
       'res.headers.authorization',
     ],
     remove: true,

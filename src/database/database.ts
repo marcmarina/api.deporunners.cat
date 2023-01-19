@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import { logger } from '../logger';
 
 const connect = async (connectionString: string) => {
+  logger.info('Attempting to connect to database');
   await mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -12,6 +13,7 @@ const connect = async (connectionString: string) => {
 };
 
 const disconnect = async () => {
+  logger.info('Attempting to disconnect from database');
   await mongoose.connection.close();
   logger.info('Database disconnected');
 };

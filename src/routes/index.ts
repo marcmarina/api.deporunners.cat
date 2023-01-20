@@ -1,4 +1,3 @@
-import DevRoutes from './development';
 import EventRoutes from './event';
 import MemberRoutes from './member';
 import RoleRoutes from './role';
@@ -15,5 +14,4 @@ export {
   TShirtSizeRoutes,
   EventRoutes,
   StripeWebhooks,
-  DevRoutes,
 };

@@ -8,7 +8,7 @@ import express, {
   Response,
 } from 'express';
 
-import { config, envIsDev } from './config';
+import { config } from './config';
 import { AuthError, BaseError, InputError } from './errors';
 import { httpLogger, logger } from './logger';
 import { apiToken, getSession } from './middleware';
@@ -20,7 +20,6 @@ import {
   TShirtSizeRoutes,
   EventRoutes,
   StripeWebhooks,
-  DevRoutes,
 } from './routes';
 
 const app = express();
@@ -36,10 +35,6 @@ Sentry.init({
 });
 
 app.use(httpLogger);
-
-if (envIsDev()) {
-  app.use('/dev', DevRoutes);
-}
 
 app.get('/health', (_req, res) => {
   res.status(200).send('OK');

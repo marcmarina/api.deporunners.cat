@@ -15,10 +15,10 @@
     "prepare": "husky install",
     "seed": "ts-node ./src/scripts/seed.ts",
     "serve": "node dist/index.js",
-    "prestart": "yarn install",
+    "prestart": "pnpm install",
     "start": "nodemon --exec ts-node --files src/index.ts",
     "test": "jest --passWithNoTests",
-    "verify": "yarn build --noEmit && yarn lint && yarn test"
+    "verify": "pnpm build --noEmit && pnpm lint && pnpm test"
   },
   "dependencies": {
     "@sentry/node": "^7.0.0",

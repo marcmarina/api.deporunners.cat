@@ -16,7 +16,7 @@ jobs:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: pnpm test --runInBand
+      - run: pnpm test -- --runInBand
   build:
     docker:
       - image: cimg/node:16.18.1

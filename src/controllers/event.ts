@@ -23,7 +23,7 @@ export const index = async (req, res, next) => {
 
 export const show = async (req, res, next) => {
   try {
-    res.status(200).json(await eventService.getById(req.params.id));
+    res.status(200).json(await eventService.findById(req.params.id));
   } catch (ex) {
     next(ex);
   }
@@ -66,7 +66,7 @@ export const destroy = async (req, res, next) => {
   try {
     const eventId = req.params.id;
 
-    const event = await eventService.getById(eventId);
+    const event = await eventService.findById(eventId);
 
     if (!event) {
       return res.status(404).send('Event not found');

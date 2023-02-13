@@ -21,7 +21,7 @@ export class EventService extends BaseService {
       .limit(perPage);
   }
 
-  async getById(id: string): Promise<IEvent | null> {
+  async findById(id: string): Promise<IEvent | null> {
     return Event.findById(id);
   }
 
@@ -35,7 +35,7 @@ export class EventService extends BaseService {
   }
 
   async attend(userId: string, eventId: string, attending: boolean) {
-    const event = await this.getById(eventId);
+    const event = await this.findById(eventId);
 
     if (!event) return;
 

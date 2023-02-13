@@ -2,18 +2,18 @@ import { IEvent } from '../models';
 import { EventService } from '../services';
 import { checkForErrors } from '../utils';
 
-const service = new EventService();
+const eventService = new EventService();
 
 export const index = async (req, res, next) => {
   try {
     let events: IEvent[];
     if (req.query.page) {
-      events = await service.getPaged(
+      events = await eventService.getPaged(
         req.query.page,
         parseInt(req.query.limit),
       );
     } else {
-      events = await service.getAll();
+      events = await eventService.getAll();
     }
     res.status(200).json(events);
   } catch (ex) {
@@ -23,7 +23,7 @@ export const index = async (req, res, next) => {
 
 export const show = async (req, res, next) => {
   try {
-    res.status(200).json(await service.getById(req.params.id));
+    res.status(200).json(await eventService.getById(req.params.id));
   } catch (ex) {
     next(ex);
   }
@@ -32,9 +32,9 @@ export const show = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    const event = await service.create({ ...req.body });
+    const event = await eventService.create({ ...req.body });
 
-    service.sendNotification(event);
+    eventService.sendNotification(event);
 
     res.status(201).json(event);
   } catch (ex) {
@@ -45,7 +45,7 @@ export const create = async (req, res, next) => {
 export const update = async (req, res, next) => {
   try {
     checkForErrors(req);
-    res.status(201).json(await service.update({ ...req.body }));
+    res.status(201).json(await eventService.update({ ...req.body }));
   } catch (ex) {
     next(ex);
   }
@@ -56,7 +56,7 @@ export const attend = async (req, res, next) => {
     const userId = res.locals.user._id;
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
-    res.status(201).json(await service.attend(userId, eventId, attending));
+    res.status(201).json(await eventService.attend(userId, eventId, attending));
   } catch (ex) {
     next(ex);
   }
@@ -65,7 +65,14 @@ export const attend = async (req, res, next) => {
 export const destroy = async (req, res, next) => {
   try {
     const eventId = req.params.id;
-    res.status(200).json(await service.deleteById(eventId));
+
+    const event = await eventService.getById(eventId);
+
+    if (!event) {
+      return res.status(404).send('Event not found');
+    }
+
+    res.status(200).json(await eventService.deleteById(event._id));
   } catch (ex) {
     next(ex);
   }

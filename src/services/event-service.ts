@@ -21,14 +21,8 @@ export class EventService extends BaseService {
       .limit(perPage);
   }
 
-  async getById(id: Types.ObjectId) {
-    const event = await Event.findById(id);
-    if (!event)
-      throw {
-        status: 404,
-        msg: 'Event id not valid',
-      };
-    return event;
+  async findById(id: string): Promise<IEvent | null> {
+    return Event.findById(id);
   }
 
   async create(event: IEvent) {
@@ -41,13 +35,9 @@ export class EventService extends BaseService {
   }
 
   async attend(userId: string, eventId: string, attending: boolean) {
-    const event = await Event.findById(eventId);
+    const event = await this.findById(eventId);
 
-    if (!event)
-      throw {
-        status: 404,
-        msg: 'Event not found',
-      };
+    if (!event) return;
 
     if (attending) {
       if (!event.members.includes(Types.ObjectId(userId)))
@@ -99,13 +89,6 @@ export class EventService extends BaseService {
   }
 
   async deleteById(id: Types.ObjectId) {
-    const event = await Event.findById(id);
-    if (!event)
-      throw {
-        status: 404,
-        msg: 'The id is not valid',
-      };
-
     return Event.findByIdAndDelete(id);
   }
 }

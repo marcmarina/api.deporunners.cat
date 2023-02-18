@@ -1,4 +1,5 @@
 import { signJWT } from '../authentication';
+import { AuthError } from '../errors';
 import { User, IUser } from '../models';
 import { compareHash, generateToken, hashString } from '../utils';
 
@@ -56,18 +57,14 @@ export class UserService extends BaseService {
 
   async updatePassword(id: string, oldPassword: string, newPassword: string) {
     const user = await User.findById(id);
-    if (!user)
-      throw {
-        status: 400,
-        msg: 'The user id is not valid',
-      };
+    if (!user) {
+      throw new AuthError('User not found');
+    }
 
     const validPassword = await compareHash(oldPassword, user.password);
-    if (!validPassword)
-      throw {
-        status: 400,
-        msg: 'The old password is not valid',
-      };
+    if (!validPassword) {
+      throw new AuthError('Invalid password');
+    }
 
     user.password = await hashString(newPassword);
     return user.save();

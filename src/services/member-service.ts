@@ -24,13 +24,7 @@ export class MemberService extends BaseService {
   }
 
   async findById(id: string) {
-    const member = await Member.findOne({ _id: id });
-    if (!member)
-      throw {
-        status: 404,
-        msg: 'Member id invalid',
-      };
-    return member;
+    return Member.findById(id);
   }
 
   async createMember(member: IMember): Promise<IMember> {
@@ -192,32 +186,24 @@ export class MemberService extends BaseService {
   }
 
   async updatePassword(id: string, oldPassword: string, newPassword: string) {
-    const member = await Member.findById(id);
-    if (!member)
-      throw {
-        status: 400,
-        msg: 'The member id is not valid',
-      };
+    const member = await this.findById(id);
+    if (!member) {
+      throw new AuthError('These credentials are invalid');
+    }
 
     const validPassword = await compareHash(oldPassword, member.password);
-    if (!validPassword)
-      throw {
-        status: 400,
-        msg: 'The old password is not valid',
-      };
+    if (!validPassword) {
+      throw new AuthError('These credentials are invalid');
+    }
 
     member.password = await hashString(newPassword);
     return member.save();
   }
 
   async registerToken(id: string, token: string) {
-    const member = await Member.findById(id);
+    const member = await this.findById(id);
 
-    if (!member)
-      throw {
-        status: 404,
-        msg: 'The member id is not valid',
-      };
+    if (!member) return null;
 
     member.expoPushToken = token;
 

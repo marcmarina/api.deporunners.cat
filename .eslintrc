@@ -28,6 +28,7 @@
 
     "no-return-await": "off",
     "no-console": "error",
+    "no-unreachable": "error",
 
     // Imports
     "import/no-cycle": "error",

@@ -1,7 +1,7 @@
 import { User } from '../models';
 import { compareHash, hashString } from '../utils';
 
-import { UserService } from './user';
+import { UserService } from './user-service';
 
 jest.mock('../models');
 jest.mock('../utils');

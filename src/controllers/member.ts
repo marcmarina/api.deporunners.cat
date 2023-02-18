@@ -65,7 +65,7 @@ export const signupPayment = async (req, res, next) => {
 
 export const index = async (req, res, next) => {
   try {
-    res.status(200).json(await service.getAllMembers());
+    res.status(200).json(await service.getAll());
   } catch (ex) {
     next(ex);
   }

@@ -16,7 +16,7 @@ import {
   TShirtSize,
   User,
 } from './src/models';
-import { hashString, randomInt } from './src/utils';
+import { hashStringSync, randomInt } from './src/utils';
 
 dotenv.config();
 
@@ -88,22 +88,22 @@ const tShirtSizes = [
 
 const roles = [{ name: 'Admin' }];
 
-const memberTemplate = async () => ({
+const memberTemplate = {
   firstName: 'John',
   lastName: 'Doe',
-  password: await hashString('123456'),
+  password: hashStringSync('123456'),
   dni: '12345678A',
   telephone: '654654654',
   address: {
     postCode: '12345',
     streetAddress: 'Sample Street, 12',
   },
-});
+};
 
-const userTemplate = async () => ({
+const userTemplate = {
   name: 'John Doe',
-  password: await hashString('123456'),
-});
+  password: hashStringSync('123456'),
+};
 
 const {
   members: memberCount,
@@ -128,7 +128,7 @@ async function seed() {
   const members: IMember[] = [];
   for (let i = 0; i < memberCount; i++) {
     const member = new Member(
-      merge({}, await memberTemplate(), {
+      merge({}, memberTemplate, {
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         address: {
@@ -151,7 +151,7 @@ async function seed() {
   for (let i = 0; i < userCount; i++) {
     const role = await Role.findOne();
     const user = new User(
-      merge({}, await userTemplate(), {
+      merge({}, userTemplate, {
         email: `john${i > 0 ? i + 1 : ''}@doe.com`,
         role: role?._id,
       }),

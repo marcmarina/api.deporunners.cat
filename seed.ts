@@ -1,6 +1,7 @@
 import dayjs from 'dayjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
+import merge from 'lodash/merge';
 
 import { config } from './src/config';
 import { database } from './src/database';
@@ -87,22 +88,22 @@ const tShirtSizes = [
 
 const roles = [{ name: 'Admin' }];
 
-const memberTemplate = {
+const memberTemplate = async () => ({
   firstName: 'John',
   lastName: 'Doe',
-  password: hashString('123456'),
+  password: await hashString('123456'),
   dni: '12345678A',
   telephone: '654654654',
   address: {
     postCode: '12345',
     streetAddress: 'Sample Street, 12',
   },
-};
+});
 
-const userTemplate = {
+const userTemplate = async () => ({
   name: 'John Doe',
-  password: hashString('123456'),
-};
+  password: await hashString('123456'),
+});
 
 const {
   members: memberCount,
@@ -126,21 +127,21 @@ async function seed() {
 
   const members: IMember[] = [];
   for (let i = 0; i < memberCount; i++) {
-    const member = new Member({
-      ...memberTemplate,
-      firstName: faker.name.firstName(),
-      lastName: faker.name.lastName(),
-      address: {
-        ...memberTemplate.address,
-        town: (await Town.findOne())?._id,
-        streetAddress: faker.address.streetAddress(),
-        postCode: faker.address.zipCode(),
-      },
-      email: faker.internet.email().toLowerCase(),
-      numMember: i + 1,
-      iban: faker.finance.iban(),
-      tshirtSize: (await TShirtSize.findOne())?._id,
-    });
+    const member = new Member(
+      merge({}, await memberTemplate(), {
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        address: {
+          town: (await Town.findOne())?._id,
+          streetAddress: faker.address.streetAddress(),
+          postCode: faker.address.zipCode(),
+        },
+        email: faker.internet.email().toLowerCase(),
+        numMember: i + 1,
+        iban: faker.finance.iban(),
+        tshirtSize: (await TShirtSize.findOne())?._id,
+      }),
+    );
     members.push(member);
   }
 
@@ -149,11 +150,12 @@ async function seed() {
   const users: IUser[] = [];
   for (let i = 0; i < userCount; i++) {
     const role = await Role.findOne();
-    const user = new User({
-      ...userTemplate,
-      email: `john${i > 0 ? i + 1 : ''}@doe.com`,
-      role: role?._id,
-    });
+    const user = new User(
+      merge({}, await userTemplate(), {
+        email: `john${i > 0 ? i + 1 : ''}@doe.com`,
+        role: role?._id,
+      }),
+    );
     users.push(user);
   }
   await User.insertMany(users);
@@ -174,7 +176,7 @@ async function seed() {
   }
   await Event.insertMany(events);
 
-  database.disconnect();
+  await database.disconnect();
 }
 
 seed();

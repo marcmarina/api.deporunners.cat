@@ -1,14 +1,16 @@
 import { User } from '../models';
 import { compareHash, hashString } from '../utils';
 
-import * as UserService from './user';
+import { UserService } from './user-service';
 
 jest.mock('../models');
 jest.mock('../utils');
 
 const mockedUser = User as jest.Mocked<typeof User>;
 
-describe.only('user service', () => {
+const userService = new UserService();
+
+describe('user service', () => {
   const sampleUser = {
     _id: '6085b02c6b4b295ab8ee9490',
     name: 'John Doe',
@@ -32,7 +34,7 @@ describe.only('user service', () => {
     it('returns all users', async () => {
       mockedUser.find.mockResolvedValueOnce([sampleUser]);
 
-      await expect(UserService.getAllUsers()).resolves.toEqual([sampleUser]);
+      await expect(userService.getAllUsers()).resolves.toEqual([sampleUser]);
     });
   });
 
@@ -40,7 +42,7 @@ describe.only('user service', () => {
     it('returns a user for a specific id', async () => {
       mockedUser.findById.mockResolvedValueOnce(sampleUser);
 
-      await expect(UserService.findById('123123123')).resolves.toEqual(
+      await expect(userService.findById('123123123')).resolves.toEqual(
         sampleUser,
       );
     });
@@ -48,7 +50,7 @@ describe.only('user service', () => {
     it("returns null if it can't find a user", async () => {
       mockedUser.findById.mockResolvedValueOnce(null);
 
-      await expect(UserService.findById('123123123')).resolves.toBeNull();
+      await expect(userService.findById('123123123')).resolves.toBeNull();
     });
   });
 
@@ -59,7 +61,7 @@ describe.only('user service', () => {
       });
       mockedHashString.mockResolvedValueOnce('hashedPassword');
 
-      await expect(UserService.createUser(sampleUser)).resolves.toEqual(
+      await expect(userService.createUser(sampleUser)).resolves.toEqual(
         sampleUser,
       );
     });
@@ -71,7 +73,7 @@ describe.only('user service', () => {
       mockedCompareHash.mockResolvedValueOnce(true);
 
       await expect(
-        UserService.login(sampleUser.email, sampleUser.password),
+        userService.login(sampleUser.email, sampleUser.password),
       ).resolves.toMatchObject({
         authToken: expect.any(String),
         refreshToken: expect.any(String),
@@ -82,7 +84,7 @@ describe.only('user service', () => {
       mockedUser.findOne.mockResolvedValueOnce(null);
 
       await expect(
-        UserService.login(sampleUser.email, sampleUser.password),
+        userService.login(sampleUser.email, sampleUser.password),
       ).resolves.toBeNull();
     });
 
@@ -91,7 +93,7 @@ describe.only('user service', () => {
       mockedCompareHash.mockResolvedValueOnce(false);
 
       await expect(
-        UserService.login(sampleUser.email, sampleUser.password),
+        userService.login(sampleUser.email, sampleUser.password),
       ).resolves.toBeNull();
     });
   });

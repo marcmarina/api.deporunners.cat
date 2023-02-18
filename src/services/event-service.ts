@@ -4,16 +4,17 @@ import { Types } from 'mongoose';
 import { logger } from '../logger';
 import { Event, IEvent } from '../models';
 
+import { BaseService } from './base-service';
 import { MemberService } from './member-service';
 
 const memberService = new MemberService();
 
-export class EventService {
-  async getAllEvents() {
+export class EventService extends BaseService {
+  async getAll() {
     return Event.find().sort({ createdAt: 'desc', name: 'asc' });
   }
 
-  async getPagedEvents(page: number, perPage: number) {
+  async getPaged(page: number, perPage: number) {
     return Event.find()
       .sort({ createdAt: 'desc', name: 'asc' })
       .skip((page - 1) * perPage)
@@ -30,16 +31,16 @@ export class EventService {
     return event;
   }
 
-  async createEvent(event: IEvent) {
+  async create(event: IEvent) {
     const newEvent = new Event({ ...event });
     return newEvent.save();
   }
 
-  async updateEvent(event: IEvent) {
+  async update(event: IEvent) {
     return Event.updateOne({ _id: event._id }, event);
   }
 
-  async attendEvent(userId: string, eventId: string, attending: boolean) {
+  async attend(userId: string, eventId: string, attending: boolean) {
     const event = await Event.findById(eventId);
 
     if (!event)
@@ -63,7 +64,7 @@ export class EventService {
   async sendNotification(event: IEvent) {
     try {
       const messages: any[] = [];
-      const members = await memberService.getAllMembers();
+      const members = await memberService.getAll();
 
       const expo = new Expo();
 

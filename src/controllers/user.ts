@@ -1,5 +1,7 @@
-import { userService } from '../services';
+import { UserService } from '../services';
 import { checkForErrors } from '../utils';
+
+const userService = new UserService();
 
 export const index = async (req, res, next) => {
   try {

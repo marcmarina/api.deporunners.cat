@@ -9,6 +9,8 @@ import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';
 import { compareHash, generateToken, hashString } from '../utils';
 
+import { BaseService } from './base-service';
+
 type Session = {
   authToken: string;
   refreshToken: string;
@@ -16,8 +18,8 @@ type Session = {
 
 const stripeAdapter = new StripeAdapter();
 
-export class MemberService {
-  async getAllMembers(): Promise<IMember[]> {
+export class MemberService extends BaseService {
+  async getAll(): Promise<IMember[]> {
     return Member.find().sort({ numMember: 'asc' });
   }
 

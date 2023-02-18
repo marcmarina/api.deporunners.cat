@@ -8,12 +8,12 @@ export const index = async (req, res, next) => {
   try {
     let events: IEvent[];
     if (req.query.page) {
-      events = await service.getPagedEvents(
+      events = await service.getPaged(
         req.query.page,
         parseInt(req.query.limit),
       );
     } else {
-      events = await service.getAllEvents();
+      events = await service.getAll();
     }
     res.status(200).json(events);
   } catch (ex) {
@@ -32,7 +32,7 @@ export const show = async (req, res, next) => {
 export const create = async (req, res, next) => {
   try {
     checkForErrors(req);
-    const event = await service.createEvent({ ...req.body });
+    const event = await service.create({ ...req.body });
 
     service.sendNotification(event);
 
@@ -45,7 +45,7 @@ export const create = async (req, res, next) => {
 export const update = async (req, res, next) => {
   try {
     checkForErrors(req);
-    res.status(201).json(await service.updateEvent({ ...req.body }));
+    res.status(201).json(await service.update({ ...req.body }));
   } catch (ex) {
     next(ex);
   }
@@ -56,7 +56,7 @@ export const attend = async (req, res, next) => {
     const userId = res.locals.user._id;
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
-    res.status(201).json(await service.attendEvent(userId, eventId, attending));
+    res.status(201).json(await service.attend(userId, eventId, attending));
   } catch (ex) {
     next(ex);
   }

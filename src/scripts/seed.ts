@@ -3,8 +3,8 @@ import dotenv from 'dotenv';
 import faker from 'faker';
 import merge from 'lodash/merge';
 
-import { config } from './src/config';
-import { database } from './src/database';
+import { config } from '../config';
+import { database } from '../database';
 import {
   Event,
   IEvent,
@@ -15,8 +15,8 @@ import {
   Town,
   TShirtSize,
   User,
-} from './src/models';
-import { hashStringSync, randomInt } from './src/utils';
+} from '../models';
+import { hashStringSync, randomInt } from '../utils';
 
 dotenv.config();
 

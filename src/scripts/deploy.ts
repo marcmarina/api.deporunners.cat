@@ -1,7 +1,5 @@
 import axios, { Method } from 'axios';
 
-import { logger } from '../logger';
-
 async function deploy() {
   const [deploymentWebhookUrl] = process.argv.slice(2);
 
@@ -12,7 +10,8 @@ async function deploy() {
   const result = await fireWebhook('GET', deploymentWebhookUrl);
 
   if (result.success === true) {
-    logger.info('Deployment webhook successfully sent');
+    // eslint-disable-next-line no-console
+    console.log('Deployment webhook successfully sent');
   } else if (result.error) {
     throw result.error;
   } else if (result.success === false) {

@@ -62,7 +62,6 @@ app.get('/favicon.ico', (_req, res) => res.status(204).end());
 
 app.get('/', (_req: Request, res) => {
   const response = require('../package.json');
-  delete response['repository'];
   return res.status(200).json(response);
 });
 

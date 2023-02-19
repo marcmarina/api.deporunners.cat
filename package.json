@@ -15,8 +15,8 @@
     "serve": "node dist/index.js",
     "prestart": "pnpm install",
     "start": "nodemon --exec ts-node --files src/index.ts",
-    "test": "jest --passWithNoTests --runInBand",
-    "verify": "pnpm run build --noEmit && pnpm run lint && pnpm run test"
+    "test": "jest --passWithNoTests",
+    "verify": "pnpm run build --noEmit && pnpm run lint && pnpm run test --runInBand"
   },
   "dependencies": {
     "@sentry/node": "^7.0.0",

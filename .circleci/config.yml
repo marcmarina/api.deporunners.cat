@@ -28,13 +28,13 @@ jobs:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: yarn deploy $DEPLOY_WEBHOOK_URL_STAGING
+      - run: pnpm run deploy $DEPLOY_WEBHOOK_URL_STAGING
   deploy:
     docker:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: yarn deploy $DEPLOY_WEBHOOK_URL
+      - run: pnpm run deploy $DEPLOY_WEBHOOK_URL
 
 workflows:
   pipeline:

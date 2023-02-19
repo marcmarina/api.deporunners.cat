@@ -2,14 +2,15 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
 commands:
+  install-pnpm:
+    steps:
+      - run: npm install -g pnpm@7.25.1
   checkout-and-install:
     steps:
       - checkout
       - install-pnpm
       - run: pnpm install --frozen-lockfile
-  install-pnpm:
-    steps:
-      - run: npm install -g pnpm@7.25.1
+
 jobs:
   test:
     docker:

@@ -3,6 +3,7 @@ import { Types } from 'mongoose';
 
 import { logger } from '../logger';
 import { Event, IEvent } from '../models';
+import { uniqueArray } from '../utils';
 
 import { BaseService } from './base-service';
 import { MemberService } from './member-service';
@@ -22,7 +23,9 @@ export class EventService extends BaseService {
   }
 
   async findById(id: string): Promise<IEvent | null> {
-    return Event.findById(id);
+    return Event.findOne({
+      _id: id,
+    });
   }
 
   async create(event: IEvent) {
@@ -34,20 +37,15 @@ export class EventService extends BaseService {
     return Event.updateOne({ _id: event._id }, event);
   }
 
-  async attend(userId: string, eventId: string, attending: boolean) {
-    const event = await this.findById(eventId);
-
-    if (!event) return;
-
+  async attend(event: IEvent, userId: string, attending: boolean) {
     if (attending) {
-      if (!event.members.includes(Types.ObjectId(userId)))
-        event.members.push(Types.ObjectId(userId));
+      event.members = uniqueArray([...event.members, Types.ObjectId(userId)]);
     } else {
-      const index = event.members.indexOf(Types.ObjectId(userId));
-      if (index > -1) {
-        event.members.splice(index, 1);
-      }
+      event.members = event.members.filter(
+        (member) => member.toString() !== userId,
+      );
     }
+
     return event.save();
   }
 

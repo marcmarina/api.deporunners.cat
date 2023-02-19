@@ -56,7 +56,14 @@ export const attend = async (req, res, next) => {
     const userId = res.locals.user._id;
     const eventId = req.params.id;
     const attending = req.query.attending === 'true';
-    res.status(201).json(await eventService.attend(userId, eventId, attending));
+
+    const event = await eventService.findById(eventId);
+
+    if (!event) {
+      return res.status(404).send('Event not found');
+    }
+
+    res.status(201).json(await eventService.attend(event, userId, attending));
   } catch (ex) {
     next(ex);
   }

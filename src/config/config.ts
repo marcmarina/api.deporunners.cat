@@ -1,5 +1,6 @@
 import 'dotenv/config';
 import { merge } from 'lodash';
+import * as z from 'zod';
 
 import { assertNever, generateToken } from '../utils';
 
@@ -22,31 +23,33 @@ enum Environment {
   Test = 'test',
 }
 
-type Config = {
-  mongoURI: string;
-  appSecretKey: string;
-  apiToken: string;
-  jwtExpiration: string;
-  emailFrom: string;
-  stripeKey: string;
-  sendgridKey: string;
-  port: number;
-  seedNumbers: {
-    members: number;
-    users: number;
-    events: number;
-  };
-  stripeFeeProductId: string;
-  sentryDSN: string;
-  environment: Environment;
-};
-
 const environment: Environment = (fetchNullableVariable('NODE_ENV') ??
   'development') as Environment;
 
 export const envIsDev = () => environment === Environment.Dev;
 export const envIsTest = () => environment === Environment.Test;
 const envIsProd = environment === Environment.Production;
+
+const configSchema = z.object({
+  mongoURI: z.string(),
+  appSecretKey: z.string(),
+  apiToken: z.string(),
+  jwtExpiration: z.string(),
+  emailFrom: z.string(),
+  stripeKey: z.string(),
+  sendgridKey: z.string(),
+  port: z.number(),
+  seedNumbers: z.object({
+    members: z.number(),
+    users: z.number(),
+    events: z.number(),
+  }),
+  stripeFeeProductId: z.string(),
+  sentryDSN: z.string(),
+  environment: z.nativeEnum(Environment),
+});
+
+type Config = z.infer<typeof configSchema>;
 
 const baseConfig = {
   appSecretKey: fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
@@ -102,7 +105,15 @@ const getConfigForEnvironment = (environment: Environment) => {
 };
 
 const getConfig = (): Config => {
-  return merge(baseConfig, getConfigForEnvironment(environment));
+  const parseResult = configSchema.safeParse(
+    merge(baseConfig, getConfigForEnvironment(environment)),
+  );
+
+  if (!parseResult.success) {
+    throw new Error(`Invalid config: ${parseResult.error}`);
+  }
+
+  return parseResult.data;
 };
 
 export const config = getConfig();

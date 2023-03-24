@@ -42,7 +42,7 @@ specifiers:
   pino: ^8.0.0
   pino-http: ^8.3.1
   pino-pretty: 9.4.0
-  prettier: 2.8.6
+  prettier: 2.8.7
   pug: ^3.0.0
   stripe: ^10.0.0
   ts-jest: 29.0.5
@@ -97,7 +97,7 @@ devDependencies:
   lint-staged: 13.1.2
   nodemon: 2.0.22
   pino-pretty: 9.4.0
-  prettier: 2.8.6
+  prettier: 2.8.7
   ts-jest: 29.0.5_uw655ssmjmbvpjyz6tqqcor4gu
   ts-node: 10.9.1_6hl5ynazp3eqrgm6tv5qj43uoa
   typescript: 4.9.4
@@ -5419,8 +5419,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier/2.8.6:
-    resolution: {integrity: sha512-mtuzdiBbHwPEgl7NxWlqOkithPyp4VN93V7VeHVWBF+ad3I5avc0RVDT4oImXQy9H/AqxA2NSQH8pSxHW6FYbQ==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true

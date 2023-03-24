@@ -110,7 +110,9 @@ const getConfig = (): Config => {
   );
 
   if (!parseResult.success) {
-    throw new Error(`Invalid config: ${parseResult.error}`);
+    // eslint-disable-next-line no-console
+    console.log(`Invalid config: ${parseResult.error}`);
+    process.exit(1);
   }
 
   return parseResult.data;

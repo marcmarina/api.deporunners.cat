@@ -1,17 +1,7 @@
-import EventRoutes from './event';
-import MemberRoutes from './member';
-import RoleRoutes from './role';
-import StripeWebhooks from './stripeWebhooks';
-import TownRoutes from './town';
-import TShirtSizeRoutes from './tshirtSize';
-import UserRoutes from './user';
-
-export {
-  UserRoutes,
-  RoleRoutes,
-  MemberRoutes,
-  TownRoutes,
-  TShirtSizeRoutes,
-  EventRoutes,
-  StripeWebhooks,
-};
+export { default as EventRoutes } from './event';
+export { default as MemberRoutes } from './member';
+export { default as RoleRoutes } from './role';
+export { default as StripeWebhooks } from './stripeWebhooks';
+export { default as TownRoutes } from './town';
+export { default as TShirtSizeRoutes } from './tshirtSize';
+export { default as UserRoutes } from './user';

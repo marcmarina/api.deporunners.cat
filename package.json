@@ -29,6 +29,7 @@
     "@deporunners/errors": "*",
     "@deporunners/logger": "*",
     "@deporunners/models": "*",
+    "@deporunners/stripe": "*",
     "@deporunners/utils": "*",
     "@sentry/node": "^7.0.0",
     "@sentry/tracing": "^7.0.0",

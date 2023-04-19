@@ -1,0 +1,23 @@
+{
+  "name": "@deporunners/logger",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@deporunners/config": "*",
+    "@deporunners/errors": "*"
+  },
+  "devDependencies": {
+    "@deporunners/eslint-config": "*",
+    "@deporunners/jest-config": "*",
+    "@deporunners/tsconfig": "*"
+  }
+}

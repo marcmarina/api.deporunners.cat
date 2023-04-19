@@ -1,5 +1,6 @@
 import { config } from '@deporunners/config';
 import { AuthError, BaseError, InputError } from '@deporunners/errors';
+import { httpLogger, logger } from '@deporunners/logger';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
 import cors from 'cors';
@@ -10,7 +11,6 @@ import express, {
   Response,
 } from 'express';
 
-import { httpLogger, logger } from './logger';
 import { apiToken, getSession } from './middleware';
 import {
   UserRoutes,

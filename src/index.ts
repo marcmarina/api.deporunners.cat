@@ -1,8 +1,8 @@
 import { config } from '@deporunners/config';
+import { logger } from '@deporunners/logger';
 
 import app from './app';
 import { database } from './database';
-import { logger } from './logger';
 
 async function startServer() {
   try {

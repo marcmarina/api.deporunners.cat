@@ -2,9 +2,8 @@ import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
 
 import { logger } from '@deporunners/logger';
+import { Event, IEvent } from '@deporunners/models';
 import { uniqueArray } from '@deporunners/utils';
-
-import { Event, IEvent } from '../models';
 
 import { BaseService } from './base-service';
 import { MemberService } from './member-service';

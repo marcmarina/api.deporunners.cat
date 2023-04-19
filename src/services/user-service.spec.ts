@@ -1,10 +1,9 @@
+import { User } from '@deporunners/models';
 import { compareHash, hashString } from '@deporunners/utils';
-
-import { User } from '../models';
 
 import { UserService } from './user-service';
 
-jest.mock('../models');
+jest.mock('@deporunners/models');
 jest.mock('@deporunners/utils');
 
 const mockedUser = User as jest.Mocked<typeof User>;

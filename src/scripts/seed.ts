@@ -4,9 +4,6 @@ import faker from 'faker';
 import merge from 'lodash/merge';
 
 import { config } from '@deporunners/config';
-import { hashStringSync, randomInt } from '@deporunners/utils';
-
-import { database } from '../database';
 import {
   Event,
   IEvent,
@@ -17,7 +14,10 @@ import {
   Town,
   TShirtSize,
   User,
-} from '../models';
+} from '@deporunners/models';
+import { hashStringSync, randomInt } from '@deporunners/utils';
+
+import { database } from '../database';
 
 dotenv.config();
 

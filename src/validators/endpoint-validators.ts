@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { check } from 'express-validator';
 
-import { Role, Town } from '../models';
+import { Role, Town } from '@deporunners/models';
 
 import { existingMemberEmail, validateModelId } from './database-validators';
 

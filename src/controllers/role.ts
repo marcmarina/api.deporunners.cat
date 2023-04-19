@@ -1,4 +1,5 @@
-import { Role } from '../models';
+import { Role } from '@deporunners/models';
+
 import { RoleService } from '../services';
 
 const roleService = new RoleService();

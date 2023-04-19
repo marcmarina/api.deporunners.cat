@@ -1,6 +1,6 @@
 import { checkForErrors } from '@deporunners/errors';
+import { IEvent } from '@deporunners/models';
 
-import { IEvent } from '../models';
 import { EventService } from '../services';
 
 const eventService = new EventService();

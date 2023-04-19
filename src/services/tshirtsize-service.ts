@@ -1,4 +1,4 @@
-import { TShirtSize } from '../models';
+import { TShirtSize } from '@deporunners/models';
 
 import { BaseService } from './base-service';
 

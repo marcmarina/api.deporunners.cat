@@ -1,4 +1,4 @@
-import { IMember, IUser, Member, User } from '../models';
+import { IMember, IUser, Member, User } from '@deporunners/models';
 
 export async function getRefreshTokenOwner(
   refreshToken: string,

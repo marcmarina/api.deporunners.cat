@@ -1,8 +1,8 @@
-import { Member, User } from '../models';
+import { Member, User } from '@deporunners/models';
 
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
 
-jest.mock('../models');
+jest.mock('@deporunners/models');
 
 describe('getRefreshTokenOwner', () => {
   const mockedUser = {

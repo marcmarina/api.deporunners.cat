@@ -3,11 +3,11 @@ import xl from 'excel4node';
 
 import { config } from '@deporunners/config';
 import { AuthError } from '@deporunners/errors';
+import { IMember, ITShirtSize, Member } from '@deporunners/models';
 import { compareHash, generateToken, hashString } from '@deporunners/utils';
 
 import { signJWT } from '../authentication';
 import { getEmailTemplate, mailService } from '../mail';
-import { IMember, ITShirtSize, Member } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';
 
 import { BaseService } from './base-service';

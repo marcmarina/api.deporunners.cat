@@ -1,4 +1,4 @@
-import { Town } from '../models';
+import { Town } from '@deporunners/models';
 
 export const index = async (req, res, next) => {
   try {

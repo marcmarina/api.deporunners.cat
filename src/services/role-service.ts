@@ -1,4 +1,4 @@
-import { IRole, Role } from '../models';
+import { IRole, Role } from '@deporunners/models';
 
 import { BaseService } from './base-service';
 

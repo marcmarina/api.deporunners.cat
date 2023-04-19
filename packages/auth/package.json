@@ -14,11 +14,13 @@
   },
   "dependencies": {
     "@deporunners/config": "*",
-    "@deporunners/models": "*"
+    "@deporunners/models": "*",
+    "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
-    "@deporunners/tsconfig": "*"
+    "@deporunners/tsconfig": "*",
+    "@types/jsonwebtoken": "9.0.1"
   }
 }

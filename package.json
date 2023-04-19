@@ -25,6 +25,7 @@
   "dependencies": {
     "@deporunners/auth": "*",
     "@deporunners/config": "*",
+    "@deporunners/database": "*",
     "@deporunners/errors": "*",
     "@deporunners/logger": "*",
     "@deporunners/models": "*",

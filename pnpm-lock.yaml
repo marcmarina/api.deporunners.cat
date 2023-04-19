@@ -74,6 +74,9 @@ importers:
         specifier: ^3.5.1
         version: 3.20.2
     devDependencies:
+      '@deporunners/jest-config':
+        specifier: workspace:*
+        version: link:packages/jest-config
       '@types/bcrypt':
         specifier: 5.0.0
         version: 5.0.0
@@ -155,6 +158,8 @@ importers:
       typescript:
         specifier: 4.9.4
         version: 4.9.4
+
+  packages/jest-config: {}
 
   packages/utils: {}
 

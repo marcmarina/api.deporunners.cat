@@ -44,6 +44,7 @@
     "zod": "^3.5.1"
   },
   "devDependencies": {
+    "@deporunners/jest-config": "workspace:*",
     "@types/bcrypt": "5.0.0",
     "@types/consolidate": "0.14.1",
     "@types/cors": "2.8.13",

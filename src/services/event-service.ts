@@ -1,9 +1,9 @@
+import { uniqueArray } from '@deporunners/utils';
 import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
 
 import { logger } from '../logger';
 import { Event, IEvent } from '../models';
-import { uniqueArray } from '../utils';
 
 import { BaseService } from './base-service';
 import { MemberService } from './member-service';

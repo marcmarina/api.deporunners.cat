@@ -19,7 +19,7 @@
     "serve": "node dist/index.js",
     "prestart": "yarn install",
     "start": "nodemon --exec ts-node --files src/index.ts",
-    "test": "jest --passWithNoTests",
+    "test": "turbo run test && jest --passWithNoTests",
     "verify": "yarn run build --noEmit && yarn run lint && yarn run test --runInBand"
   },
   "dependencies": {

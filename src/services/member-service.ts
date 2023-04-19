@@ -1,4 +1,5 @@
 import { AuthError } from '@deporunners/errors';
+import { compareHash, generateToken, hashString } from '@deporunners/utils';
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
@@ -7,7 +8,6 @@ import { config } from '../config';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';
-import { compareHash, generateToken, hashString } from '../utils';
 
 import { BaseService } from './base-service';
 

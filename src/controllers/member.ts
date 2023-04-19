@@ -1,8 +1,8 @@
+import { checkForErrors } from '@deporunners/utils';
 import Stripe from 'stripe';
 
 import { MemberService } from '../services';
 import { stripeClient } from '../stripe';
-import { checkForErrors } from '../utils';
 
 const service = new MemberService();
 

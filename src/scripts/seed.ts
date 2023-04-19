@@ -1,3 +1,4 @@
+import { hashStringSync, randomInt } from '@deporunners/utils';
 import dayjs from 'dayjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
@@ -16,7 +17,6 @@ import {
   TShirtSize,
   User,
 } from '../models';
-import { hashStringSync, randomInt } from '../utils';
 
 dotenv.config();
 

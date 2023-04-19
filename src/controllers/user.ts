@@ -1,5 +1,6 @@
+import { checkForErrors } from '@deporunners/utils';
+
 import { UserService } from '../services';
-import { checkForErrors } from '../utils';
 
 const userService = new UserService();
 

@@ -1,8 +1,8 @@
 import { AuthError } from '@deporunners/errors';
+import { compareHash, generateToken, hashString } from '@deporunners/utils';
 
 import { signJWT } from '../authentication';
 import { User, IUser } from '../models';
-import { compareHash, generateToken, hashString } from '../utils';
 
 import { BaseService } from './base-service';
 

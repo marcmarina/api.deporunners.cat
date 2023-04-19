@@ -1,8 +1,7 @@
 import 'dotenv/config';
+import { assertNever, generateToken } from '@deporunners/utils';
 import { merge } from 'lodash';
 import * as z from 'zod';
-
-import { assertNever, generateToken } from '../utils';
 
 export function fetchNullableVariable(key: string): string | null {
   return process.env[key] ?? null;

@@ -1,4 +1,4 @@
-import { ServiceError } from '../errors';
+import { ServiceError } from '@deporunners/errors';
 
 export class BaseService {
   constructor() {

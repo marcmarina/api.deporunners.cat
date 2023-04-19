@@ -1,5 +1,6 @@
+import { AuthError } from '@deporunners/errors';
+
 import { signJWT } from '../authentication';
-import { AuthError } from '../errors';
 import { User, IUser } from '../models';
 import { compareHash, generateToken, hashString } from '../utils';
 

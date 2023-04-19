@@ -1,9 +1,9 @@
+import { AuthError } from '@deporunners/errors';
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
 import { signJWT } from '../authentication';
 import { config } from '../config';
-import { AuthError } from '../errors';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';

@@ -5,10 +5,10 @@ import { signJWT } from '@deporunners/auth';
 import { config } from '@deporunners/config';
 import { AuthError } from '@deporunners/errors';
 import { IMember, ITShirtSize, Member } from '@deporunners/models';
+import { StripeAdapter, stripeClient } from '@deporunners/stripe';
 import { compareHash, generateToken, hashString } from '@deporunners/utils';
 
 import { getEmailTemplate, mailService } from '../mail';
-import { StripeAdapter, stripeClient } from '../stripe';
 
 import { BaseService } from './base-service';
 

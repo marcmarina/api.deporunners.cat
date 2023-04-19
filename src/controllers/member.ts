@@ -1,9 +1,9 @@
 import Stripe from 'stripe';
 
 import { checkForErrors } from '@deporunners/errors';
+import { stripeClient } from '@deporunners/stripe';
 
 import { MemberService } from '../services';
-import { stripeClient } from '../stripe';
 
 const service = new MemberService();
 

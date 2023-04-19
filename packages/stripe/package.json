@@ -1,0 +1,21 @@
+{
+  "name": "@deporunners/stripe",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "lint": "eslint --fix --ext .ts src"
+  },
+  "dependencies": {
+    "@deporunners/config": "*"
+  },
+  "devDependencies": {
+    "@deporunners/eslint-config": "*",
+    "@deporunners/tsconfig": "*"
+  }
+}

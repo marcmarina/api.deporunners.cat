@@ -2,13 +2,9 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
 commands:
-  install-yarn:
-    steps:
-      - run: npm install -g yarn@7.25.1
   checkout-and-install:
     steps:
       - checkout
-      - install-yarn
       - run: yarn install --frozen-lockfile
 
 jobs:

@@ -6,7 +6,7 @@
   "author": "Marc Marina",
   "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "turbo run build && tsc",
     "deploy": "ts-node ./src/scripts/deploy",
     "lint": "eslint . --ext .ts",
     "mongo:start": "docker run -d -p 27017:27017 --name deporunners_mongo mongo:latest",

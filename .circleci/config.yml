@@ -17,6 +17,7 @@ jobs:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
+      - run: pnpm build
       - run: pnpm run test --runInBand
   build:
     docker:
@@ -41,9 +42,7 @@ workflows:
   pipeline:
     jobs:
       - build
-      - test:
-          requires:
-            - build
+      - test
       - deploy:
           requires:
             - test

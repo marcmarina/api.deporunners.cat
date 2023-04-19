@@ -1,5 +1,6 @@
-import { config } from '@deporunners/config';
 import jwt from 'jsonwebtoken';
+
+import { config } from '@deporunners/config';
 
 export function signJWT(data: any) {
   return jwt.sign(

@@ -16,7 +16,7 @@ module.exports = {
     ecmaVersion: 12,
     sourceType: 'module',
   },
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'simple-import-sort'],
   rules: {
     // Typescript
     '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -31,14 +31,29 @@ module.exports = {
     // Imports
     'import/no-cycle': 'error',
     'import/no-duplicates': 'error',
-    'import/order': [
+    'simple-import-sort/imports': [
       'error',
       {
-        alphabetize: {
-          order: 'asc',
-          caseInsensitive: true,
-        },
-        'newlines-between': 'always',
+        groups: [
+          // Copied from https://github.com/lydell/eslint-plugin-simple-import-sort/#custom-grouping
+          // Side effect imports.
+          ['^\\u0000'],
+          // Node.js builtins prefixed with `node:`.
+          ['^node:'],
+          // React
+          ['^react'],
+          // Packages.
+          // Things that start with a letter (or digit or underscore), or `@` followed by a letter.
+          ['^@?\\w'],
+          // Internal packages.
+          ['^@deporunners'],
+          // Absolute imports and other imports such as Vue-style `@/foo`.
+          // Anything not matched in another group.
+          ['^'],
+          // Relative imports.
+          ['^\\.\\.'],
+          ['^\\.'],
+        ],
       },
     ],
   },

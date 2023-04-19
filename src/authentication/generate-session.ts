@@ -1,5 +1,5 @@
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
-import { signJWT, decodeJWT } from './jwt-utils';
+import { decodeJWT, signJWT } from './jwt-utils';
 
 type Session = {
   authToken: string | null;

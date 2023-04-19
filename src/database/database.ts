@@ -1,5 +1,6 @@
-import { logger } from '@deporunners/logger';
 import mongoose from 'mongoose';
+
+import { logger } from '@deporunners/logger';
 
 const connect = async (connectionString: string) => {
   logger.info('Attempting to connect to database');

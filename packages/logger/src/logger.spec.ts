@@ -1,5 +1,6 @@
-import { envIsDev, envIsTest } from '@deporunners/config';
 import { captureException } from '@sentry/node';
+
+import { envIsDev, envIsTest } from '@deporunners/config';
 
 import { logger } from './logger';
 

@@ -1,6 +1,6 @@
 import { generateSession } from './generate-session';
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
-import { signJWT, decodeJWT } from './jwt-utils';
+import { decodeJWT, signJWT } from './jwt-utils';
 
 jest.mock('./jwt-utils');
 jest.mock('./get-refresh-token-owner');

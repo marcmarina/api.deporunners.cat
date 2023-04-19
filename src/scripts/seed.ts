@@ -1,9 +1,10 @@
-import { config } from '@deporunners/config';
-import { hashStringSync, randomInt } from '@deporunners/utils';
 import dayjs from 'dayjs';
 import dotenv from 'dotenv';
 import faker from 'faker';
 import merge from 'lodash/merge';
+
+import { config } from '@deporunners/config';
+import { hashStringSync, randomInt } from '@deporunners/utils';
 
 import { database } from '../database';
 import {

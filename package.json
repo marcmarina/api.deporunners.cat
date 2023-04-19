@@ -12,7 +12,7 @@
   "scripts": {
     "build": "turbo run build && tsc",
     "deploy": "ts-node ./src/scripts/deploy",
-    "lint": "turbo run lint && eslint src --ext .ts",
+    "lint": "turbo run lint && eslint --fix --ext .ts src",
     "mongo:start": "docker run -d -p 27017:27017 --name deporunners_mongo mongo:latest",
     "prepare": "husky install",
     "seed": "ts-node ./src/scripts/seed.ts",
@@ -69,6 +69,7 @@
     "eslint": "8.35.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jest": "^27.2.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
     "faker": "5.5.3",
     "husky": "8.0.3",
     "jest": "29.5.0",

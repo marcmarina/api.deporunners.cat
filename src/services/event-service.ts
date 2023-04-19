@@ -1,7 +1,8 @@
-import { logger } from '@deporunners/logger';
-import { uniqueArray } from '@deporunners/utils';
 import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
+
+import { logger } from '@deporunners/logger';
+import { uniqueArray } from '@deporunners/utils';
 
 import { Event, IEvent } from '../models';
 

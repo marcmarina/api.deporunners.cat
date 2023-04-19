@@ -1,6 +1,5 @@
-import crypto from 'crypto';
-
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
 
 export function generateToken(size: number) {
   return crypto.randomBytes(size).toString('hex');

@@ -1,5 +1,4 @@
 import crypto from 'crypto';
-
 import pinoHttp from 'pino-http';
 
 import { createLogger } from './create-logger';

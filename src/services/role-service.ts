@@ -1,4 +1,4 @@
-import { Role, IRole } from '../models';
+import { IRole, Role } from '../models';
 
 import { BaseService } from './base-service';
 

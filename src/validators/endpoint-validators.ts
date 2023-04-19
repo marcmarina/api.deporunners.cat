@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import { check } from 'express-validator';
 
-import { Town, Role } from '../models';
+import { Role, Town } from '../models';
 
 import { existingMemberEmail, validateModelId } from './database-validators';
 

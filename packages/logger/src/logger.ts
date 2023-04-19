@@ -1,5 +1,6 @@
-import { envIsDev, envIsTest } from '@deporunners/config';
 import * as Sentry from '@sentry/node';
+
+import { envIsDev, envIsTest } from '@deporunners/config';
 
 import { createLogger } from './create-logger';
 

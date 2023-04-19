@@ -1,4 +1,4 @@
-import { Schema, Document, model } from 'mongoose';
+import { Document, model, Schema } from 'mongoose';
 
 import { Role } from './Role';
 

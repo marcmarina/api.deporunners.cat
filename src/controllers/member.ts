@@ -1,5 +1,6 @@
-import { checkForErrors } from '@deporunners/errors';
 import Stripe from 'stripe';
+
+import { checkForErrors } from '@deporunners/errors';
 
 import { MemberService } from '../services';
 import { stripeClient } from '../stripe';

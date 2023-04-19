@@ -14,7 +14,8 @@
   "dependencies": {
     "@deporunners/config": "*",
     "@deporunners/logger": "*",
-    "@deporunners/models": "*"
+    "@deporunners/models": "*",
+    "mongoose": "^5.9.28"
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",

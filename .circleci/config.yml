@@ -2,14 +2,14 @@ version: 2.1
 orbs:
   node: circleci/node@5.1.0
 commands:
-  install-pnpm:
+  install-yarn:
     steps:
-      - run: npm install -g pnpm@7.25.1
+      - run: npm install -g yarn@7.25.1
   checkout-and-install:
     steps:
       - checkout
-      - install-pnpm
-      - run: pnpm install --frozen-lockfile
+      - install-yarn
+      - run: yarn install --frozen-lockfile
 
 jobs:
   test:
@@ -17,26 +17,26 @@ jobs:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: pnpm build
-      - run: pnpm run test --runInBand
+      - run: yarn build
+      - run: yarn run test --runInBand
   build:
     docker:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: pnpm build
+      - run: yarn build
   stage:
     docker:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: pnpm run deploy $DEPLOY_WEBHOOK_URL_STAGING
+      - run: yarn run deploy $DEPLOY_WEBHOOK_URL_STAGING
   deploy:
     docker:
       - image: cimg/node:16.18.1
     steps:
       - checkout-and-install
-      - run: pnpm run deploy $DEPLOY_WEBHOOK_URL
+      - run: yarn run deploy $DEPLOY_WEBHOOK_URL
 
 workflows:
   pipeline:

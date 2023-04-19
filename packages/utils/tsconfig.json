@@ -1,20 +1,10 @@
 {
+  "extends": "@deporunners/tsconfig/base.json",
   "compilerOptions": {
-    "target": "es6",
-    "module": "commonjs",
-    "lib": ["dom", "es2018"],
-    "sourceMap": true,
+    "rootDir": "src",
     "outDir": "dist",
-    "strict": true,
-    "noImplicitAny": false,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "useUnknownInCatchVariables": false,
-    "declarationMap": true,
-    "declaration": true
+    "declaration": true,
+    "declarationMap": true
   },
   "include": ["src"]
 }

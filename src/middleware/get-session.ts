@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 
-import { generateSession } from '../authentication';
+import { generateSession } from '@deporunners/auth';
 
 export const getSession = async (
   req: Request,

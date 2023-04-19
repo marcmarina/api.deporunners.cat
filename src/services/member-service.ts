@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
+import { signJWT } from '@deporunners/auth';
 import { config } from '@deporunners/config';
 import { AuthError } from '@deporunners/errors';
 import { IMember, ITShirtSize, Member } from '@deporunners/models';
 import { compareHash, generateToken, hashString } from '@deporunners/utils';
 
-import { signJWT } from '../authentication';
 import { getEmailTemplate, mailService } from '../mail';
 import { StripeAdapter, stripeClient } from '../stripe';
 

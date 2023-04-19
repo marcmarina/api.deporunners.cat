@@ -1,8 +1,8 @@
-import { generateSession } from '../authentication';
+import { generateSession } from '@deporunners/auth';
 
 import { getSession } from './get-session';
 
-jest.mock('../authentication');
+jest.mock('@deporunners/auth');
 
 describe('getSession', () => {
   beforeEach(() => {

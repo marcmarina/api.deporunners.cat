@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@deporunners/config": "*",
+    "@deporunners/logger": "*",
     "@deporunners/models": "*"
   },
   "devDependencies": {

@@ -19,6 +19,8 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'simple-import-sort'],
   rules: {
+    'no-process-exit': 'off',
+
     // Node
     'node/no-unsupported-features/es-syntax': [
       'error',

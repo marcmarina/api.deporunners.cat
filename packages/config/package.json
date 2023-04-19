@@ -13,12 +13,15 @@
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
-    "@deporunners/errors": "*"
+    "@deporunners/errors": "*",
+    "@deporunners/utils": "*",
+    "dotenv": "^16.0.0",
+    "lodash": "^4.17.21",
+    "zod": "^3.5.1"
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
-    "@deporunners/tsconfig": "*",
-    "@deporunners/utils": "*"
+    "@deporunners/tsconfig": "*"
   }
 }

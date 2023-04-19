@@ -1,4 +1,4 @@
-import { checkForErrors } from '@deporunners/utils';
+import { checkForErrors } from '@deporunners/errors';
 
 import { UserService } from '../services';
 

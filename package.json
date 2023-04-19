@@ -19,6 +19,7 @@
     "verify": "pnpm run build --noEmit && pnpm run lint && pnpm run test --runInBand"
   },
   "dependencies": {
+    "@deporunners/utils": "workspace:*",
     "@sentry/node": "^7.0.0",
     "@sentry/tracing": "^7.0.0",
     "axios": "^1.3.3",

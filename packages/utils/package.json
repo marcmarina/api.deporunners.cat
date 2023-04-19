@@ -15,6 +15,7 @@
     "@deporunners/errors": "*"
   },
   "devDependencies": {
+    "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
     "@deporunners/tsconfig": "*"
   }

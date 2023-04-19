@@ -51,6 +51,7 @@
     "zod": "^3.5.1"
   },
   "devDependencies": {
+    "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
     "@deporunners/tsconfig": "*",
     "@types/bcrypt": "5.0.0",

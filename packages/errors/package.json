@@ -11,6 +11,9 @@
     "build": "tsc",
     "lint": "eslint --fix --ext .ts src"
   },
+  "dependencies": {
+    "express-validator": "^6.6.1"
+  },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
     "@deporunners/tsconfig": "*"

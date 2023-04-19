@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '@deporunners/config';
 
 import { apiToken } from './api-token';
 

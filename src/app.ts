@@ -1,3 +1,4 @@
+import { config } from '@deporunners/config';
 import { AuthError, BaseError, InputError } from '@deporunners/errors';
 import * as Sentry from '@sentry/node';
 import * as Tracing from '@sentry/tracing';
@@ -9,7 +10,6 @@ import express, {
   Response,
 } from 'express';
 
-import { config } from './config';
 import { httpLogger, logger } from './logger';
 import { apiToken, getSession } from './middleware';
 import {

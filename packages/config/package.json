@@ -1,0 +1,23 @@
+{
+  "name": "@deporunners/config",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --passWithNoTests"
+  },
+  "dependencies": {
+    "@deporunners/errors": "*"
+  },
+  "devDependencies": {
+    "@deporunners/eslint-config": "*",
+    "@deporunners/jest-config": "*",
+    "@deporunners/tsconfig": "*",
+    "@deporunners/utils": "*"
+  }
+}

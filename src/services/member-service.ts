@@ -1,10 +1,10 @@
+import { config } from '@deporunners/config';
 import { AuthError } from '@deporunners/errors';
 import { compareHash, generateToken, hashString } from '@deporunners/utils';
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
 import { signJWT } from '../authentication';
-import { config } from '../config';
 import { getEmailTemplate, mailService } from '../mail';
 import { Member, IMember, ITShirtSize } from '../models';
 import { StripeAdapter, stripeClient } from '../stripe';

@@ -23,6 +23,7 @@
     "verify": "yarn run build --noEmit && yarn run lint && yarn run test --runInBand"
   },
   "dependencies": {
+    "@deporunners/config": "*",
     "@deporunners/errors": "*",
     "@deporunners/utils": "*",
     "@sentry/node": "^7.0.0",

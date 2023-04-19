@@ -1,11 +1,10 @@
+import { envIsDev, envIsTest } from '@deporunners/config';
 import pino from 'pino';
-
-import { envIsDev, envIsTest } from '../config';
 
 import { createLogger } from './create-logger';
 
 jest.mock('pino');
-jest.mock('../config');
+jest.mock('@deporunners/config');
 
 describe('createLogger', () => {
   const mockedEnvIsDev = envIsDev as jest.Mock;

@@ -1,12 +1,11 @@
+import { envIsDev, envIsTest } from '@deporunners/config';
 import { captureException } from '@sentry/node';
-
-import { envIsDev, envIsTest } from '../config';
 
 import { logger } from './logger';
 
 jest.mock('@sentry/node');
 jest.mock('./create-logger');
-jest.mock('../config');
+jest.mock('@deporunners/config');
 
 describe('logger', () => {
   const mockedCaptureException = captureException as jest.Mock;

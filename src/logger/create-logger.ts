@@ -1,6 +1,5 @@
+import { envIsDev, envIsTest } from '@deporunners/config';
 import pino from 'pino';
-
-import { envIsDev, envIsTest } from '../config';
 
 function getLogLevel() {
   if (envIsDev()) {

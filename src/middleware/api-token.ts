@@ -1,4 +1,4 @@
-import { config } from '../config';
+import { config } from '@deporunners/config';
 
 export const apiToken = (req, res, next) => {
   const token = req.headers['x-api-token'] as string;

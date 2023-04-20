@@ -1,20 +1,11 @@
 import Stripe from 'stripe';
 
 import { checkForErrors } from '@deporunners/errors';
-import { stripeClient } from '@deporunners/stripe';
+import { PaymentResponse, stripeClient } from '@deporunners/stripe';
 
 import { MemberService } from '../services';
 
 const service = new MemberService();
-
-type PaymentResponse =
-  | {
-      success: boolean;
-    }
-  | {
-      payment_client_secret: string | null;
-      requires_action: boolean;
-    };
 
 export const create = async (req, res, next) => {
   try {

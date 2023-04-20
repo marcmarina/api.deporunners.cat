@@ -15,6 +15,7 @@
   "dependencies": {
     "@deporunners/config": "*",
     "@deporunners/models": "*",
+    "@deporunners/utils": "*",
     "jsonwebtoken": "^9.0.0"
   },
   "devDependencies": {

@@ -1,9 +1,11 @@
+import { Maybe } from '@deporunners/utils';
+
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
 import { decodeJWT, signJWT } from './jwt-utils';
 
 type Session = {
-  authToken: string | null;
-  refreshToken: string | null;
+  authToken: Maybe<string>;
+  refreshToken: Maybe<string>;
   user: any;
 };
 

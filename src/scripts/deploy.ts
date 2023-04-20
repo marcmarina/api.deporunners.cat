@@ -1,5 +1,7 @@
 import axios, { Method } from 'axios';
 
+import { Maybe } from '@deporunners/utils';
+
 async function deploy() {
   const [deploymentWebhookUrl] = process.argv.slice(2);
 
@@ -20,8 +22,6 @@ async function deploy() {
     );
   }
 }
-
-type Maybe<T> = T | null;
 
 async function fireWebhook(
   method: Method = 'POST',

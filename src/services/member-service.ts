@@ -1,7 +1,7 @@
 import dayjs from 'dayjs';
 import xl from 'excel4node';
 
-import { signJWT } from '@deporunners/auth';
+import { Session, signJWT } from '@deporunners/auth';
 import { config } from '@deporunners/config';
 import { AuthError } from '@deporunners/errors';
 import { getEmailTemplate, mailService } from '@deporunners/mail';
@@ -10,11 +10,6 @@ import { StripeAdapter, stripeClient } from '@deporunners/stripe';
 import { compareHash, generateToken, hashString } from '@deporunners/utils';
 
 import { BaseService } from './base-service';
-
-type Session = {
-  authToken: string;
-  refreshToken: string;
-};
 
 const stripeAdapter = new StripeAdapter();
 

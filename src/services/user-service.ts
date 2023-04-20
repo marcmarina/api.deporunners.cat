@@ -1,14 +1,9 @@
-import { signJWT } from '@deporunners/auth';
+import { Session, signJWT } from '@deporunners/auth';
 import { AuthError } from '@deporunners/errors';
 import { IUser, User } from '@deporunners/models';
 import { compareHash, generateToken, hashString } from '@deporunners/utils';
 
 import { BaseService } from './base-service';
-
-type Session = {
-  authToken: string;
-  refreshToken: string;
-};
 
 export class UserService extends BaseService {
   async getAllUsers(): Promise<IUser[]> {

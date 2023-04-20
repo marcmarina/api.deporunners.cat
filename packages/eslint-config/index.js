@@ -10,6 +10,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:import/typescript',
     'plugin:jest/recommended',
+    'plugin:node/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -18,6 +19,24 @@ module.exports = {
   },
   plugins: ['@typescript-eslint', 'simple-import-sort'],
   rules: {
+    'no-process-exit': 'off',
+
+    // Node
+    'node/no-unsupported-features/es-syntax': [
+      'error',
+      {
+        ignores: ['modules'],
+        version: '16.18.1',
+      },
+    ],
+    'node/no-extraneous-import': 'error',
+    'node/no-missing-import': [
+      'error',
+      {
+        tryExtensions: ['.js', '.ts'],
+      },
+    ],
+
     // Typescript
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'off',

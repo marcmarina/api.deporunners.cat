@@ -11,6 +11,9 @@
     "build": "tsc",
     "lint": "eslint --fix --ext .ts src"
   },
+  "dependencies": {
+    "mongoose": "^5.9.28"
+  },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",

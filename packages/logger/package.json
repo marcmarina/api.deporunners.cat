@@ -14,11 +14,15 @@
   },
   "dependencies": {
     "@deporunners/config": "*",
-    "@deporunners/errors": "*"
+    "@deporunners/errors": "*",
+    "@sentry/node": "^7.0.0",
+    "pino": "^8.0.0",
+    "pino-http": "^8.3.1"
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
-    "@deporunners/tsconfig": "*"
+    "@deporunners/tsconfig": "*",
+    "pino-pretty": "9.4.0"
   }
 }

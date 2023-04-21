@@ -1,3 +1,5 @@
+import { Maybe } from '@deporunners/utils';
+
 export type PaymentResponse =
   | {
       success: true;
@@ -6,6 +8,6 @@ export type PaymentResponse =
       success: false;
     }
   | {
-      payment_client_secret: string | null;
+      payment_client_secret: Maybe<string>;
       requires_action: boolean;
     };

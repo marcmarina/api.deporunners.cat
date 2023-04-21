@@ -1,7 +1,12 @@
 import { Session, signJWT } from '@deporunners/auth';
 import { AuthError } from '@deporunners/errors';
 import { IUser, User } from '@deporunners/models';
-import { compareHash, generateToken, hashString } from '@deporunners/utils';
+import {
+  compareHash,
+  generateToken,
+  hashString,
+  Maybe,
+} from '@deporunners/utils';
 
 import { BaseService } from './base-service';
 
@@ -28,7 +33,7 @@ export class UserService extends BaseService {
     });
   }
 
-  async login(email: string, password: string): Promise<Session | null> {
+  async login(email: string, password: string): Promise<Maybe<Session>> {
     const user = await User.findOne({ email });
     if (!user) return null;
 

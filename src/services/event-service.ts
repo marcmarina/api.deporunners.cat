@@ -3,7 +3,7 @@ import { Types } from 'mongoose';
 
 import { logger } from '@deporunners/logger';
 import { Event, IEvent } from '@deporunners/models';
-import { uniqueArray } from '@deporunners/utils';
+import { Maybe, uniqueArray } from '@deporunners/utils';
 
 import { BaseService } from './base-service';
 import { MemberService } from './member-service';
@@ -22,7 +22,7 @@ export class EventService extends BaseService {
       .limit(perPage);
   }
 
-  async findById(id: string): Promise<IEvent | null> {
+  async findById(id: string): Promise<Maybe<IEvent>> {
     return Event.findOne({
       _id: id,
     });

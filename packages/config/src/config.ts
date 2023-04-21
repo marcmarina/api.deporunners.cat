@@ -3,9 +3,9 @@ import 'dotenv/config';
 import { merge } from 'lodash';
 import * as z from 'zod';
 
-import { assertNever, generateToken } from '@deporunners/utils';
+import { assertNever, generateToken, Maybe } from '@deporunners/utils';
 
-export function fetchNullableVariable(key: string): string | null {
+export function fetchNullableVariable(key: string): Maybe<string> {
   return process.env[key] ?? null;
 }
 

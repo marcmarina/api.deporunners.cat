@@ -7,7 +7,12 @@ import { AuthError } from '@deporunners/errors';
 import { getEmailTemplate, mailService } from '@deporunners/mail';
 import { IMember, ITShirtSize, Member } from '@deporunners/models';
 import { StripeAdapter, stripeClient } from '@deporunners/stripe';
-import { compareHash, generateToken, hashString } from '@deporunners/utils';
+import {
+  compareHash,
+  generateToken,
+  hashString,
+  Maybe,
+} from '@deporunners/utils';
 
 import { BaseService } from './base-service';
 
@@ -132,7 +137,7 @@ export class MemberService extends BaseService {
     };
   }
 
-  async loginV2(username: string, password: string): Promise<Session | null> {
+  async loginV2(username: string, password: string): Promise<Maybe<Session>> {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const filter = re.test(username) ? { email: username } : { dni: username };

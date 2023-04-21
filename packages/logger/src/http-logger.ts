@@ -1,5 +1,6 @@
-import crypto from 'crypto';
 import pinoHttp from 'pino-http';
+
+import { randomUUID } from '@deporunners/utils';
 
 import { createLogger } from './create-logger';
 
@@ -29,7 +30,7 @@ export const httpLogger = pinoHttp({
     } else if (req.headers['x-request-id']) {
       return req.headers['x-request-id'] as string;
     } else {
-      const id = crypto.randomUUID();
+      const id = randomUUID();
 
       res.setHeader('x-request-id', id);
 

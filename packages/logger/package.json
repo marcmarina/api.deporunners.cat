@@ -15,6 +15,7 @@
   "dependencies": {
     "@deporunners/config": "*",
     "@deporunners/errors": "*",
+    "@deporunners/utils": "*",
     "@sentry/node": "^7.0.0",
     "pino": "^8.0.0",
     "pino-http": "^8.3.1"

@@ -24,6 +24,6 @@
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
     "@deporunners/tsconfig": "*",
-    "pino-pretty": "9.4.0"
+    "pino-pretty": "10.0.0"
   }
 }

@@ -17,7 +17,7 @@
     "prepare": "husky install",
     "seed": "ts-node ./src/scripts/seed.ts",
     "serve": "node dist/index.js",
-    "prestart": "yarn install",
+    "prestart": "yarn install && turbo run build",
     "start": "nodemon --exec ts-node --files src/index.ts",
     "test": "turbo run test && jest --passWithNoTests",
     "verify": "yarn run build --noEmit && yarn run lint && yarn run test --runInBand"

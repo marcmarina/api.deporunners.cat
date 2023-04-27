@@ -22,6 +22,6 @@
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
     "@deporunners/tsconfig": "*",
-    "@types/jsonwebtoken": "9.0.1"
+    "@types/jsonwebtoken": "9.0.2"
   }
 }

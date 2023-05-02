@@ -50,6 +50,7 @@ module.exports = {
     // Imports
     'import/no-cycle': 'error',
     'import/no-duplicates': 'error',
+    'import/no-deprecated': 'warn',
     'simple-import-sort/imports': [
       'error',
       {
@@ -75,5 +76,11 @@ module.exports = {
         ],
       },
     ],
+  },
+  settings: {
+    'import/resolver': {
+      typescript: true,
+      node: true,
+    },
   },
 };

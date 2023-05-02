@@ -2701,9 +2701,9 @@ events@^3.3.0:
   integrity sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==
 
 excel4node@^1.7.2:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/excel4node/-/excel4node-1.8.1.tgz#84ceeaeef53a19730cec4f95b6dfe8fc01e94828"
-  integrity sha512-aWuz1v63U3zc9tkjAMpx1ZrYfrButTOFFj/OW8owlRHAe3BvRFoFWDzRukOH5tsK6xcnlB8YD7HX1H0aSJ/RAg==
+  version "1.8.2"
+  resolved "https://registry.yarnpkg.com/excel4node/-/excel4node-1.8.2.tgz#2d2f8b2ae56a3d3c7ae6a29bb2652b25807b021f"
+  integrity sha512-v5BZZy8y4cibFQ/xvztUleAoyYmIBol1qTKWuDWZZPpFGBAy4P7qkswdpBkTkQgLIQ/WkCpyV/P6liW4mIb/wQ==
   dependencies:
     deepmerge "^4.2.2"
     image-size "^1.0.2"

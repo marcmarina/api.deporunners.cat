@@ -1,5 +1,4 @@
 import Stripe from 'stripe';
-import z from 'zod';
 
 import { checkForErrors } from '@deporunners/errors';
 import { PaymentResponse, stripeClient } from '@deporunners/stripe';
@@ -8,27 +7,11 @@ import { MemberService } from '../services';
 
 const service = new MemberService();
 
-const memberSchema = z.object({
-  firstName: z.string().min(2),
-  lastName: z.string().min(2),
-  email: z.string().email(),
-  dni: z.string(),
-  address: z.object({
-    streetAddress: z.string(),
-    postCode: z.string(),
-    town: z.string(),
-  }),
-});
-
 export const create = async (req, res, next) => {
   try {
-    const parseResult = memberSchema.safeParse(req.body);
+    checkForErrors(req);
 
-    if (!parseResult.success) {
-      throw new Error(parseResult.error.message);
-    }
-
-    const member = parseResult.data as any;
+    const { member } = req.body;
 
     const createdMember = await service.createMember(member);
 

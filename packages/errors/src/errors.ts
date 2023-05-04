@@ -40,6 +40,16 @@ export class InputError extends BaseError {
   }
 }
 
+export class InputErrorV2 extends BaseError {
+  public errors: any[];
+
+  constructor(errors: any) {
+    super('Validation errors', 400);
+
+    this.errors = errors.array();
+  }
+}
+
 export class AuthError extends BaseError {
   constructor(message: string) {
     super(message, 401);

@@ -46,7 +46,8 @@
     "lodash": "^4.17.21",
     "mongoose": "^5.9.28",
     "pug": "^3.0.0",
-    "stripe": "^10.0.0"
+    "stripe": "^10.0.0",
+    "zod": "^3.5.1"
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",

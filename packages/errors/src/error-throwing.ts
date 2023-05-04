@@ -4,6 +4,8 @@ import { validationResult } from 'express-validator';
 import { InputError } from './errors';
 
 /**
+ * @deprecated Don't use express-validator. Use Zod instead.
+ *
  * Checks for express-validator errors and throws an InputError if any are found.
  * @param req Request object
  */

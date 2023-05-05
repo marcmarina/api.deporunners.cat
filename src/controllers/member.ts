@@ -1,19 +1,31 @@
 import Stripe from 'stripe';
+import { z } from 'zod';
 
 import { checkForErrors } from '@deporunners/errors';
 import { PaymentResponse, stripeClient } from '@deporunners/stripe';
 
 import { MemberService } from '../services';
 
+const memberSchema = z.object({
+  firstName: z.string().min(2),
+  lastName: z.string().min(2),
+  email: z.string().email(),
+  dni: z.string(),
+  telephone: z.string(),
+  address: z.object({
+    streetAddress: z.string(),
+    postCode: z.string(),
+    town: z.string(),
+  }),
+});
+
 const service = new MemberService();
 
 export const create = async (req, res, next) => {
   try {
-    checkForErrors(req);
+    const member = memberSchema.parse(req.body.member);
 
-    const { member } = req.body;
-
-    const createdMember = await service.createMember(member);
+    const createdMember = await service.createMember(member as any);
 
     res.status(201).json({ member: createdMember });
   } catch (ex) {
@@ -91,10 +103,15 @@ export const put = async (req, res, next) => {
   }
 };
 
+const loginSchema = z.object({
+  username: z.string(),
+  password: z.string(),
+});
+
 export const login = async (req, res, next) => {
   try {
-    checkForErrors(req);
-    const { username, password } = req.body;
+    const { username, password } = loginSchema.parse(req.body);
+
     const { authToken, refreshToken } = await service.loginCredentials(
       username,
       password,
@@ -110,9 +127,8 @@ export const login = async (req, res, next) => {
 
 export const loginV2 = async (req, res, next) => {
   try {
-    checkForErrors(req);
+    const { username, password } = loginSchema.parse(req.body);
 
-    const { username, password } = req.body;
     const session = await service.loginV2(username, password);
 
     if (!session) {
@@ -129,12 +145,16 @@ export const loginV2 = async (req, res, next) => {
   }
 };
 
+const changePasswordSchema = z.object({
+  oldPassword: z.string(),
+  newPassword: z.string(),
+});
+
 export const changePassword = async (req, res, next) => {
   try {
-    checkForErrors(req);
-
     const userId = res.locals.user._id;
-    const { oldPassword, newPassword } = req.body;
+
+    const { oldPassword, newPassword } = changePasswordSchema.parse(req.body);
 
     res
       .status(200)

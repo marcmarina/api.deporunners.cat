@@ -2,7 +2,6 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:base"],
   "ignoreDeps": ["faker", "node", "typescript"],
-  "reviewers": ["marcmarina"],
   "labels": ["dependencies", "renovate"],
   "packageRules": [
     {

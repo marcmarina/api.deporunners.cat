@@ -1,3 +1,5 @@
+import { IMember } from '@deporunners/models';
+
 import { generateSession } from './generate-session';
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
 import { decodeJWT, signJWT } from './jwt-utils';
@@ -6,10 +8,11 @@ jest.mock('./jwt-utils');
 jest.mock('./get-refresh-token-owner');
 
 describe('generateSession', () => {
-  const mockedValidateJWT = decodeJWT as jest.Mock;
-  const mockedSignJWT = signJWT as jest.Mock;
+  const mockedDecodeJWT = decodeJWT as jest.MockedFunction<typeof decodeJWT>;
+  const mockedSignJWT = signJWT as jest.MockedFunction<typeof signJWT>;
 
-  const mockedGetRefreshTokenOwner = getRefreshTokenOwner as jest.Mock;
+  const mockedGetRefreshTokenOwner =
+    getRefreshTokenOwner as jest.MockedFunction<typeof getRefreshTokenOwner>;
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -19,7 +22,7 @@ describe('generateSession', () => {
     const authToken = 'authToken';
     const refreshToken = 'refreshToken';
 
-    mockedValidateJWT.mockReturnValueOnce({ id: 1 });
+    mockedDecodeJWT.mockReturnValueOnce({ id: 1 });
 
     const session = generateSession(authToken, refreshToken);
 
@@ -36,8 +39,8 @@ describe('generateSession', () => {
     const authToken = 'authToken';
     const refreshToken = 'refreshToken';
 
-    mockedValidateJWT.mockReturnValueOnce(null);
-    mockedGetRefreshTokenOwner.mockReturnValueOnce({ id: 1 });
+    mockedDecodeJWT.mockReturnValueOnce(null);
+    mockedGetRefreshTokenOwner.mockResolvedValueOnce({ id: 1 } as IMember);
     mockedSignJWT.mockReturnValueOnce('authToken');
 
     const session = generateSession(authToken, refreshToken);
@@ -55,8 +58,8 @@ describe('generateSession', () => {
     const authToken = 'authToken';
     const refreshToken = 'refreshToken';
 
-    mockedValidateJWT.mockReturnValueOnce(null);
-    mockedGetRefreshTokenOwner.mockReturnValueOnce(null);
+    mockedDecodeJWT.mockReturnValueOnce(null);
+    mockedGetRefreshTokenOwner.mockResolvedValueOnce(null);
 
     const session = generateSession(authToken, refreshToken);
 

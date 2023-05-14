@@ -23,8 +23,10 @@ describe('user service', () => {
     save: jest.fn(),
   } as any;
 
-  const mockedHashString = hashString as jest.Mock;
-  const mockedCompareHash = compareHash as jest.Mock;
+  const mockedHashString = hashString as jest.MockedFunction<typeof hashString>;
+  const mockedCompareHash = compareHash as jest.MockedFunction<
+    typeof compareHash
+  >;
 
   beforeEach(() => {
     jest.clearAllMocks();

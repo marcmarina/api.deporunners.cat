@@ -9,7 +9,9 @@ describe('getSession', () => {
     jest.clearAllMocks();
   });
 
-  const mockedGenerateSession = generateSession as jest.Mock;
+  const mockedGenerateSession = generateSession as jest.MockedFunction<
+    typeof generateSession
+  >;
 
   it('populates the user in the response if the session is valid', async () => {
     const req = {

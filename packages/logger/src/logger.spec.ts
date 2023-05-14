@@ -9,10 +9,12 @@ jest.mock('./create-logger');
 jest.mock('@deporunners/config');
 
 describe('logger', () => {
-  const mockedCaptureException = captureException as jest.Mock;
+  const mockedCaptureException = captureException as jest.MockedFunction<
+    typeof captureException
+  >;
 
-  const mockedEnvIsDev = envIsDev as jest.Mock;
-  const mockedEnvIsTest = envIsTest as jest.Mock;
+  const mockedEnvIsDev = envIsDev as jest.MockedFunction<typeof envIsDev>;
+  const mockedEnvIsTest = envIsTest as jest.MockedFunction<typeof envIsTest>;
 
   beforeEach(() => {
     jest.clearAllMocks();

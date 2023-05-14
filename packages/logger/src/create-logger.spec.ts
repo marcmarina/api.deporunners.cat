@@ -8,11 +8,11 @@ jest.mock('pino');
 jest.mock('@deporunners/config');
 
 describe('createLogger', () => {
-  const mockedEnvIsDev = envIsDev as jest.Mock;
-  const mockedEnvIsTest = envIsTest as jest.Mock;
+  const mockedEnvIsDev = envIsDev as jest.MockedFunction<typeof envIsDev>;
+  const mockedEnvIsTest = envIsTest as jest.MockedFunction<typeof envIsTest>;
 
-  const mockedPino = pino as unknown as jest.Mock;
-  mockedPino.mockReturnValue({});
+  const mockedPino = pino as unknown as jest.MockedFunction<typeof pino>;
+  mockedPino.mockReturnValue({} as any);
 
   beforeEach(() => {
     jest.clearAllMocks();

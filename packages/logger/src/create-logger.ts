@@ -2,7 +2,7 @@ import pino from 'pino';
 
 import { envIsDev, envIsTest } from '@deporunners/config';
 
-function getLogLevel() {
+function getLogLevel(): pino.LevelWithSilent {
   if (envIsDev()) {
     return 'trace';
   } else if (envIsTest()) {

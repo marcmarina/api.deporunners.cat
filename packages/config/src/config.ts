@@ -52,7 +52,7 @@ const configSchema = z.object({
 
 type Config = z.infer<typeof configSchema>;
 
-const baseConfig = {
+const baseConfig = Object.freeze({
   appSecretKey: fetchNullableVariable('APP_SECRET_KEY') ?? generateToken(32),
   jwtExpiration: fetchNullableVariable('JWT_EXPIRATION_TIME') ?? '900',
   port: parseInt(fetchNullableVariable('PORT') ?? '8080'),
@@ -63,9 +63,9 @@ const baseConfig = {
   },
   stripeFeeProductId: envIsProd ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
   environment,
-};
+});
 
-const getConfigForEnvironment = (environment: Environment) => {
+function getConfigForEnvironment(environment: Environment) {
   try {
     switch (environment) {
       case Environment.Production:
@@ -103,11 +103,11 @@ const getConfigForEnvironment = (environment: Environment) => {
 
     throw err;
   }
-};
+}
 
-const getConfig = (): Config => {
+function getConfig(): Config {
   const parseResult = configSchema.safeParse(
-    merge(baseConfig, getConfigForEnvironment(environment)),
+    merge({}, baseConfig, getConfigForEnvironment(environment)),
   );
 
   if (!parseResult.success) {
@@ -117,6 +117,6 @@ const getConfig = (): Config => {
   }
 
   return parseResult.data;
-};
+}
 
 export const config = getConfig();

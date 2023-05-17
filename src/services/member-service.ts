@@ -159,13 +159,11 @@ export class MemberService extends BaseService {
     return session;
   }
 
-  private async createSession(member: IMember): Promise<{
-    authToken: string;
-    refreshToken: string;
-  }> {
+  private async createSession(member: IMember): Promise<Session> {
     return {
       authToken: signJWT(member.toObject()),
       refreshToken: member.refreshToken ?? generateToken(32),
+      user: member,
     };
   }
 

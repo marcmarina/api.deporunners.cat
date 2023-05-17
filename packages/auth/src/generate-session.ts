@@ -1,18 +1,11 @@
-import { Maybe } from '@deporunners/utils';
-
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
 import { decodeJWT, signJWT } from './jwt-utils';
-
-type Session = {
-  authToken: Maybe<string>;
-  refreshToken: Maybe<string>;
-  user: any;
-};
+import { PartialSession } from './types';
 
 export async function generateSession(
   authToken,
   refreshToken,
-): Promise<Session> {
+): Promise<PartialSession> {
   if (!authToken || !refreshToken) {
     return {
       authToken: null,

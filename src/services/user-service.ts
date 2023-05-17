@@ -52,6 +52,7 @@ export class UserService extends BaseService {
     return {
       authToken: signJWT(user.toObject()),
       refreshToken: user.refreshToken ?? generateToken(32),
+      user: user,
     };
   }
 

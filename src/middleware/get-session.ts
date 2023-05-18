@@ -8,8 +8,8 @@ export const getSession = async (
   next: NextFunction,
 ) => {
   try {
-    const authToken = req.headers['x-auth-token'] as string;
-    const refreshToken = req.headers['x-refresh-token'] as string;
+    const authToken = req.get('x-auth-token') ?? null;
+    const refreshToken = req.get('x-refresh-token') ?? null;
 
     const session = await generateSession(authToken, refreshToken);
 

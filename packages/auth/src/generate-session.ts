@@ -3,8 +3,8 @@ import { decodeJWT, signJWT } from './jwt-utils';
 import { PartialSession } from './types';
 
 export async function generateSession(
-  authToken,
-  refreshToken,
+  authToken: string | null,
+  refreshToken: string | null,
 ): Promise<PartialSession> {
   if (!authToken || !refreshToken) {
     return {

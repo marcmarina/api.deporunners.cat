@@ -14,12 +14,15 @@ describe('getSession', () => {
   >;
 
   it('populates the user in the response if the session is valid', async () => {
-    const req = {
-      headers: {
-        'x-auth-token': 'authToken',
-        'x-refresh-token': 'refreshToken',
-      },
+    const headers = {
+      'x-auth-token': 'authToken',
+      'x-refresh-token': 'refreshToken',
     };
+
+    const req = {
+      get: jest.fn((header) => headers[header]),
+    };
+
     const res = {
       locals: {} as any,
       set: jest.fn(),
@@ -43,12 +46,15 @@ describe('getSession', () => {
   });
 
   it('set the user as null in the response if the session is not valid', async () => {
-    const req = {
-      headers: {
-        'x-auth-token': 'authToken',
-        'x-refresh-token': 'refreshToken',
-      },
+    const headers = {
+      'x-auth-token': 'authToken',
+      'x-refresh-token': 'refreshToken',
     };
+
+    const req = {
+      get: jest.fn((header) => headers[header]),
+    };
+
     const res = {
       locals: {} as any,
       set: jest.fn(),

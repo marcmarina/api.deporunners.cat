@@ -25,6 +25,6 @@
     "@deporunners/jest-config": "*",
     "@deporunners/tsconfig": "*",
     "@types/consolidate": "0.14.1",
-    "@types/nodemailer": "6.4.7"
+    "@types/nodemailer": "6.4.8"
   }
 }

@@ -8,11 +8,10 @@ jest.mock('./jwt-utils');
 jest.mock('./get-refresh-token-owner');
 
 describe('generateSession', () => {
-  const mockedDecodeJWT = decodeJWT as jest.MockedFunction<typeof decodeJWT>;
-  const mockedSignJWT = signJWT as jest.MockedFunction<typeof signJWT>;
+  const mockedDecodeJWT = jest.mocked(decodeJWT);
+  const mockedSignJWT = jest.mocked(signJWT);
 
-  const mockedGetRefreshTokenOwner =
-    getRefreshTokenOwner as jest.MockedFunction<typeof getRefreshTokenOwner>;
+  const mockedGetRefreshTokenOwner = jest.mocked(getRefreshTokenOwner);
 
   beforeEach(() => {
     jest.clearAllMocks();

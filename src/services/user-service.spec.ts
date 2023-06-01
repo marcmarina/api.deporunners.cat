@@ -6,7 +6,7 @@ import { UserService } from './user-service';
 jest.mock('@deporunners/models');
 jest.mock('@deporunners/utils');
 
-const mockedUser = User as jest.Mocked<typeof User>;
+const mockedUser = jest.mocked(User);
 
 const userService = new UserService();
 
@@ -23,10 +23,8 @@ describe('user service', () => {
     save: jest.fn(),
   } as any;
 
-  const mockedHashString = hashString as jest.MockedFunction<typeof hashString>;
-  const mockedCompareHash = compareHash as jest.MockedFunction<
-    typeof compareHash
-  >;
+  const mockedHashString = jest.mocked(hashString);
+  const mockedCompareHash = jest.mocked(compareHash);
 
   beforeEach(() => {
     jest.clearAllMocks();

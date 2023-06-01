@@ -6,10 +6,10 @@ jest.mock('@deporunners/models');
 
 describe('getRefreshTokenOwner', () => {
   const mockedUser = {
-    findOne: User.findOne as jest.MockedFunction<typeof User.findOne>,
+    findOne: jest.mocked(User.findOne),
   };
   const mockedMember = {
-    findOne: Member.findOne as jest.MockedFunction<typeof Member.findOne>,
+    findOne: jest.mocked(Member.findOne),
   };
 
   beforeEach(() => {

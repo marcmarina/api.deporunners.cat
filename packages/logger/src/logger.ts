@@ -1,6 +1,6 @@
 import * as Sentry from '@sentry/node';
 
-import { envIsDev, envIsTest } from '@deporunners/config';
+import { config, Environment } from '@deporunners/config';
 
 import { createLogger } from './create-logger';
 
@@ -18,7 +18,11 @@ class Logger {
   error(error: Error, logToSentry?: boolean) {
     pinoLogger.error(error);
 
-    if (logToSentry || (!envIsDev() && !envIsTest())) {
+    if (
+      logToSentry ||
+      (config.environment !== Environment.Test &&
+        config.environment !== Environment.Dev)
+    ) {
       Sentry.captureException(error);
     }
   }

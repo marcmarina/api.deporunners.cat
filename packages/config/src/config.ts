@@ -3,19 +3,9 @@ import 'dotenv/config';
 import { merge } from 'lodash';
 import * as z from 'zod';
 
-import { assertNever, generateToken, Maybe } from '@deporunners/utils';
+import { assertNever, generateToken } from '@deporunners/utils';
 
-export function fetchNullableVariable(key: string): Maybe<string> {
-  return process.env[key] ?? null;
-}
-
-export function fetchVariable(key: string): string {
-  const value = process.env[key];
-
-  if (!value) throw new Error(`Could not fetch environment variable ${key}`);
-
-  return value;
-}
+import { fetchNullableVariable, fetchVariable } from './fetch-variable';
 
 export enum Environment {
   Production = 'production',

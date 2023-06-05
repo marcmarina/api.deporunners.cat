@@ -17,7 +17,7 @@ export function fetchVariable(key: string): string {
   return value;
 }
 
-enum Environment {
+export enum Environment {
   Production = 'production',
   Staging = 'staging',
   Dev = 'development',
@@ -26,10 +26,6 @@ enum Environment {
 
 const environment: Environment = (fetchNullableVariable('NODE_ENV') ??
   'development') as Environment;
-
-export const envIsDev = () => environment === Environment.Dev;
-export const envIsTest = () => environment === Environment.Test;
-const envIsProd = environment === Environment.Production;
 
 const configSchema = z.object({
   mongoURI: z.string(),
@@ -61,7 +57,10 @@ const baseConfig = Object.freeze({
     users: parseInt(fetchNullableVariable('SEED_USER_COUNT') ?? '2'),
     events: parseInt(fetchNullableVariable('SEED_EVENT_COUNT') ?? '5'),
   },
-  stripeFeeProductId: envIsProd ? 'prod_JrHBBMKU67z4gu' : 'prod_JrHTTZhO6jaGdK',
+  stripeFeeProductId:
+    environment === Environment.Production
+      ? 'prod_JrHBBMKU67z4gu'
+      : 'prod_JrHTTZhO6jaGdK',
   environment,
 });
 

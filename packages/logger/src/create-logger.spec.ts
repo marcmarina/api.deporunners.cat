@@ -1,26 +1,24 @@
 import pino from 'pino';
 
-import { envIsDev, envIsTest } from '@deporunners/config';
+import { config, Environment } from '@deporunners/config';
 
 import { createLogger } from './create-logger';
 
 jest.mock('pino');
 jest.mock('@deporunners/config');
 
+const mockedConfig = jest.mocked(config);
+
+const mockedPino = jest.mocked(pino);
+mockedPino.mockReturnValue({} as any);
+
 describe('createLogger', () => {
-  const mockedEnvIsDev = jest.mocked(envIsDev);
-  const mockedEnvIsTest = jest.mocked(envIsTest);
-
-  const mockedPino = jest.mocked(pino);
-  mockedPino.mockReturnValue({} as any);
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('returns a logger with a trace log level if the environment is dev', () => {
-    mockedEnvIsDev.mockReturnValue(true);
-    mockedEnvIsTest.mockReturnValue(false);
+    mockedConfig.environment = Environment.Dev;
 
     const logger = createLogger();
 
@@ -33,8 +31,7 @@ describe('createLogger', () => {
   });
 
   it('returns a logger with a silent log level if the environment is test', () => {
-    mockedEnvIsDev.mockReturnValue(false);
-    mockedEnvIsTest.mockReturnValue(true);
+    mockedConfig.environment = Environment.Test;
 
     const logger = createLogger();
 
@@ -46,8 +43,7 @@ describe('createLogger', () => {
   });
 
   it('returns a logger with a info log level if the environment is neither test nor dev', () => {
-    mockedEnvIsDev.mockReturnValue(false);
-    mockedEnvIsTest.mockReturnValue(false);
+    mockedConfig.environment = Environment.Production;
 
     const logger = createLogger();
 

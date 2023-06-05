@@ -1,6 +1,6 @@
 import { captureException } from '@sentry/node';
 
-import { envIsDev, envIsTest } from '@deporunners/config';
+import { config, Environment } from '@deporunners/config';
 
 import { logger } from './logger';
 
@@ -8,19 +8,16 @@ jest.mock('@sentry/node');
 jest.mock('./create-logger');
 jest.mock('@deporunners/config');
 
+const mockedConfig = jest.mocked(config);
+const mockedCaptureException = jest.mocked(captureException);
+
 describe('logger', () => {
-  const mockedCaptureException = jest.mocked(captureException);
-
-  const mockedEnvIsDev = jest.mocked(envIsDev);
-  const mockedEnvIsTest = jest.mocked(envIsTest);
-
   beforeEach(() => {
     jest.clearAllMocks();
   });
 
   it('sends an error to Sentry if the environment is not development or testing', () => {
-    mockedEnvIsDev.mockReturnValue(false);
-    mockedEnvIsTest.mockReturnValue(false);
+    mockedConfig.environment = Environment.Production;
 
     logger.error(new Error('test'));
 
@@ -28,8 +25,7 @@ describe('logger', () => {
   });
 
   it('bypasses environments and sends an error to sentry if the logToSentry flag is true', () => {
-    mockedEnvIsDev.mockReturnValue(true);
-    mockedEnvIsTest.mockReturnValue(true);
+    mockedConfig.environment = Environment.Test;
 
     logger.error(new Error('test'), true);
 
@@ -37,8 +33,7 @@ describe('logger', () => {
   });
 
   it("doesn't send an error to sentry if the environment is test", () => {
-    mockedEnvIsDev.mockReturnValue(false);
-    mockedEnvIsTest.mockReturnValue(true);
+    mockedConfig.environment = Environment.Test;
 
     logger.error(new Error('test'));
 
@@ -46,8 +41,7 @@ describe('logger', () => {
   });
 
   it("doesn't send an error to sentry if the environment is dev", () => {
-    mockedEnvIsDev.mockReturnValue(true);
-    mockedEnvIsTest.mockReturnValue(false);
+    mockedConfig.environment = Environment.Dev;
 
     logger.error(new Error('test'));
 

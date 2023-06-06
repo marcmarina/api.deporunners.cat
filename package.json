@@ -12,13 +12,10 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "deploy": "ts-node ./src/scripts/deploy",
     "lint": "turbo run lint",
     "mongo:start": "docker run -d -p 27017:27017 --name deporunners_mongo mongo:latest",
     "prepare": "husky install",
-    "seed": "ts-node ./src/scripts/seed.ts",
-    "serve": "node dist/index.js",
-    "start": "nodemon --exec ts-node --files src/index.ts",
+    "start": "turbo run start",
     "test": "turbo run test",
     "verify": "turbo run verify"
   },

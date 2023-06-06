@@ -15,8 +15,11 @@
       "cache": true
     },
     "verify": {
-      "dependsOn": ["^verify"],
+      "dependsOn": ["build", "test", "lint"],
       "cache": true
+    },
+    "start": {
+      "dependsOn": ["^build"]
     }
   }
 }

@@ -36,6 +36,7 @@ module.exports = {
         tryExtensions: ['.js', '.ts'],
       },
     ],
+    'node/no-unpublished-import': 'off',
 
     // Typescript
     '@typescript-eslint/explicit-module-boundary-types': 'off',

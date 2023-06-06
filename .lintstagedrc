@@ -1,4 +1,4 @@
 {
-  "**/*.*(ts|js)": ["prettier --write"],
+  "**/*.*(ts|js)": ["yarn lint", "prettier --write"],
   "package.json": ["npx sort-package-json"]
 }

@@ -4,6 +4,7 @@ import crypto from 'crypto';
 export function generateToken(size: number) {
   return crypto.randomBytes(size).toString('hex');
 }
+
 export async function hashString(password: string): Promise<string> {
   return await bcrypt.hash(password, 12);
 }

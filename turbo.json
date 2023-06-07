@@ -10,7 +10,6 @@
       "dependsOn": ["build", "^test"],
       "cache": true
     },
-
     "lint": {
       "dependsOn": ["^lint"],
       "cache": true

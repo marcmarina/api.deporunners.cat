@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`createValidationError should return an error object 1`] = `
+{
+  "a": "validation error",
+}
+`;
+
+exports[`createValidationError should return an error object 2`] = `
+{
+  "a": {
+    "b": "validation error",
+  },
+}
+`;
+
+exports[`createValidationError should return an error object 3`] = `
+{
+  "a": {
+    "b": {
+      "c": "validation error",
+    },
+  },
+}
+`;

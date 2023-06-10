@@ -7,6 +7,8 @@ jest.mock('@deporunners/models');
 jest.mock('@deporunners/utils');
 
 const mockedUser = jest.mocked(User);
+const mockedHashString = jest.mocked(hashString);
+const mockedCompareHash = jest.mocked(compareHash);
 
 const userService = new UserService();
 
@@ -22,9 +24,6 @@ describe('user service', () => {
     toObject: jest.fn(),
     save: jest.fn(),
   } as any;
-
-  const mockedHashString = jest.mocked(hashString);
-  const mockedCompareHash = jest.mocked(compareHash);
 
   beforeEach(() => {
     jest.clearAllMocks();

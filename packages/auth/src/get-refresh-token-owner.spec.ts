@@ -5,12 +5,8 @@ import { getRefreshTokenOwner } from './get-refresh-token-owner';
 jest.mock('@deporunners/models');
 
 describe('getRefreshTokenOwner', () => {
-  const mockedUser = {
-    findOne: jest.mocked(User.findOne),
-  };
-  const mockedMember = {
-    findOne: jest.mocked(Member.findOne),
-  };
+  const mockedUser = jest.mocked(User);
+  const mockedMember = jest.mocked(Member);
 
   beforeEach(() => {
     jest.clearAllMocks();

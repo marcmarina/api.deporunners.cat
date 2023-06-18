@@ -1,7 +1,7 @@
 import { checkForErrors } from '@deporunners/errors';
 import { IEvent } from '@deporunners/models';
 
-import { EventService } from '../services';
+import { EventService, MemberService } from '../services';
 
 const eventService = new EventService();
 
@@ -31,11 +31,18 @@ export const show = async (req, res, next) => {
 };
 
 export const create = async (req, res, next) => {
+  const eventService = new EventService();
+  const memberService = new MemberService();
+
   try {
     checkForErrors(req);
-    const event = await eventService.create({ ...req.body });
 
-    eventService.sendNotification(event);
+    const [event, members] = await Promise.all([
+      eventService.create({ ...req.body }),
+      memberService.getAll(),
+    ]);
+
+    eventService.sendNotification(event, members);
 
     res.status(201).json(event);
   } catch (ex) {

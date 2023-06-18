@@ -2,13 +2,10 @@ import { Expo } from 'expo-server-sdk';
 import { Types } from 'mongoose';
 
 import { logger } from '@deporunners/logger';
-import { Event, IEvent } from '@deporunners/models';
+import { Event, IEvent, IMember } from '@deporunners/models';
 import { Maybe, uniqueArray } from '@deporunners/utils';
 
 import { BaseService } from './base-service';
-import { MemberService } from './member-service';
-
-const memberService = new MemberService();
 
 export class EventService extends BaseService {
   async getAll() {
@@ -49,10 +46,9 @@ export class EventService extends BaseService {
     return event.save();
   }
 
-  async sendNotification(event: IEvent) {
+  async sendNotification(event: IEvent, members: IMember[]) {
     try {
       const messages: any[] = [];
-      const members = await memberService.getAll();
 
       const expo = new Expo();
 

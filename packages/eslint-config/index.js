@@ -52,6 +52,7 @@ module.exports = {
     'import/no-duplicates': 'error',
     'import/no-deprecated': 'warn',
     'import/no-named-as-default-member': 'off',
+    'import/no-named-as-default': 'off',
     'simple-import-sort/imports': [
       'error',
       {

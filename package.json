@@ -52,6 +52,7 @@
     "@deporunners/eslint-config": "*",
     "@deporunners/jest-config": "*",
     "@deporunners/tsconfig": "*",
+    "@types/bcrypt": "^5.0.0",
     "@types/cors": "2.8.13",
     "@types/express": "4.17.17",
     "@types/faker": "6.6.8",

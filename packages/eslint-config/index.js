@@ -51,6 +51,7 @@ module.exports = {
     'import/no-cycle': 'error',
     'import/no-duplicates': 'error',
     'import/no-deprecated': 'warn',
+    'import/no-named-as-default-member': 'off',
     'simple-import-sort/imports': [
       'error',
       {

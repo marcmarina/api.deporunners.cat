@@ -2,21 +2,19 @@ import jwt from 'jsonwebtoken';
 
 import { decodeJWT } from './jwt-utils';
 
-jest.mock('jsonwebtoken');
+vi.mock('jsonwebtoken');
 
 describe('decodeJWT', () => {
-  const mockedJwt = {
-    verify: jwt.verify as jest.Mock,
-  };
+  const mockedJwt = vi.mocked(jwt);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns the decoded token when the token is valid', () => {
     const token = 'token';
 
-    mockedJwt.verify.mockReturnValueOnce({ id: 1 });
+    mockedJwt.verify.mockReturnValueOnce({ id: 1 } as unknown as any);
 
     const decodedToken = decodeJWT(token);
 

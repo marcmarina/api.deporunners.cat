@@ -1,7 +1,7 @@
 export function createLogger() {
   return {
-    error: jest.fn(),
-    debug: jest.fn(),
-    info: jest.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+    info: vi.fn(),
   };
 }

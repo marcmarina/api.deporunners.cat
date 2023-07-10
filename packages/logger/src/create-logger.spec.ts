@@ -4,17 +4,17 @@ import { config, Environment } from '@deporunners/config';
 
 import { createLogger } from './create-logger';
 
-jest.mock('pino');
-jest.mock('@deporunners/config');
+vi.mock('pino');
+vi.mock('@deporunners/config');
 
-const mockedConfig = jest.mocked(config);
+const mockedConfig = vi.mocked(config);
 
-const mockedPino = jest.mocked(pino);
+const mockedPino = vi.mocked(pino);
 mockedPino.mockReturnValue({} as any);
 
 describe('createLogger', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns a logger with a trace log level if the environment is dev', () => {

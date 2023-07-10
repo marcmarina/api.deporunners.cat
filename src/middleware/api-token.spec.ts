@@ -8,10 +8,10 @@ describe('apiToken', () => {
       headers: {},
     };
     const res = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
+      status: vi.fn().mockReturnThis(),
+      send: vi.fn(),
     };
-    const next = jest.fn();
+    const next = vi.fn();
 
     apiToken(req, res, next);
 
@@ -27,10 +27,10 @@ describe('apiToken', () => {
       },
     };
     const res = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
+      status: vi.fn().mockReturnThis(),
+      send: vi.fn(),
     };
-    const next = jest.fn();
+    const next = vi.fn();
 
     apiToken(req, res, next);
 
@@ -46,10 +46,10 @@ describe('apiToken', () => {
       },
     };
     const res = {
-      status: jest.fn().mockReturnThis(),
-      send: jest.fn(),
+      status: vi.fn().mockReturnThis(),
+      send: vi.fn(),
     };
-    const next = jest.fn();
+    const next = vi.fn();
 
     apiToken(req, res, next);
 

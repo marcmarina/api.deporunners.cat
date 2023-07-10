@@ -4,17 +4,17 @@ import { generateSession } from './generate-session';
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
 import { decodeJWT, signJWT } from './jwt-utils';
 
-jest.mock('./jwt-utils');
-jest.mock('./get-refresh-token-owner');
+vi.mock('./jwt-utils');
+vi.mock('./get-refresh-token-owner');
 
 describe('generateSession', () => {
-  const mockedDecodeJWT = jest.mocked(decodeJWT);
-  const mockedSignJWT = jest.mocked(signJWT);
+  const mockedDecodeJWT = vi.mocked(decodeJWT);
+  const mockedSignJWT = vi.mocked(signJWT);
 
-  const mockedGetRefreshTokenOwner = jest.mocked(getRefreshTokenOwner);
+  const mockedGetRefreshTokenOwner = vi.mocked(getRefreshTokenOwner);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('generates a session when the user has a valid auth and refresh token', async () => {

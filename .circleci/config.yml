@@ -14,7 +14,7 @@ jobs:
     steps:
       - checkout-and-install
       - run: yarn build
-      - run: yarn run test --runInBand
+      - run: yarn run test
   build:
     docker:
       - image: cimg/node:16.18.1

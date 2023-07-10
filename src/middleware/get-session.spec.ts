@@ -2,14 +2,14 @@ import { generateSession } from '@deporunners/auth';
 
 import { getSession } from './get-session';
 
-jest.mock('@deporunners/auth');
+vi.mock('@deporunners/auth');
 
 describe('getSession', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
-  const mockedGenerateSession = jest.mocked(generateSession);
+  const mockedGenerateSession = vi.mocked(generateSession);
 
   it('populates the user in the response if the session is valid', async () => {
     const headers = {
@@ -18,14 +18,14 @@ describe('getSession', () => {
     };
 
     const req = {
-      get: jest.fn((header) => headers[header]),
+      get: vi.fn((header) => headers[header]),
     };
 
     const res = {
       locals: {} as any,
-      set: jest.fn(),
+      set: vi.fn(),
     };
-    const next = jest.fn();
+    const next = vi.fn();
 
     mockedGenerateSession.mockResolvedValueOnce({
       user: { id: 1 },
@@ -50,14 +50,14 @@ describe('getSession', () => {
     };
 
     const req = {
-      get: jest.fn((header) => headers[header]),
+      get: vi.fn((header) => headers[header]),
     };
 
     const res = {
       locals: {} as any,
-      set: jest.fn(),
+      set: vi.fn(),
     };
-    const next = jest.fn();
+    const next = vi.fn();
 
     mockedGenerateSession.mockResolvedValueOnce({
       user: null,

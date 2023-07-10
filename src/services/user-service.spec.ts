@@ -3,10 +3,10 @@ import { compareHash, hashString } from '@deporunners/utils';
 
 import { UserService } from './user-service';
 
-jest.mock('@deporunners/models');
-jest.mock('@deporunners/utils');
+vi.mock('@deporunners/models');
+vi.mock('@deporunners/utils');
 
-const mockedUser = jest.mocked(User);
+const mockedUser = vi.mocked(User);
 
 const userService = new UserService();
 
@@ -19,15 +19,15 @@ describe('user service', () => {
     role: '6085b02b6b4b295ab8ee93ef',
     refreshToken:
       '9a1560c86f8bb8ee34d540574033bb9844331ca9af89be7f4f9f4271878656a92fce3936421037adaafd07d7a1f5d3f606b3bd6298327dbf11fc7695e616c4f9',
-    toObject: jest.fn(),
-    save: jest.fn(),
+    toObject: vi.fn(),
+    save: vi.fn(),
   } as any;
 
-  const mockedHashString = jest.mocked(hashString);
-  const mockedCompareHash = jest.mocked(compareHash);
+  const mockedHashString = vi.mocked(hashString);
+  const mockedCompareHash = vi.mocked(compareHash);
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   describe('getAllUsers', () => {

@@ -1,0 +1,16 @@
+{
+  "name": "@deporunners/vitest-config",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [],
+  "license": "ISC",
+  "author": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@deporunners/eslint-config": "*",
+    "@deporunners/tsconfig": "*"
+  }
+}

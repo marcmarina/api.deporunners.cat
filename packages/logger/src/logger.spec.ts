@@ -4,16 +4,16 @@ import { config, Environment } from '@deporunners/config';
 
 import { logger } from './logger';
 
-jest.mock('@sentry/node');
-jest.mock('./create-logger');
-jest.mock('@deporunners/config');
+vi.mock('@sentry/node');
+vi.mock('./create-logger');
+vi.mock('@deporunners/config');
 
-const mockedConfig = jest.mocked(config);
-const mockedCaptureException = jest.mocked(captureException);
+const mockedConfig = vi.mocked(config);
+const mockedCaptureException = vi.mocked(captureException);
 
 describe('logger', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('sends an error to Sentry if the environment is not development or testing', () => {

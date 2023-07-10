@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
-    "@deporunners/jest-config": "*",
-    "@deporunners/tsconfig": "*"
+    "@deporunners/tsconfig": "*",
+    "@deporunners/vitest-config": "*"
   }
 }

@@ -86,4 +86,5 @@ module.exports = {
       node: true,
     },
   },
+  ignorePatterns: ['vitest.config.ts'],
 };

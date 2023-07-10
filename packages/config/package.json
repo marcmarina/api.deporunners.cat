@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "lint": "eslint --fix --ext .ts src",
-    "test": "jest --passWithNoTests"
+    "test": "vitest run --passWithNoTests"
   },
   "dependencies": {
     "@deporunners/utils": "*",
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "@deporunners/eslint-config": "*",
-    "@deporunners/jest-config": "*",
-    "@deporunners/tsconfig": "*"
+    "@deporunners/tsconfig": "*",
+    "@deporunners/vitest-config": "*"
   }
 }

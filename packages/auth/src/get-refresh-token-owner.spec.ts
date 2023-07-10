@@ -2,18 +2,18 @@ import { IMember, IUser, Member, User } from '@deporunners/models';
 
 import { getRefreshTokenOwner } from './get-refresh-token-owner';
 
-jest.mock('@deporunners/models');
+vi.mock('@deporunners/models');
 
 describe('getRefreshTokenOwner', () => {
   const mockedUser = {
-    findOne: jest.mocked(User.findOne),
+    findOne: vi.mocked(User.findOne),
   };
   const mockedMember = {
-    findOne: jest.mocked(Member.findOne),
+    findOne: vi.mocked(Member.findOne),
   };
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('returns a user when a user matches the refresh token', async () => {

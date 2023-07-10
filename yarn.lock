@@ -6406,10 +6406,10 @@ strip-literal@^1.0.1:
   dependencies:
     acorn "^8.8.2"
 
-stripe@^10.0.0:
-  version "10.17.0"
-  resolved "https://registry.yarnpkg.com/stripe/-/stripe-10.17.0.tgz#b65d8c9d55ec7190b866a77dffe9843941ddced7"
-  integrity sha512-JHV2KoL+nMQRXu3m9ervCZZvi4DDCJfzHUE6CmtJxR9TmizyYfrVuhGvnsZLLnheby9Qrnf4Hq6iOEcejGwnGQ==
+stripe@^12.0.0:
+  version "12.12.0"
+  resolved "https://registry.yarnpkg.com/stripe/-/stripe-12.12.0.tgz#29d38a893133e36810cff668002103426258ae2f"
+  integrity sha512-aM9xfyDryiaf/qSWMtJaTMrlc/he3qyx3aVHMqOZqUiMdgTV6lt7tLpFrU0pG+QURm1LAP9GYZ+EcA17446YoQ==
   dependencies:
     "@types/node" ">=8.1.0"
     qs "^6.11.0"

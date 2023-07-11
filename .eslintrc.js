@@ -1,5 +1,6 @@
 module.exports = {
   extends: ['@deporunners/eslint-config'],
+  root: false,
   overrides: [
     {
       files: ['*.ts'],

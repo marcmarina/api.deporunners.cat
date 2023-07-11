@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { merge } from 'lodash';
 import {
   defineConfig as defineViteConfig,

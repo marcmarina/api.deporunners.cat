@@ -4,6 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
+  root: false,
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
@@ -86,5 +87,5 @@ module.exports = {
       node: true,
     },
   },
-  ignorePatterns: ['vitest.config.ts'],
+  ignorePatterns: ['vitest.config.ts', 'packages/vitest-config/**/*'],
 };

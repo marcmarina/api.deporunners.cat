@@ -10,27 +10,27 @@ commands:
 jobs:
   test:
     docker:
-      - image: cimg/node:16.18.1
+      - image: cimg/node:16.20.2
     steps:
       - checkout-and-install
       - run: yarn build
       - run: yarn run test
   build:
     docker:
-      - image: cimg/node:16.18.1
+      - image: cimg/node:16.20.2
     steps:
       - checkout-and-install
       - run: yarn build
   stage:
     docker:
-      - image: cimg/node:16.18.1
+      - image: cimg/node:16.20.2
     steps:
       - checkout-and-install
       - run: yarn build
       - run: yarn run deploy $DEPLOY_WEBHOOK_URL_STAGING
   deploy:
     docker:
-      - image: cimg/node:16.18.1
+      - image: cimg/node:16.20.2
     steps:
       - checkout-and-install
       - run: yarn build

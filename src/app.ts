@@ -54,6 +54,7 @@ app.use(
       'x-auth-token',
       'x-refresh-token',
       'x-api-token',
+      'x-request-id',
     ],
     exposedHeaders: ['x-auth-token', 'x-refresh-token'],
   }),
@@ -88,7 +89,7 @@ app.use(
       logger.error(error);
     }
 
-    res.status(error.status).json({ ...error, message: error.message });
+    res.status(error.status ?? 500).json({ ...error, message: error.message });
   },
 );
 

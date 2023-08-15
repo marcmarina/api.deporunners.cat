@@ -1,11 +1,12 @@
 import { check } from 'express-validator';
 import { Model } from 'mongoose';
 
+import { BaseError } from '@deporunners/errors';
 import { Member } from '@deporunners/models';
 
 export async function isModelIdValid(model: Model<any>, id: string) {
   const result = await model.findOne({ _id: id });
-  if (!result) throw new Error(`The ${model.modelName} id is not valid`);
+  if (!result) throw new BaseError(`The ${model.modelName} id is not valid`);
   return true;
 }
 
@@ -20,6 +21,6 @@ export const existingMemberEmail = (path: string) =>
       email: value,
     });
     if (existingEmail)
-      throw new Error('A member with that email address already exists');
+      throw new BaseError('A member with that email address already exists');
     return true;
   });

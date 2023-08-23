@@ -13,6 +13,14 @@
     "lint": {
       "dependsOn": ["^lint"],
       "cache": true
+    },
+    "start": {
+      "dependsOn": [],
+      "cache": false
+    },
+    "verify": {
+      "dependsOn": [],
+      "cache": true
     }
   }
 }

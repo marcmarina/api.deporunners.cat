@@ -1,9 +1,7 @@
 # Deporunners - API
 
-[![CircleCI](https://circleci.com/gh/marcmarina/api.deporunners.cat/tree/develop.svg?style=svg)](https://circleci.com/gh/marcmarina/api.deporunners.cat/tree/develop)
-
-[![node](https://img.shields.io/badge/Node.js-v.14.X-brightgreen)](https://nodejs.org)
-[![express](https://img.shields.io/badge/Express-v.4.17.X-brightgreen)](https://expressjs.com/)
+[![node](https://img.shields.io/badge/Node.js-v.16.X-brightgreen)](https://nodejs.org)
+[![express](https://img.shields.io/badge/Express-v.4.18.X-brightgreen)](https://expressjs.com/)
 [![mongoose](https://img.shields.io/badge/Mongoose-v.5.9.X-brightgreen)](https://mongoosejs.com/)
 
 This is the API that powers the other two parts of this project: [website][web] and [app][app].

@@ -951,10 +951,10 @@
   dependencies:
     "@types/node" "*"
 
-"@types/consolidate@0.14.3":
-  version "0.14.3"
-  resolved "https://registry.yarnpkg.com/@types/consolidate/-/consolidate-0.14.3.tgz#ce27b9534e24e3a35aa7675386da46dc43f46069"
-  integrity sha512-CZRcwjq2qlJK+H8WoqGNULVBpL+84M3vZNwC+iU5GCcioncLTCXH3dO002jISDuRkYKyUOHbzu21YplVe8ntjQ==
+"@types/consolidate@0.14.4":
+  version "0.14.4"
+  resolved "https://registry.yarnpkg.com/@types/consolidate/-/consolidate-0.14.4.tgz#73624434ed1716c3bb557a41146d7d6726b4257d"
+  integrity sha512-rOrLjFOuN+IQHTwwGITW/01Ho1KoaoUBPGRi57NFkwzxFff8S9Mk66TU1au1O9O8N5nJENWx6o0n6W/35Ebfxg==
   dependencies:
     "@types/bluebird" "*"
     "@types/node" "*"

@@ -25,6 +25,6 @@
     "@deporunners/tsconfig": "*",
     "@deporunners/vitest-config": "*",
     "@types/consolidate": "0.14.4",
-    "@types/nodemailer": "6.4.13"
+    "@types/nodemailer": "6.4.14"
   }
 }

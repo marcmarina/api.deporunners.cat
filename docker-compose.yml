@@ -3,6 +3,6 @@ name: deporunners
 services:
   mongo:
     container_name: deporunners-mongo
-    image: mongo:latest
+    image: mongo:7.0.5
     ports:
       - '27017:27017'

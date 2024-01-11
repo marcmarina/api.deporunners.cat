@@ -1,0 +1,8 @@
+name: deporunners
+
+services:
+  mongo:
+    container_name: deporunners-mongo
+    image: mongo:latest
+    ports:
+      - '27017:27017'

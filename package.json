@@ -5,7 +5,6 @@
   "repository": "https://github.com/marcmarina/api.deporunners.cat",
   "license": "ISC",
   "author": "Marc Marina",
-  "main": "dist/index.js",
   "workspaces": [
     "apps/*",
     "packages/*"
@@ -21,11 +20,12 @@
     "verify": "turbo run verify"
   },
   "dependencies": {
-    "turbo": "^1.9.3"
+    "turbo": "^1.12.4"
   },
   "devDependencies": {
     "husky": "8.0.3",
     "lint-staged": "13.2.2",
     "prettier": "2.8.8"
-  }
+  },
+  "packageManager": "yarn@4.1.0"
 }

@@ -12,8 +12,8 @@
   "scripts": {
     "build": "turbo run build && tsc",
     "deploy": "ts-node ./src/scripts/deploy",
+    "postinstall": "husky install",
     "lint": "turbo run lint && eslint --fix --ext .ts src",
-    "prepare": "husky install",
     "seed": "ts-node ./src/scripts/seed.ts",
     "serve": "node dist/index.js",
     "services:start": "docker-compose -f docker-compose.yml up -d",

@@ -1,30 +1,10 @@
-import * as Sentry from '@sentry/node';
-
-import { config, Environment } from '@deporunners/config';
-
 import { createLogger } from './create-logger';
 
 const pinoLogger = createLogger();
 
 class Logger {
-  /**
-   * Log an error. If the environment is development or testing it only logs it to the console. Otherwise it also logs it to Sentry.
-   *
-   * This behaviour can be overridden with the `logToSentry` argument.
-   *
-   * @param {Error} error - Error to log.
-   * @param {boolean} [logToSentry] - Flag to bypass environment and force logging to Sentry.
-   */
-  error(error: Error, logToSentry?: boolean) {
+  error(error: Error) {
     pinoLogger.error(error);
-
-    if (
-      logToSentry ||
-      (config.environment !== Environment.Test &&
-        config.environment !== Environment.Dev)
-    ) {
-      Sentry.captureException(error);
-    }
   }
 
   debug(msg: string, args?: Record<string, unknown>) {

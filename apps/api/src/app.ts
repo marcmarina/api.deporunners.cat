@@ -1,5 +1,3 @@
-import * as Sentry from '@sentry/node';
-import * as Tracing from '@sentry/tracing';
 import cors from 'cors';
 import express, {
   NextFunction,
@@ -8,7 +6,6 @@ import express, {
   Response,
 } from 'express';
 
-import { config } from '@deporunners/config';
 import { AuthError, BaseError, InputError } from '@deporunners/errors';
 import { httpLogger, logger } from '@deporunners/logger';
 
@@ -25,16 +22,6 @@ import {
 
 const app = express();
 
-Sentry.init({
-  dsn: config.sentryDSN,
-  integrations: [
-    new Sentry.Integrations.Http({ tracing: true }),
-    new Tracing.Integrations.Express({ app }),
-  ],
-  tracesSampleRate: 1.0,
-  environment: config.environment,
-});
-
 app.use(httpLogger);
 
 app.get('/health', (_req, res) => {
@@ -42,9 +29,6 @@ app.get('/health', (_req, res) => {
 });
 
 app.use(express.static('public'));
-
-app.use(Sentry.Handlers.requestHandler() as RequestHandler);
-app.use(Sentry.Handlers.tracingHandler() as RequestHandler);
 
 app.use(express.json() as RequestHandler);
 app.use(

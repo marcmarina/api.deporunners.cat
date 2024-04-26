@@ -525,7 +525,6 @@ __metadata:
     "@deporunners/tsconfig": "npm:*"
     "@deporunners/utils": "npm:*"
     "@deporunners/vitest-config": "npm:*"
-    "@sentry/node": "npm:^7.0.0"
     pino: "npm:^8.0.0"
     pino-http: "npm:^8.3.1"
     pino-pretty: "npm:10.0.0"
@@ -541,7 +540,6 @@ __metadata:
     "@deporunners/eslint-config": "npm:*"
     "@deporunners/tsconfig": "npm:*"
     "@deporunners/vitest-config": "npm:*"
-    "@sentry/node": "npm:^7.0.0"
     "@types/consolidate": "npm:0.14.4"
     "@types/nodemailer": "npm:6.4.14"
     consolidate: "npm:^0.16.0"
@@ -1224,71 +1222,6 @@ __metadata:
   version: 0.11.0
   resolution: "@pkgjs/parseargs@npm:0.11.0"
   checksum: 10c0/5bd7576bb1b38a47a7fc7b51ac9f38748e772beebc56200450c4a817d712232b8f1d3ef70532c80840243c657d491cf6a6be1e3a214cff907645819fdc34aadd
-  languageName: node
-  linkType: hard
-
-"@sentry-internal/tracing@npm:7.48.0":
-  version: 7.48.0
-  resolution: "@sentry-internal/tracing@npm:7.48.0"
-  dependencies:
-    "@sentry/core": "npm:7.48.0"
-    "@sentry/types": "npm:7.48.0"
-    "@sentry/utils": "npm:7.48.0"
-    tslib: "npm:^1.9.3"
-  checksum: 10c0/d6d7967ba5172fc236ef48ac4e3ebe2a6fb0553243d08849e0f6f65eb210157282bbe7c3659522691b2e15809548a424bf3e8af2c3308d38d9453221cd513ef2
-  languageName: node
-  linkType: hard
-
-"@sentry/core@npm:7.48.0":
-  version: 7.48.0
-  resolution: "@sentry/core@npm:7.48.0"
-  dependencies:
-    "@sentry/types": "npm:7.48.0"
-    "@sentry/utils": "npm:7.48.0"
-    tslib: "npm:^1.9.3"
-  checksum: 10c0/c72efee022b32616ae0b8d630181f2b777f8182594f8fea6b8730dc520429ae3e420c0ef4cf3f027b7473a450b74978991f59b61813cff914d1566cca3d863eb
-  languageName: node
-  linkType: hard
-
-"@sentry/node@npm:^7.0.0":
-  version: 7.48.0
-  resolution: "@sentry/node@npm:7.48.0"
-  dependencies:
-    "@sentry-internal/tracing": "npm:7.48.0"
-    "@sentry/core": "npm:7.48.0"
-    "@sentry/types": "npm:7.48.0"
-    "@sentry/utils": "npm:7.48.0"
-    cookie: "npm:^0.4.1"
-    https-proxy-agent: "npm:^5.0.0"
-    lru_map: "npm:^0.3.3"
-    tslib: "npm:^1.9.3"
-  checksum: 10c0/5173c1c2d55bb54b8f3fdc83659463ad9739f8fb214bdf95991e8030e5026d248f9c676b98fe36dd8d79d37b00e7df2fddf0f3debca7c4b4369905f94d14a05d
-  languageName: node
-  linkType: hard
-
-"@sentry/tracing@npm:^7.0.0":
-  version: 7.48.0
-  resolution: "@sentry/tracing@npm:7.48.0"
-  dependencies:
-    "@sentry-internal/tracing": "npm:7.48.0"
-  checksum: 10c0/5a40f2186e7b8228051fcbf1a026697b35cc4a4d38f38f7dd69956ef8f2189d434df0e615325eba5f3e7180d17dfd195cee46a08e55a15cc2ccd2cbc647dec17
-  languageName: node
-  linkType: hard
-
-"@sentry/types@npm:7.48.0":
-  version: 7.48.0
-  resolution: "@sentry/types@npm:7.48.0"
-  checksum: 10c0/07aad912448522fe0cd6cb8336b04b00a788b5d048ab03fee815acefae0570c97ccee641c8d94c669a87fda615381b64d417f39acb320ca71d3636752ac1b377
-  languageName: node
-  linkType: hard
-
-"@sentry/utils@npm:7.48.0":
-  version: 7.48.0
-  resolution: "@sentry/utils@npm:7.48.0"
-  dependencies:
-    "@sentry/types": "npm:7.48.0"
-    tslib: "npm:^1.9.3"
-  checksum: 10c0/8c603e1b362e988e2857a7a836b2aa184343707f447246b4ad308d10ffbbc3f3cc0c0d5b5ff7e7085950c0705ec2d69f949651243f572056e1e13650885b9418
   languageName: node
   linkType: hard
 
@@ -2180,8 +2113,6 @@ __metadata:
     "@deporunners/tsconfig": "npm:*"
     "@deporunners/utils": "npm:*"
     "@deporunners/vitest-config": "npm:*"
-    "@sentry/node": "npm:^7.0.0"
-    "@sentry/tracing": "npm:^7.0.0"
     "@types/bcrypt": "npm:^5.0.0"
     "@types/cors": "npm:2.8.17"
     "@types/express": "npm:4.17.21"
@@ -3262,13 +3193,6 @@ __metadata:
   version: 0.5.0
   resolution: "cookie@npm:0.5.0"
   checksum: 10c0/c01ca3ef8d7b8187bae434434582288681273b5a9ed27521d4d7f9f7928fe0c920df0decd9f9d3bbd2d14ac432b8c8cf42b98b3bdd5bfe0e6edddeebebe8b61d
-  languageName: node
-  linkType: hard
-
-"cookie@npm:^0.4.1":
-  version: 0.4.2
-  resolution: "cookie@npm:0.4.2"
-  checksum: 10c0/beab41fbd7c20175e3a2799ba948c1dcc71ef69f23fe14eeeff59fc09f50c517b0f77098db87dbb4c55da802f9d86ee86cdc1cd3efd87760341551838d53fca2
   languageName: node
   linkType: hard
 
@@ -6913,13 +6837,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lru_map@npm:^0.3.3":
-  version: 0.3.3
-  resolution: "lru_map@npm:0.3.3"
-  checksum: 10c0/d861f14a142a4a74ebf8d3ad57f2e768a5b820db4100ae53eed1a64eb6350912332e6ebc87cb7415ad6d0cd8f3ce6d20beab9a5e6042ccb5996ea0067a220448
-  languageName: node
-  linkType: hard
-
 "magic-string@npm:^0.30.1":
   version: 0.30.1
   resolution: "magic-string@npm:0.30.1"
@@ -9723,7 +9640,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tslib@npm:^1.8.1, tslib@npm:^1.9.3":
+"tslib@npm:^1.8.1":
   version: 1.14.1
   resolution: "tslib@npm:1.14.1"
   checksum: 10c0/69ae09c49eea644bc5ebe1bca4fa4cc2c82b7b3e02f43b84bd891504edf66dbc6b2ec0eef31a957042de2269139e4acff911e6d186a258fb14069cd7f6febce2

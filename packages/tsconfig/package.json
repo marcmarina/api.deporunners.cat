@@ -6,7 +6,6 @@
   "license": "ISC",
   "author": "",
   "main": "index.js",
-  "scripts": {},
   "publishConfig": {
     "access": "public"
   }

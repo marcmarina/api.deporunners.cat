@@ -1,27 +1,14 @@
 import pino from 'pino';
 
-import { config, Environment } from '@deporunners/config';
-import { assertNever } from '@deporunners/utils';
-
-function getLogLevel(): pino.LevelWithSilent {
-  switch (config.environment) {
-    case Environment.Test:
-      return 'silent';
-    case Environment.Dev:
-      return 'trace';
-    case Environment.Staging:
-    case Environment.Production:
-      return 'info';
-    default:
-      assertNever(config.environment);
-  }
-}
+import { config } from '@deporunners/config';
 
 export function createLogger() {
   return pino({
-    ...(config.environment === Environment.Dev && {
-      transport: { target: 'pino-pretty' },
+    ...(config.logger.format === 'pretty' && {
+      transport: {
+        target: 'pino-pretty',
+      },
     }),
-    level: getLogLevel(),
+    level: config.logger.level,
   });
 }

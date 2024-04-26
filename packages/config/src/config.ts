@@ -31,6 +31,10 @@ const configSchema = z.object({
   }),
   stripeFeeProductId: z.string(),
   environment: z.nativeEnum(Environment),
+  logger: z.object({
+    level: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace']),
+    format: z.enum(['json', 'pretty']),
+  }),
 });
 
 type Config = z.infer<typeof configSchema>;
@@ -49,6 +53,10 @@ const baseConfig = Object.freeze({
       ? 'prod_JrHBBMKU67z4gu'
       : 'prod_JrHTTZhO6jaGdK',
   environment,
+  logger: {
+    level: fetchVariable('LOG_LEVEL'),
+    format: fetchVariable('LOG_FORMAT'),
+  },
 });
 
 function getConfigForEnvironment(environment: Environment) {
@@ -72,6 +80,10 @@ function getConfigForEnvironment(environment: Environment) {
           emailFrom: '',
           stripeKey: '',
           sendgridKey: '',
+          logger: {
+            level: 'silent',
+            format: 'json',
+          },
         };
       default:
         assertNever(environment);

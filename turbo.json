@@ -3,16 +3,22 @@
   "pipeline": {
     "build": {
       "dependsOn": ["^build"],
+      "inputs": ["src/**"],
       "outputs": ["dist/**"],
-      "cache": true
+      "cache": true,
+      "outputMode": "new-only"
     },
     "test": {
       "dependsOn": ["build", "^test"],
-      "cache": true
+      "cache": true,
+      "outputMode": "new-only"
     },
     "lint": {
       "dependsOn": ["^lint"],
       "cache": true
+    },
+    "verify": {
+      "dependsOn": ["build", "test", "lint"]
     }
   }
 }

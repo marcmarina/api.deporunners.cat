@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 import { merge } from 'lodash';
 import * as z from 'zod';
 

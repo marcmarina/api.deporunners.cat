@@ -1,3 +1,9 @@
+import dotenv from 'dotenv';
+import path from 'path';
+
+const envFilePath = path.resolve(__dirname, '../.env');
+dotenv.config({ path: envFilePath });
+
 import { config } from '@deporunners/config';
 import { database } from '@deporunners/database';
 import { logger } from '@deporunners/logger';
